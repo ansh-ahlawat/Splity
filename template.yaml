@@ -1,0 +1,319 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Splity - Cloud-Native Serverless Personal & Shared Expense Management System
+  Architected 100% on AWS Free Tier (Lambda, API Gateway, DynamoDB, S3, Cognito, CloudFront)
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: nodejs20.x
+    Architectures:
+      - arm64
+    Environment:
+      Variables:
+        NODE_ENV: production
+        USE_DYNAMODB: "true"
+        DYNAMODB_USERS_TABLE: !Ref SplityUsersTable
+        DYNAMODB_TRANSACTIONS_TABLE: !Ref SplityTransactionsTable
+        DYNAMODB_CATEGORIES_TABLE: !Ref SplityCategoriesTable
+        DYNAMODB_BUDGETS_TABLE: !Ref SplityBudgetsTable
+        DYNAMODB_FRIENDS_TABLE: !Ref SplityFriendsTable
+        DYNAMODB_DEBTS_TABLE: !Ref SplityDebtsTable
+        S3_STORAGE_BUCKET: !Ref SplityReceiptsBucket
+        COGNITO_USER_POOL_ID: !Ref SplityUserPool
+        COGNITO_CLIENT_ID: !Ref SplityUserPoolClient
+
+Resources:
+  # =========================================================================
+  # 1. AWS COGNITO USER POOL (Authentication - 50,000 MAU Free Forever)
+  # =========================================================================
+  SplityUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: splity-user-pool
+      AutoVerifiedAttributes:
+        - email
+      UsernameAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+          RequireUppercase: false
+
+  SplityUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: splity-web-client
+      UserPoolId: !Ref SplityUserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+
+  # =========================================================================
+  # 2. AMAZON DYNAMODB TABLES (Database - 25 GB Free Forever, 25 RCU/WCU)
+  # =========================================================================
+  SplityUsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Users
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: email
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  SplityTransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Transactions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  SplityCategoriesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Categories
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: id
+          KeyType: RANGE
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  SplityBudgetsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Budgets
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: id
+          KeyType: RANGE
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  SplityFriendsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Friends
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: id
+          KeyType: RANGE
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  SplityDebtsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Splity_Debts
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: id
+          KeyType: RANGE
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+
+  # =========================================================================
+  # 3. AMAZON S3 STORAGE (Receipts & PDF Reports - 5 GB Free Tier)
+  # =========================================================================
+  SplityReceiptsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'splity-receipts-${AWS::AccountId}-${AWS::Region}'
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET, PUT, POST, HEAD]
+            AllowedOrigins: ['*']
+            MaxAge: 3600
+
+  # Frontend S3 Bucket for Static React SPA
+  SplityFrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'splity-frontend-${AWS::AccountId}-${AWS::Region}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  SplityOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: SplityOAC
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # =========================================================================
+  # 4. AMAZON CLOUDFRONT CDN (Free Tier: 1 TB Transfer Out, Global CDN)
+  # =========================================================================
+  SplityDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        HttpVersion: http2and3
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt SplityFrontendBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt SplityOriginAccessControl.Id
+            S3OriginConfig: {}
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD, OPTIONS]
+          CachedMethods: [GET, HEAD]
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+
+  SplityFrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref SplityFrontendBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub '${SplityFrontendBucket.Arn}/*'
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${SplityDistribution}'
+
+  # =========================================================================
+  # 5. AWS LAMBDA & API GATEWAY (Serverless Backend - 1M Requests Free/Mo)
+  # =========================================================================
+  SplityHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Amz-Date
+        AllowOrigins:
+          - '*'
+
+  SplityApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda.handler
+      CodeUri: ./dist
+      Description: Splity Serverless Express API running on AWS Lambda
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Users
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Transactions
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Categories
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Budgets
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Friends
+        - DynamoDBCrudPolicy:
+            TableName: Splity_Debts
+        - S3CrudPolicy:
+            BucketName: !Sub 'splity-receipts-${AWS::AccountId}-${AWS::Region}'
+      Events:
+        ApiCatchAll:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref SplityHttpApi
+            Path: /{proxy+}
+            Method: ANY
+        ApiRoot:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref SplityHttpApi
+            Path: /
+            Method: ANY
+
+Outputs:
+  ApiEndpoint:
+    Description: HTTP API Gateway endpoint URL (AWS Serverless Backend)
+    Value: !Sub 'https://${SplityHttpApi}.execute-api.${AWS::Region}.amazonaws.com'
+  CloudFrontUrl:
+    Description: Live Application CloudFront URL (Global HTTPS CDN)
+    Value: !Sub 'https://${SplityDistribution.DomainName}'
+  ReceiptsBucketName:
+    Description: S3 Receipts & Invoices Bucket
+    Value: !Ref SplityReceiptsBucket
+  FrontendBucketName:
+    Description: S3 Static Website Hosting Bucket
+    Value: !Ref SplityFrontendBucket
+  CognitoUserPoolId:
+    Description: Amazon Cognito User Pool ID
+    Value: !Ref SplityUserPool
+  CognitoClientId:
+    Description: Amazon Cognito App Client ID
+    Value: !Ref SplityUserPoolClient

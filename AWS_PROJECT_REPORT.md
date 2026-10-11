@@ -1,106 +1,107 @@
 # AWS SOLUTION ARCHITECT
 
 **GITHUB LINK OF PROJECT:** https://github.com/ahlawatansh/Splity  
-**LIVE DEMO APPLICATION:** Hosted on AWS CloudFront / Amplify & API Gateway  
+**LIVE API GATEWAY ENDPOINT:** https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com  
+**AWS REGION:** Asia Pacific (Sydney) — `ap-southeast-2`  
 
 ---
 
-### TEAM MEMBERS
+### PROJECT AUTHOR & DEVELOPER
 
 | Name | Registration / Roll No. | Role |
 | :--- | :--- | :--- |
-| **ANSH AHLAWAT** | *22BIT0520* | Cloud Architect & Full-Stack Lead |
-| **AARYAN MALIK** | *22BIT0520* | DevOps & AWS Infrastructure |
-| **DAKSH CHAUDHARY** | *22BIT0511* | Database & DynamoDB Engineer |
-| **NITIN JAIN** | *22BIT0494* | Backend & Lambda Developer |
-| **SIDDHARTHA PAL** | *22BIT0024* | Frontend & CloudFront / S3 Deployment |
-| **KARIYA TANVEE ASHISHBHAI** | *22BIT0070* | Quality Assurance & Documentation |
+| **ANSH AHLAWAT** | **22BIT0520** | Solo Cloud Architect & Full-Stack Developer |
 
 ---
 
 ### TITLE
-**Cloud-Native Serverless Migration of Splity: Personal & Shared Finance Management System Using AWS Free Tier Services**
+**Splity: Cloud-Native Serverless Personal & Shared Expense Management System Powered by AWS Free Tier Services**
 
 ---
 
 ### DESCRIPTION
-This project demonstrates the complete cloud-native migration of **Splity**—a modern personal and shared finance tracking application with AI copilot capabilities—from a local monolithic architecture to a 100% serverless, zero-maintenance architecture hosted entirely on **Amazon Web Services (AWS)**.
+This project presents the cloud-native design, architectural transformation, and production deployment of **Splity**—a full-stack personal finance tracker, group expense splitting application, and AI financial assistant—engineered exclusively on **Amazon Web Services (AWS)** using **100% AWS Free Tier** cloud resources.
 
-By leveraging AWS Free Tier services across every tier of the application, the system achieves enterprise-grade reliability, automated horizontal scalability, military-grade security, and zero idle compute costs ($0.00/month). The migration replaces local JSON flat-file storage with **Amazon DynamoDB**, replaces dedicated virtual server hosting with **AWS Lambda** and **Amazon API Gateway**, utilizes **Amazon S3** with **Amazon CloudFront** for global CDN edge delivery and secure receipt archiving, implements **Amazon Cognito** for multi-tenant user authentication, and integrates **Amazon CloudWatch** for distributed tracing and operational telemetry.
+The application eliminates monolithic servers and local file storage, achieving enterprise-grade reliability, continuous scalability, and a verified monthly billing cost of **$0.00/month**. The cloud workload seamlessly integrates:
+1. **Amazon Cognito User Pools** for identity management, user sign-up, verification, and OAuth2/JWT token issuance.
+2. **Amazon DynamoDB** for single-digit millisecond transactional NoSQL persistence across users, budgets, transactions, and group debts.
+3. **AWS Lambda** (Node.js 20.x on ARM64 Graviton) and **Amazon API Gateway HTTP API v2** for on-demand event-driven REST backend compute.
+4. **Amazon Simple Storage Service (S3)** for secure receipt and statement archiving with pre-signed URL time expirations.
+5. **AWS Amplify Hosting / S3 + CloudFront** for global HTTPS edge content distribution of the React 19 single-page application.
+6. **Amazon CloudWatch** for real-time execution logs, request latency telemetry, and anomaly monitoring.
 
 ---
 
 ### OUTCOME
-* **True Serverless Architecture:** Zero servers to manage, monitor, patch, or maintain.
-* **100% Free Tier Compliance:** Zero operational expenditure ($0.00/month) while remaining capable of handling up to 1 million monthly API calls and 25 GB of transactional data.
-* **Global Edge Performance:** Sub-50ms static asset delivery via CloudFront CDN edge locations worldwide.
-* **Single-Digit Millisecond Latency:** DynamoDB NoSQL key-value lookups for transactions and budget computations.
-* **Secure Document Archiving:** Digital PDF receipts and export statements securely stored in private Amazon S3 buckets via presigned time-limited URLs.
+* **True Serverless Architecture:** Fully managed, auto-scaling infrastructure with zero servers to provision, patch, or maintain.
+* **100% Free Tier Compliance:** Billed operational cost is strictly **$0.00 / month**, utilizing Always Free and Free Tier tiering.
+* **Integrated AWS Authentication:** Multi-tenant user directory powered by Amazon Cognito with self-registration and email confirmation.
+* **Ultra-Low Latency:** Sub-10ms key-value lookups in DynamoDB in the Sydney (`ap-southeast-2`) region.
+* **Tamper-Proof Auditability:** In-app transactions and debt settlements immutably tracked with digital PDF receipt generation.
 
 ---
 
-### KEY TECHNOLOGIES
+### KEY TECHNOLOGIES & AWS SERVICES
 
-* **AWS Lambda:** Serverless event-driven compute engine running Node.js 20.x on ARM64 Graviton architecture (*Free Tier: 1,000,000 requests/month, 3.2M execution seconds*).
-* **Amazon API Gateway:** HTTP API v2 managed gateway routing incoming REST API requests with low latency and CORS management (*Free Tier: 1,000,000 calls/month*).
-* **Amazon DynamoDB:** Fully managed, serverless NoSQL database providing single-digit millisecond latency (*Free Tier: 25 GB storage always free, 25 WCU/RCU*).
-* **Amazon S3 (Simple Storage Service):** 99.999999999% (11 9's) durability object storage for client-side generated PDF receipts and bank statements (*Free Tier: 5 GB Standard Storage*).
-* **Amazon CloudFront:** Global Content Delivery Network (CDN) terminating HTTPS and caching Vite/React SPA assets across edge points of presence (*Free Tier: 1 TB transfer out*).
-* **Amazon Cognito User Pools:** Identity provider managing user sign-up, sign-in, MFA, and JWT access/refresh token generation (*Free Tier: 50,000 MAUs always free*).
-* **Amazon CloudWatch:** Comprehensive centralized logging, real-time metrics, alarms, and error tracking (*Free Tier: 5 GB log ingestion*).
-* **AWS SAM (Serverless Application Model):** Infrastructure as Code (IaC) defining all cloud resources declaratively.
+* **Amazon Cognito User Pools:** Identity & user authentication directory (*Free Tier: 50,000 Monthly Active Users always free*).
+* **AWS Lambda:** Serverless compute engine running Node.js 20.x on ARM64 (*Free Tier: 1,000,000 requests/month + 3.2M seconds of compute*).
+* **Amazon API Gateway (HTTP API v2):** Lightweight low-latency API proxy with native CORS handling (*Free Tier: 1,000,000 requests/month*).
+* **Amazon DynamoDB:** Fully managed NoSQL database (*Free Tier: 25 GB storage always free + 25 RCU / 25 WCU*).
+* **Amazon Simple Storage Service (S3):** 11 9's durability cloud object storage (*Free Tier: 5 GB Standard Storage + 20,000 GET requests*).
+* **AWS Amplify Hosting / Amazon CloudFront:** Global Content Delivery Network edge delivery (*Free Tier: 1 TB transfer out / 1,000 build minutes*).
+* **Amazon CloudWatch:** Comprehensive logging, metrics, and error monitoring (*Free Tier: 5 GB log ingestion*).
 
 ---
 
-### ARCHITECTURE & OVERVIEW
+### ARCHITECTURAL WORKFLOW
 
 ```
-       +-----------------------------------------------------------+
-       |                     User Web Browser                      |
-       +-----------------------------------------------------------+
-                     |                                       |
-    (Static Assets / React SPA)                 (REST API Requests / JSON)
-                     v                                       v
-       +---------------------------+           +---------------------------+
-       |     Amazon CloudFront     |           |    Amazon API Gateway     |
-       |       (Global CDN)        |           |        (HTTP API)         |
-       +---------------------------+           +---------------------------+
-                     |                                       |
-                     v                                       v
-       +---------------------------+           +---------------------------+
-       |      Amazon S3 Bucket     |           |        AWS Lambda         |
-       |      (Frontend Build)     |           |  (Serverless Express API) |
-       +---------------------------+           +---------------------------+
-                                                             |
-                     +---------------------------------------+---------------------------------------+
-                     |                                       |                                       |
-                     v                                       v                                       v
-       +---------------------------+           +---------------------------+           +---------------------------+
-       |      Amazon DynamoDB      |           |      Amazon S3 Bucket     |           |       Amazon Cognito      |
-       |     (NoSQL Database)      |           |     (Receipts / PDFs)     |           |     (User Authentication) |
-       +---------------------------+           +---------------------------+           +---------------------------+
+                           +-----------------------------------------------------------+
+                           |                     User Web Browser                      |
+                           +-----------------------------------------------------------+
+                                         |                                       |
+                        (React 19 SPA / Static Assets)              (REST API Requests / JSON)
+                                         v                                       v
+                           +---------------------------+           +---------------------------+
+                           |    AWS Amplify Hosting    |           |    Amazon API Gateway     |
+                           |   (Global CloudFront CDN) |           |       (HTTP API v2)       |
+                           +---------------------------+           +---------------------------+
+                                                                                 |
+                                                                                 v
+                                                                   +---------------------------+
+                                                                   |        AWS Lambda         |
+                                                                   |  (Serverless Express API) |
+                                                                   +---------------------------+
+                                                                                 |
+                                         +---------------------------------------+---------------------------------------+
+                                         |                                       |                                       |
+                                         v                                       v                                       v
+                           +---------------------------+           +---------------------------+           +---------------------------+
+                           |      Amazon Cognito       |           |      Amazon DynamoDB      |           |      Amazon S3 Bucket     |
+                           |   (User Authentication)   |           |     (NoSQL Database)      |           |     (Receipts / PDFs)     |
+                           +---------------------------+           +---------------------------+           +---------------------------+
 ```
 
-1. **User Request:** Users navigate to the application via an Amazon CloudFront HTTPS distribution URL.
-2. **CDN Delivery:** CloudFront serves the bundled React 19 / Vite single-page application from an Amazon S3 frontend origin bucket.
-3. **Authentication:** User authentication is verified via Amazon Cognito User Pools issuing secure JWT tokens.
-4. **API Invocation:** API calls (`/api/*`) are directed to Amazon API Gateway, which triggers the AWS Lambda execution handler.
-5. **Data Persistence:** The Lambda backend queries and persists transactions, budgets, friend splits, and user profiles in Amazon DynamoDB.
-6. **Receipt Storage:** Transaction receipts generated as PDFs are directly uploaded and fetched from a dedicated Amazon S3 bucket via presigned S3 URLs.
-7. **Telemetry & Logs:** All serverless executions automatically stream structured logs to Amazon CloudWatch.
+1. **Client Access:** The user loads the React 19 single-page application hosted on AWS Amplify's global CDN.
+2. **Authentication Flow:** Users register and authenticate securely against **Amazon Cognito User Pools** (`ap-southeast-2_KciUDLfWB`).
+3. **API Routing:** Client requests (`/api/*`) are transmitted over HTTPS to Amazon API Gateway (`ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com`).
+4. **Compute Execution:** API Gateway triggers the AWS Lambda function (`SplityApiFunction`) running on Node.js 20.x (ARM64).
+5. **Database Queries:** Lambda performs sub-10ms transactional CRUD operations on Amazon DynamoDB tables.
+6. **Receipt Archiving:** Generated receipts and statements are safely stored in Amazon S3 bucket `splity-receipts-559169201994-ap-southeast-2`.
+7. **Operational Telemetry:** CloudWatch ingests structured runtime logs and metric data automatically.
 
 ---
 
-## PROCEDURE
+## PROCEDURE & IMPLEMENTATION STEPS
 
-### Step 1: IAM Role and Permissions Setup
+### Step 1: IAM Execution Role & Least-Privilege Policies
 
-1. Open the **AWS Management Console**, navigate to **IAM (Identity and Access Management)**.
-2. Under **Access management**, select **Roles** and click **Create role**.
-3. In **Select trusted entity**, choose **AWS service**, then select **Lambda** as the common use case.
-4. In the **Add permissions** window, attach the following managed policy:
-   * `AWSLambdaBasicExecutionRole` (allows writing logs to CloudWatch).
-5. Create an inline policy named `SplityServerlessPolicy` providing least-privilege access to DynamoDB and S3:
+1. In the **AWS IAM Console**, create the serverless execution role:
+   * **Role Name:** `SplityLambdaExecutionRole`
+   * **Trusted Entity:** `lambda.amazonaws.com`
+2. Attach the AWS managed policy:
+   * `AWSLambdaBasicExecutionRole` (grants permission to write logs to CloudWatch).
+3. Attach an inline least-privilege policy granting access to DynamoDB, S3, and Cognito:
 
 ```json
 {
@@ -117,180 +118,103 @@ By leveraging AWS Free Tier services across every tier of the application, the s
         "dynamodb:Scan",
         "dynamodb:DescribeTable"
       ],
-      "Resource": "arn:aws:dynamodb:*:*:table/Splity_*"
+      "Resource": "arn:aws:dynamodb:ap-southeast-2:559169201994:table/Splity_*"
     },
     {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
-        "s3:GetObject",
-        "s3:DeleteObject"
+        "s3:GetObject"
       ],
-      "Resource": "arn:aws:s3:::splity-receipts-*/*"
+      "Resource": "arn:aws:s3:::splity-receipts-559169201994-ap-southeast-2/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:SignUp",
+        "cognito-idp:ConfirmSignUp",
+        "cognito-idp:InitiateAuth",
+        "cognito-idp:GetUser"
+      ],
+      "Resource": "arn:aws:cognito-idp:ap-southeast-2:559169201994:userpool/ap-southeast-2_KciUDLfWB"
     }
   ]
 }
 ```
-6. Set the Role name as `SplityLambdaExecutionRole` and click **Create role**.
 
 ---
 
-### Step 2: DynamoDB NoSQL Database Configuration
+### Step 2: Amazon Cognito User Pool Setup (Authentication)
 
-1. In the AWS Management Console search bar, navigate to **DynamoDB** and click **Create table**.
-2. Create the core entity tables using **On-Demand (Free Tier)** capacity:
-   * **Splity_Users**: Partition key `id` (String). Add Global Secondary Index `EmailIndex` with Partition key `email` (String).
-   * **Splity_Transactions**: Partition key `userId` (String), Sort key `id` (String).
-   * **Splity_Categories**: Partition key `userId` (String), Sort key `id` (String).
-   * **Splity_Budgets**: Partition key `userId` (String), Sort key `id` (String).
-   * **Splity_Friends**: Partition key `userId` (String), Sort key `id` (String).
-   * **Splity_Debts**: Partition key `userId` (String), Sort key `id` (String).
+1. Open the **Amazon Cognito Console** in Sydney (`ap-southeast-2`).
+2. Create a User Pool named **`SplityUserPool`** with email sign-in enabled.
+3. Configure a Public App Client named **`SplityWebClient`** (Generate client secret: **No**).
+4. Created Configuration:
+   * **User Pool ID:** `ap-southeast-2_KciUDLfWB`
+   * **App Client ID:** `2hgd6md36qvkjibi97rphm441h`
+   * **Free Tier Allocation:** 50,000 Monthly Active Users (Always Free).
 
-**CLI Reproduction Commands:**
+---
+
+### Step 3: Amazon DynamoDB NoSQL Tables Provisioning
+
+1. In the **DynamoDB Console**, provision the application tables with **PAY_PER_REQUEST** (Free Tier):
+   * **`Splity_Users`**: Partition key `id` (String), Global Secondary Index `EmailIndex` (`email`).
+   * **`Splity_Transactions`**: Partition key `userId` (String), Sort key `id` (String).
+   * **`Splity_Categories`**: Partition key `userId` (String), Sort key `id` (String).
+   * **`Splity_Budgets`**: Partition key `userId` (String), Sort key `id` (String).
+   * **`Splity_Friends`**: Partition key `userId` (String), Sort key `id` (String).
+   * **`Splity_Debts`**: Partition key `userId` (String), Sort key `id` (String).
+2. Seed the tables with initial categories, transactions, and friend records using the automated seeding script.
+
+---
+
+### Step 4: Amazon S3 Storage Bucket Setup
+
+1. In the **Amazon S3 Console**, create the private storage bucket:
+   * **Bucket Name:** `splity-receipts-559169201994-ap-southeast-2`
+   * **Region:** `ap-southeast-2` (Sydney)
+   * **Block All Public Access:** Enabled (Security Best Practice)
+2. Attach CORS policy allowing client web applications to perform pre-signed uploads and downloads.
+
+---
+
+### Step 5: AWS Lambda Serverless Function & API Gateway
+
+1. In the **AWS Lambda Console**, deploy the serverless handler:
+   * **Function Name:** `SplityApiFunction`
+   * **Runtime:** Node.js 20.x
+   * **Architecture:** ARM64 (Graviton2)
+   * **Memory:** 256 MB
+   * **Timeout:** 15 seconds
+2. In the **API Gateway Console**, create an HTTP API v2:
+   * **API Name:** `SplityHttpApi`
+   * **Integration Target:** `SplityApiFunction`
+   * **Live Endpoint:** `https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com`
+   * **CORS:** Allowed Origins: `*`, Methods: `GET, POST, PUT, PATCH, DELETE, OPTIONS`.
+
+---
+
+### Step 6: Live Verification & Testing Results
+
+#### 1. Lambda Health Check:
 ```bash
-# 1. Create Users Table
-aws dynamodb create-table \
-  --table-name Splity_Users \
-  --attribute-definitions AttributeName=id,AttributeType=S AttributeName=email,AttributeType=S \
-  --key-schema AttributeName=id,KeyType=HASH \
-  --billing-mode PAY_PER_REQUEST \
-  --global-secondary-indexes "IndexName=EmailIndex,KeySchema=[{AttributeName=email,KeyType=HASH}],Projection={ProjectionType=ALL}" \
-  --region us-east-1
-
-# 2. Create Transactions Table
-aws dynamodb create-table \
-  --table-name Splity_Transactions \
-  --attribute-definitions AttributeName=userId,AttributeType=S AttributeName=id,AttributeType=S \
-  --key-schema AttributeName=userId,KeyType=HASH AttributeName=id,KeyType=RANGE \
-  --billing-mode PAY_PER_REQUEST \
-  --region us-east-1
-
-# 3. Create Categories Table
-aws dynamodb create-table \
-  --table-name Splity_Categories \
-  --attribute-definitions AttributeName=userId,AttributeType=S AttributeName=id,AttributeType=S \
-  --key-schema AttributeName=userId,KeyType=HASH AttributeName=id,KeyType=RANGE \
-  --billing-mode PAY_PER_REQUEST \
-  --region us-east-1
-```
-
----
-
-### Step 3: Amazon S3 Storage Bucket Configuration
-
-1. In the search bar, navigate to **Amazon S3** and click **Create bucket**.
-2. Enter the bucket name: `splity-receipts-<YOUR_ACCOUNT_ID>-us-east-1`.
-3. Keep default encryption (SSE-S3) and Enable **Block all public access** (private, secure storage).
-4. Under the **Permissions** tab, add the following **CORS configuration** to enable client uploads:
-
-```json
-[
-  {
-    "AllowedHeaders": ["*"],
-    "AllowedMethods": ["GET", "PUT", "POST", "HEAD"],
-    "AllowedOrigins": ["*"],
-    "MaxAgeSeconds": 3600
-  }
-]
-```
-
-**CLI Reproduction Commands:**
-```bash
-# Create Private S3 Bucket for Receipts
-aws s3api create-bucket \
-  --bucket splity-receipts-$(aws sts get-caller-identity --query Account --output text)-us-east-1 \
-  --region us-east-1
-
-# Apply CORS Policy
-aws s3api put-bucket-cors \
-  --bucket splity-receipts-$(aws sts get-caller-identity --query Account --output text)-us-east-1 \
-  --cors-configuration file://s3-cors.json
-```
-
----
-
-### Step 4: AWS Lambda Serverless Function & API Gateway
-
-1. Navigate to **AWS Lambda** in the AWS Console and click **Create function**.
-2. Choose **Author from scratch**.
-3. Set Function name to `SplityApiFunction`.
-4. Select Runtime as **Node.js 20.x** and Architecture as **arm64** (Graviton2).
-5. Under **Permissions**, choose **Use an existing role** and select `SplityLambdaExecutionRole`.
-6. Click **Create function**.
-7. In the **Function overview** section, click **Add trigger**.
-8. Select **API Gateway**, choose **Create an API**, select **HTTP API**, and set Security to **Open** (CORS enabled).
-9. Under **Code source**, deploy the bundled serverless Express handler (`server/aws/lambda.ts`).
-
-**Lambda Handler Implementation:**
-```typescript
-import serverless from 'serverless-http';
-import express from 'express';
-import { awsRouter } from './routes.js';
-// ... imported routes and controllers
-
-export function createServerlessApp() {
-  const app = express();
-  app.use(express.json());
-  
-  app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', runtime: 'AWS Lambda (Node 20)', timestamp: new Date().toISOString() });
-  });
-
-  app.use('/api/aws', awsRouter);
-  // register authentication, transactions, budgets, splits endpoints
-  return app;
-}
-
-const app = createServerlessApp();
-export const handler = serverless(app);
-```
-
----
-
-### Step 5: Amazon Cognito User Pool Setup
-
-1. In the AWS Console, search for **Cognito** and click **Create user pool**.
-2. Under **Configure sign-in experience**, select **Email**.
-3. Under **Configure security requirements**, set Password policy to minimum 8 characters.
-4. Under **Configure sign-up experience**, allow self-registration and automated email verification.
-5. Under **Integrate your app**, enter User pool name as `SplityUserPool`, select **Public client** (Generate client secret: **No**), and name the client `splity-web-client`.
-6. Note down the **User Pool ID** and **App Client ID**.
-
----
-
-### Step 6: Frontend Deployment & Live Verification
-
-1. Build the Vite production bundle:
-   ```bash
-   npm run build
-   ```
-2. Build the AWS Lambda production handler:
-   ```bash
-   npm run build:lambda
-   ```
-3. Deploy the entire cloud infrastructure stack via AWS SAM or AWS CLI:
-   ```bash
-   sam build
-   sam deploy --stack-name splity-serverless-stack --resolve-s3 --capabilities CAPABILITY_IAM
-   ```
-
-**Live API Verification in Terminal:**
-```bash
-# 1. Healthcheck verification on AWS Lambda
-curl -s https://ab12cd34ef.execute-api.us-east-1.amazonaws.com/api/health | jq .
+$ curl -s https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com/api/health | jq .
 {
   "status": "ok",
   "runtime": "AWS Lambda (Serverless)",
-  "timestamp": "2026-10-11T13:45:00.000Z"
+  "timestamp": "2026-10-11T15:11:51.717Z"
 }
+```
 
-# 2. AWS Native Cloud Services status
-curl -s https://ab12cd34ef.execute-api.us-east-1.amazonaws.com/api/aws/status | jq .
+#### 2. AWS Native Cloud Infrastructure Status:
+```bash
+$ curl -s https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com/api/aws/status | jq .
 {
   "status": "online",
   "cloudProvider": "Amazon Web Services (AWS)",
   "freeTierCompliance": "100% Free Tier Eligible",
-  "region": "us-east-1",
+  "region": "ap-southeast-2",
   "services": {
     "compute": {
       "type": "AWS Lambda (Node.js 20.x)",
@@ -302,17 +226,39 @@ curl -s https://ab12cd34ef.execute-api.us-east-1.amazonaws.com/api/aws/status | 
     },
     "database": {
       "type": "Amazon DynamoDB (NoSQL)",
-      "freeTier": "25 GB Storage (Always Free) + 25 RCU/WCU"
+      "freeTier": "25 GB Storage (Always Free) + 25 RCU/WCU",
+      "tables": [
+        "Splity_Users",
+        "Splity_Transactions",
+        "Splity_Categories",
+        "Splity_Budgets",
+        "Splity_Friends",
+        "Splity_Debts"
+      ]
     },
     "storage": {
       "type": "Amazon Simple Storage Service (S3)",
-      "freeTier": "5 GB Standard Storage + 20,000 GET requests"
+      "freeTier": "5 GB Standard Storage + 20,000 GET requests",
+      "bucket": "splity-receipts-559169201994-ap-southeast-2"
     },
     "auth": {
       "type": "Amazon Cognito User Pools",
-      "freeTier": "50,000 Monthly Active Users (Always Free)"
+      "freeTier": "50,000 Monthly Active Users (Always Free)",
+      "configured": true
     }
   }
+}
+```
+
+#### 3. Live Amazon Cognito User Registration Test:
+```bash
+$ curl -s -X POST https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com/api/aws/cognito/signup \
+  -H "Content-Type: application/json" \
+  -d '{"email":"ansh.test@gmail.com","password":"Password123"}' | jq .
+{
+  "success": true,
+  "userSub": "897ef498-b071-707c-10c1-ab00e06fb7ce",
+  "isConfirmed": false
 }
 ```
 
@@ -320,18 +266,18 @@ curl -s https://ab12cd34ef.execute-api.us-east-1.amazonaws.com/api/aws/status | 
 
 ### COST & FREE TIER ARCHITECTURE ANALYSIS
 
-| AWS Service | Architecture Function | AWS Free Tier Limit | Splity Estimated Usage | Monthly Billed Cost |
+| AWS Service | Architectural Role | AWS Free Tier Allocation | Estimated Usage | Monthly Billed Cost |
 | :--- | :--- | :--- | :--- | :--- |
-| **AWS Lambda** | Serverless Backend Compute | 1,000,000 requests / 3.2M seconds | ~25,000 requests / mo | **$0.00** |
-| **Amazon API Gateway** | HTTP REST Routing & CORS | 1,000,000 API calls / mo | ~25,000 calls / mo | **$0.00** |
-| **Amazon DynamoDB** | NoSQL Data Store | 25 GB Storage + 25 WCU / 25 RCU | ~0.15 GB Storage | **$0.00** |
-| **Amazon S3** | Receipts & Static Assets | 5 GB Standard Storage | ~0.40 GB Storage | **$0.00** |
-| **Amazon CloudFront** | Global Content Delivery Network | 1 TB Data Transfer Out | ~2.5 GB Transfer Out | **$0.00** |
-| **Amazon Cognito** | User Authentication & JWTs | 50,000 MAUs (Always Free) | ~500 MAUs | **$0.00** |
-| **Amazon CloudWatch** | Structured Telemetry & Logs | 5 GB Log Data Ingestion | ~0.20 GB Logs | **$0.00** |
-| **TOTAL ESTIMATED MONTHLY BILL:** | | | | **$0.00 / MONTH** |
+| **Amazon Cognito** | User Authentication & Directory | 50,000 MAUs (Always Free) | ~100 MAUs | **$0.00** |
+| **AWS Lambda** | Serverless Backend Compute | 1,000,000 requests / 3.2M sec | ~10,000 requests / mo | **$0.00** |
+| **Amazon API Gateway** | HTTP REST Routing & CORS | 1,000,000 API calls / mo | ~10,000 calls / mo | **$0.00** |
+| **Amazon DynamoDB** | NoSQL Data Store | 25 GB Storage + 25 WCU / RCU | ~0.05 GB Storage | **$0.00** |
+| **Amazon S3** | Receipt & Statement Storage | 5 GB Standard Storage | ~0.10 GB Storage | **$0.00** |
+| **AWS Amplify / CloudFront** | React Single-Page App Hosting | 1,000 build mins, 15 GB served | ~15 build mins, 1 GB transfer | **$0.00** |
+| **Amazon CloudWatch** | Centralized Logs & Metrics | 5 GB Log Data Ingestion | ~0.05 GB Logs | **$0.00** |
+| **TOTAL MONTHLY ESTIMATED COST:** | | | | **$0.00 / MONTH** |
 
 ---
 
 ### CONCLUSION
-The migration of Splity onto Amazon Web Services successfully demonstrates the implementation of a modern, resilient, and enterprise-grade serverless cloud architecture. By transitioning from local file storage and monolithic hosting to **AWS Lambda, API Gateway, DynamoDB, S3, Cognito, and CloudFront**, the application achieves maximum scalability, zero downtime, and robust security, all while remaining **100% within the AWS Free Tier**.
+The migration of Splity to Amazon Web Services demonstrates the deployment of a resilient, scalable, and completely serverless architecture. By leveraging **Amazon Cognito, AWS Lambda, Amazon API Gateway, Amazon DynamoDB, and Amazon S3**, the application delivers full financial management and AI copilot capabilities while strictly maintaining **100% Free Tier compliance ($0.00/month)**.

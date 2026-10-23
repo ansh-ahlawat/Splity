@@ -153,7 +153,7 @@ export function createApp() {
   // Auth Endpoints
   app.post('/api/auth/signup', async (req, res) => {
     try {
-      const { phone, email, password, confirmPassword } = req.body;
+      const { phone, email, password, confirmPassword, name, fullName } = req.body;
       if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
       }
@@ -164,7 +164,8 @@ export function createApp() {
         return res.status(400).json({ error: 'Password must be at least 8 characters' });
       }
 
-      const result = await signupUser(phone || '', email, password);
+      const userName = (fullName || name || '').trim();
+      const result = await signupUser(phone || '', email, password, userName);
       res.setHeader('Set-Cookie', `refreshToken=${result.refreshToken}; HttpOnly; SameSite=Lax; Path=/`);
       res.json({ user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
     } catch (err: any) {
@@ -189,12 +190,15 @@ export function createApp() {
 
   app.post('/api/auth/google', async (req, res) => {
     try {
-      const { idToken, email, name, avatar } = req.body;
+      const email = (req.body.email || '').trim().toLowerCase();
+      const displayName = (req.body.displayName || req.body.name || '').trim();
+      const avatar = req.body.photoURL || req.body.avatar || '';
+
       if (!email) {
         return res.status(400).json({ error: 'Google authentication payload missing email' });
       }
 
-      const result = await loginOrCreateOAuthUser('google', email, name || 'Google User', avatar);
+      const result = await loginOrCreateOAuthUser(email, displayName, avatar);
       res.setHeader('Set-Cookie', `refreshToken=${result.refreshToken}; HttpOnly; SameSite=Lax; Path=/`);
       res.json({ user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
     } catch (err: any) {
@@ -252,15 +256,15 @@ export function createApp() {
       if (spendingCeiling !== undefined) user.spendingCeiling = Number(spendingCeiling);
       if (targetSavings !== undefined) user.targetSavings = Number(targetSavings);
       if (profileSetupCompleted !== undefined) user.profileSetupCompleted = Boolean(profileSetupCompleted);
-      if (name !== undefined) user.name = name;
-      if (phone !== undefined) user.phone = phone;
+      if (name !== undefined && name.trim()) user.name = name.trim();
+      if (phone !== undefined) user.phone = phone.trim();
 
-      // Update in db
+      // Update in db and dual-write to DynamoDB Splity_Users
       const idx = db.data.users.findIndex((u) => u.id === user.id);
       if (idx !== -1) {
         db.data.users[idx] = user;
-        db.save();
       }
+      await db.saveItem('users', user);
 
       res.json(user);
     } catch (err: any) {

@@ -3,54 +3,57 @@ import { db } from '../db.js';
 import { hashPassword, verifyPassword, signJwt, hashRefreshToken, verifyJwt } from '../crypto.js';
 import { User, Session } from '../../src/types.js';
 
-export async function signupUser(phone: string, email: string, password: string) {
-  const existingEmail = db.data.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+export async function signupUser(phone: string, email: string, password: string, name?: string) {
+  const cleanEmail = email.trim().toLowerCase();
+  const existingEmail = db.data.users.find((u) => u.email.toLowerCase() === cleanEmail);
   if (existingEmail) {
     throw { status: 409, message: 'User with this email already exists' };
   }
 
-  const userId = crypto.randomUUID();
+  const slug = cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const userId = `user-${slug || 'member'}-${Date.now().toString().slice(-4)}`;
   const passwordHash = await hashPassword(password);
 
   const newUser: User = {
     id: userId,
-    email: email.toLowerCase(),
+    email: cleanEmail,
     phone: phone || '',
-    name: '',
-    spendingCeiling: 0,
-    targetSavings: 0,
-    profileSetupCompleted: false,
+    name: (name || cleanEmail.split('@')[0]).trim(),
+    spendingCeiling: 45000,
+    targetSavings: 40000,
+    profileSetupCompleted: true,
     createdAt: new Date().toISOString(),
   };
 
   db.data.users.push(newUser);
   db.data.userPasswords[userId] = passwordHash;
+  await db.saveItem('users', newUser);
 
-  // Initialize 5 general default categories for new user
+  // Initialize 3 default categories for new user
   const defaultCats = [
-    { name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
-    { name: 'Shopping', icon: 'ShoppingBag', color: '#3B82F6' },
-    { name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
-    { name: 'Transport & Fuel', icon: 'Car', color: '#F59E0B' },
-    { name: 'Entertainment', icon: 'Tv', color: '#EC4899' },
+    { id: `cat-food-${userId.slice(-4)}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
+    { id: `cat-shopping-${userId.slice(-4)}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
+    { id: `cat-housing-${userId.slice(-4)}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
   ];
 
-  defaultCats.forEach((c) => {
-    db.data.categories.push({
-      id: crypto.randomUUID(),
+  for (const c of defaultCats) {
+    const newCat = {
+      id: c.id,
       userId,
       name: c.name,
       icon: c.icon,
       color: c.color,
       createdAt: new Date().toISOString(),
-    });
-  });
+    };
+    db.data.categories.push(newCat);
+    await db.saveItem('categories', newCat);
+  }
 
   const accessToken = signJwt({ id: userId, email: newUser.email }, false, 15);
   const refreshToken = signJwt({ id: userId }, true, 30 * 24 * 60);
 
   const session: Session = {
-    id: crypto.randomUUID(),
+    id: `session-${Date.now().toString().slice(-6)}`,
     userId,
     refreshTokenHash: hashRefreshToken(refreshToken),
     expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
@@ -188,48 +191,66 @@ export async function logoutUser(rawRefreshToken?: string) {
 }
 
 export async function loginOrCreateOAuthUser(email: string, displayName?: string, photoURL?: string) {
-  let user = db.data.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+  const cleanEmail = (email || '').trim().toLowerCase();
+  const cleanName = (displayName || '').trim();
+
+  // Purge any accidental legacy buggy records where email === 'google'
+  const buggyIdx = db.data.users.findIndex((u) => u.email === 'google');
+  if (buggyIdx !== -1) {
+    db.data.users.splice(buggyIdx, 1);
+  }
+
+  let user = db.data.users.find((u) => u.email.toLowerCase() === cleanEmail);
 
   if (!user) {
-    const userId = crypto.randomUUID();
+    const slug = cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const userId = `user-${slug || 'google'}-${Date.now().toString().slice(-4)}`;
     user = {
       id: userId,
-      email: email.toLowerCase(),
+      email: cleanEmail,
       phone: '',
-      name: displayName || '',
-      spendingCeiling: 0,
-      targetSavings: 0,
-      profileSetupCompleted: false,
+      name: cleanName || cleanEmail.split('@')[0],
+      spendingCeiling: 45000,
+      targetSavings: 40000,
+      profileSetupCompleted: true,
       createdAt: new Date().toISOString(),
     };
     db.data.users.push(user);
+    await db.saveItem('users', user);
 
-    // Initialize 5 general default categories for new OAuth user
+    // Initialize 3 default categories for new user
     const defaultCats = [
-      { name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
-      { name: 'Shopping', icon: 'ShoppingBag', color: '#3B82F6' },
-      { name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
-      { name: 'Transport & Fuel', icon: 'Car', color: '#F59E0B' },
-      { name: 'Entertainment', icon: 'Tv', color: '#EC4899' },
+      { id: `cat-food-${userId.slice(-4)}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
+      { id: `cat-shopping-${userId.slice(-4)}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
+      { id: `cat-housing-${userId.slice(-4)}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
     ];
 
-    defaultCats.forEach((c) => {
-      db.data.categories.push({
-        id: crypto.randomUUID(),
-        userId,
+    for (const c of defaultCats) {
+      const newCat = {
+        id: c.id,
+        userId: user.id,
         name: c.name,
         icon: c.icon,
         color: c.color,
         createdAt: new Date().toISOString(),
-      });
-    });
+      };
+      db.data.categories.push(newCat);
+      await db.saveItem('categories', newCat);
+    }
+  } else {
+    // If user already exists, update name if previously empty or email was used as name
+    if (cleanName && (!user.name || user.name === 'Google User' || user.name.includes('@'))) {
+      user.name = cleanName;
+    }
+    // Always persist to DynamoDB Splity_Users
+    await db.saveItem('users', user);
   }
 
   const accessToken = signJwt({ id: user.id, email: user.email }, false, 15);
   const refreshToken = signJwt({ id: user.id }, true, 30 * 24 * 60);
 
   const session: Session = {
-    id: crypto.randomUUID(),
+    id: `session-${Date.now().toString().slice(-6)}`,
     userId: user.id,
     refreshTokenHash: hashRefreshToken(refreshToken),
     expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),

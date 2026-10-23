@@ -10,6 +10,21 @@ try {
   accessTokenMemory = null;
 }
 
+const API_BASE: string =
+  (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL)) || '';
+
+function resolveUrl(endpoint: string): string {
+  if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) {
+    return endpoint;
+  }
+  if (!API_BASE) {
+    return endpoint;
+  }
+  const cleanBase = API_BASE.replace(/\/+$/, '');
+  const cleanPath = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  return `${cleanBase}${cleanPath}`;
+}
+
 export function setAccessToken(token: string | null) {
   accessTokenMemory = token;
   try {
@@ -124,7 +139,7 @@ export async function refreshAuthTokens(): Promise<{ accessToken: string; user?:
 
   refreshPromise = (async () => {
     try {
-      const res = await fetch('/api/auth/refresh', {
+      const res = await fetch(resolveUrl('/api/auth/refresh'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken: currentRefreshToken }),
@@ -186,7 +201,9 @@ export async function apiRequest<T = any>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(endpoint, {
+  const targetUrl = resolveUrl(endpoint);
+
+  const response = await fetch(targetUrl, {
     ...options,
     headers,
     credentials: 'include',
@@ -198,7 +215,7 @@ export async function apiRequest<T = any>(
     if (refreshed?.accessToken) {
       headers['Authorization'] = `Bearer ${refreshed.accessToken}`;
 
-      const retryRes = await fetch(endpoint, {
+      const retryRes = await fetch(targetUrl, {
         ...options,
         headers,
         credentials: 'include',

@@ -11,7 +11,7 @@ export async function signupUser(phone: string, email: string, password: string,
   }
 
   const slug = cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const userId = `user-${slug || 'member'}-${Date.now().toString().slice(-4)}`;
+  const userId = cleanEmail;
   const passwordHash = await hashPassword(password);
 
   const newUser: User = {
@@ -31,9 +31,9 @@ export async function signupUser(phone: string, email: string, password: string,
 
   // Initialize 3 default categories for new user
   const defaultCats = [
-    { id: `cat-food-${userId.slice(-4)}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
-    { id: `cat-shopping-${userId.slice(-4)}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
-    { id: `cat-housing-${userId.slice(-4)}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
+    { id: `cat-food-${slug || 'user'}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
+    { id: `cat-shopping-${slug || 'user'}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
+    { id: `cat-housing-${slug || 'user'}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
   ];
 
   for (const c of defaultCats) {
@@ -84,6 +84,9 @@ export async function loginUser(identifier: string, password: string) {
   if (!user) {
     throw { status: 401, message: 'Invalid credentials. Check email or mobile number.' };
   }
+
+  // Ensure user.id is the email
+  user.id = user.email.trim().toLowerCase();
 
   let hash = db.data.userPasswords[user.id] || db.data.userPasswords[user.email];
   if (!hash && (user.id === 'demo@splity.app' || user.id === 'demo-user-123' || user.email === 'demo@splity.app' || user.email === 'anshahlawat.me@gmail.com' || user.email === 'demo@expensebuddy.app')) {
@@ -216,7 +219,7 @@ export async function loginOrCreateOAuthUser(email: string, displayName?: string
 
   if (!user) {
     const slug = cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const userId = `user-${slug || 'google'}-${Date.now().toString().slice(-4)}`;
+    const userId = cleanEmail;
     user = {
       id: userId,
       email: cleanEmail,
@@ -232,9 +235,9 @@ export async function loginOrCreateOAuthUser(email: string, displayName?: string
 
     // Initialize 3 default categories for new user
     const defaultCats = [
-      { id: `cat-food-${userId.slice(-4)}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
-      { id: `cat-shopping-${userId.slice(-4)}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
-      { id: `cat-housing-${userId.slice(-4)}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
+      { id: `cat-food-${slug || 'user'}`, name: 'Food & Dining', icon: 'Utensils', color: '#10B981' },
+      { id: `cat-shopping-${slug || 'user'}`, name: 'Shopping & Lifestyle', icon: 'ShoppingBag', color: '#3B82F6' },
+      { id: `cat-housing-${slug || 'user'}`, name: 'Housing & Rent', icon: 'Home', color: '#8B5CF6' },
     ];
 
     for (const c of defaultCats) {
@@ -250,7 +253,8 @@ export async function loginOrCreateOAuthUser(email: string, displayName?: string
       await db.saveItem('categories', newCat);
     }
   } else {
-    // If user already exists, update name if previously empty or email was used as name
+    // If user already exists, ensure id is cleanEmail
+    user.id = cleanEmail;
     if (cleanName && (!user.name || user.name === 'Google User' || user.name.includes('@'))) {
       user.name = cleanName;
     }

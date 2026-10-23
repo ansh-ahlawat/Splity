@@ -169,6 +169,7 @@ const DEDICATED_TABLES: Record<string, string> = {
   friendGroups: 'Splity_FriendGroups',
   monthlyBudgets: 'Splity_Budgets',
   categoryBudgets: 'Splity_Budgets',
+  notifications: 'Splity_Notifications',
   users: 'Splity_Users',
 };
 
@@ -186,8 +187,19 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
       ? String(item.email).trim().toLowerCase()
       : item.id || item.userId || item.email || String(Date.now());
 
+  // Resolve user email to ensure primary key (userId) in dedicated tables is always the email
+  let resolvedUserId = item.userId;
+  if (!resolvedUserId || resolvedUserId === 'demo-user-123') {
+    resolvedUserId = 'demo@splity.app';
+  } else if (resolvedUserId === 'user-anshahlawat-me-9051') {
+    resolvedUserId = 'anshahlawat.me@gmail.com';
+  } else if (item.email && (!resolvedUserId || !resolvedUserId.includes('@'))) {
+    resolvedUserId = String(item.email).trim().toLowerCase();
+  }
+
   const ddbItem = {
     ...item,
+    ...(resolvedUserId ? { userId: resolvedUserId } : {}),
     pk: collection,
     sk: String(id),
     updatedAt: new Date().toISOString(),
@@ -195,7 +207,7 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
 
   let success = false;
 
-  // 1. Write to monolithic splity_records
+  // 1. Write to monolithic splity_records (pk is collection/category name, sk is id)
   try {
     await ddbDocClient.send(
       new PutCommand({
@@ -218,7 +230,7 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
       if (dedicatedTable === 'Splity_Users') {
         dedicatedItem.id = item.email ? String(item.email).trim().toLowerCase() : String(id);
       } else {
-        dedicatedItem.userId = item.userId || 'demo-user-123';
+        dedicatedItem.userId = resolvedUserId || item.userId || 'demo@splity.app';
         dedicatedItem.id = String(id);
       }
       await ddbDocClient.send(
@@ -239,11 +251,18 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
 /**
  * Delete an item from DynamoDB (both dedicated Splity_* table and splity_records)
  */
-export async function deleteDynamoItem(collection: string, id: string, userId = 'demo-user-123'): Promise<boolean> {
+export async function deleteDynamoItem(collection: string, id: string, userId = 'demo@splity.app'): Promise<boolean> {
   if (!ddbDocClient) {
     initAwsClients();
   }
   if (!ddbDocClient) return false;
+
+  let resolvedUserId = userId;
+  if (!resolvedUserId || resolvedUserId === 'demo-user-123') {
+    resolvedUserId = 'demo@splity.app';
+  } else if (resolvedUserId === 'user-anshahlawat-me-9051') {
+    resolvedUserId = 'anshahlawat.me@gmail.com';
+  }
 
   let success = false;
 
@@ -269,7 +288,7 @@ export async function deleteDynamoItem(collection: string, id: string, userId = 
   if (dedicatedTable) {
     try {
       const key: Record<string, any> =
-        dedicatedTable === 'Splity_Users' ? { id: String(id) } : { userId, id: String(id) };
+        dedicatedTable === 'Splity_Users' ? { id: String(id) } : { userId: resolvedUserId, id: String(id) };
       await ddbDocClient.send(
         new DeleteCommand({
           TableName: dedicatedTable,

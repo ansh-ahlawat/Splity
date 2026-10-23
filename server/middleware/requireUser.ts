@@ -27,6 +27,8 @@ export function requireUser(req: AuthRequest, res: Response, next: NextFunction)
     return res.status(401).json({ error: 'Unauthorized: Invalid or expired access token' });
   }
 
-  req.user = { id: payload.id, email: payload.email };
+  const email = (payload.email || (payload.id && payload.id.includes('@') ? payload.id : '')).trim().toLowerCase();
+  const id = email || payload.id;
+  req.user = { id, email: email || payload.email };
   next();
 }

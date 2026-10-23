@@ -499,6 +499,11 @@ function saveLocalFileOnly() {
 }
 
 async function saveItem(collection: keyof DbSchema, item: any) {
+  if (item && item.userId) {
+    if (item.userId === 'user-anshahlawat-me-9051') item.userId = 'anshahlawat.me@gmail.com';
+    else if (item.userId === 'demo-user-123') item.userId = 'demo@splity.app';
+  }
+
   const list = (dbData as any)[collection];
   if (Array.isArray(list)) {
     const idx = list.findIndex((x: any) => x.id === item.id);
@@ -518,7 +523,11 @@ async function saveItem(collection: keyof DbSchema, item: any) {
   }
 }
 
-async function deleteItem(collection: keyof DbSchema, id: string, userId = 'demo-user-123') {
+async function deleteItem(collection: keyof DbSchema, id: string, userId = 'demo@splity.app') {
+  let resolvedUserId = userId;
+  if (resolvedUserId === 'user-anshahlawat-me-9051') resolvedUserId = 'anshahlawat.me@gmail.com';
+  else if (resolvedUserId === 'demo-user-123' || !resolvedUserId) resolvedUserId = 'demo@splity.app';
+
   const list = (dbData as any)[collection];
   if (Array.isArray(list)) {
     const idx = list.findIndex((x: any) => x.id === id);
@@ -530,7 +539,7 @@ async function deleteItem(collection: keyof DbSchema, id: string, userId = 'demo
 
   // Delete directly from DynamoDB so all serverless instances immediately see it
   try {
-    await deleteDynamoItem(String(collection), id, userId);
+    await deleteDynamoItem(String(collection), id, resolvedUserId);
   } catch (err: any) {
     console.warn(`[AWS DynamoDB] Failed to delete ${String(collection)} from DynamoDB:`, err.message);
   }

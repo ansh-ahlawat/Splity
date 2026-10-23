@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "demo-user-123",
+      "id": "demo@splity.app",
       "email": "demo@expensebuddy.app",
       "phone": "+91 00000 00000",
       "name": "Ansh Ahlawat",
@@ -12,7 +12,7 @@
     }
   ],
   "userPasswords": {
-    "demo-user-123": "scrypt:808080:e7b00366a5c2b620a23bc38703a893ef:994488a07fffc568a9e69b55bfdc422dfa4d033a37d3ef02e1a5e35752cb6d6da4023ed5f417a6f126d53f2c2c3e0518f605165888972f32e7c6436387e397d3",
+    "demo@splity.app": "scrypt:808080:e7b00366a5c2b620a23bc38703a893ef:994488a07fffc568a9e69b55bfdc422dfa4d033a37d3ef02e1a5e35752cb6d6da4023ed5f417a6f126d53f2c2c3e0518f605165888972f32e7c6436387e397d3",
     "a36efd81-1720-412a-b105-c431eb9ab0cb": "scrypt:808080:00e6bc52eb3f2a33bcc6375f1c7b6faa:140be2c5ff668a087ab165ba85326c9d66a5b7de721540d425bfe81d8760ec71ce41c1871c375f2b61d1453f8501bd788e8f750bc9dabec58f8645b607d16ce8",
     "339a8f7a-ff8f-424b-8e07-9b9ced5752cd": "scrypt:808080:551c8a0ef7e54b98afa6f02563d94475:0afca0548d2aec0045de3ff6a423341a4d127624238ba91549b675092ff5e1dd865a77d2157678ad332ea4571b5060e543924ad23d108a47b27e8952abd3a9fd",
     "df6ce9e1-e40b-42dd-8460-fbd0f204b93e": "scrypt:808080:0f769f046d180d20ec71c731721ff6cc:6a8d05bd352b7305775fa6c98d69fc7fc030ec42766e2b0a22a8b959753e00942737fc7ec2a238f8f7f57788af7c2faed341a5f6af8d20db32856463655d7193",
@@ -60,7 +60,7 @@
     },
     {
       "id": "583b86fe-f456-4b34-944b-0f2afacfda55",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "refreshTokenHash": "52e1c84765eb5ad9de606d172e58d62ed69cef5281e1b5b998c8db2f4ce7de7a",
       "expiresAt": "2026-11-22T11:21:03.403Z",
       "createdAt": "2026-10-23T11:21:03.403Z"
@@ -74,7 +74,7 @@
     },
     {
       "id": "ef6b3244-4c48-4b66-b6fe-9c36574b554c",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "refreshTokenHash": "f7c2506a14885db8f82abba1743bc61e9aa15bcde1dc5b97babebaa2b17eac0c",
       "expiresAt": "2026-11-22T11:21:28.537Z",
       "createdAt": "2026-10-23T11:21:28.537Z",
@@ -89,7 +89,7 @@
     },
     {
       "id": "cd9efafb-ea11-45fb-819e-6155cc36ae0f",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "refreshTokenHash": "bca0c3125cc1d24b1f214dc4487807743710c16ad54addd09710aba65616c775",
       "expiresAt": "2026-11-22T11:22:21.164Z",
       "createdAt": "2026-10-23T11:22:21.164Z",
@@ -104,7 +104,7 @@
     },
     {
       "id": "e3ebb0f8-fc47-4083-a6b9-abfe55c2bbee",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "refreshTokenHash": "def2b4ac98b558d024cd7f15c8e6cbe040a0185035fb9bde888d1ecc979c51a1",
       "expiresAt": "2026-11-22T11:29:34.110Z",
       "createdAt": "2026-10-23T11:29:34.110Z",
@@ -114,7 +114,7 @@
   "categories": [
     {
       "id": "cat-housing-rent",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Housing & Rent",
       "icon": "Home",
       "color": "#8B5CF6",
@@ -122,7 +122,7 @@
     },
     {
       "id": "cat-food-dining",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Food & Dining",
       "icon": "Utensils",
       "color": "#10B981",
@@ -130,7 +130,7 @@
     },
     {
       "id": "cat-shopping-lifestyle",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Shopping & Lifestyle",
       "icon": "ShoppingBag",
       "color": "#3B82F6",
@@ -140,7 +140,7 @@
   "transactions": [
     {
       "id": "txn-salary-deposit-oct",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": null,
       "categoryName": "Salary / Income",
       "type": "INCOME",
@@ -153,7 +153,7 @@
     },
     {
       "id": "txn-apartment-rent-oct",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-housing-rent",
       "categoryName": "Housing & Rent",
       "type": "EXPENSE",
@@ -166,7 +166,7 @@
     },
     {
       "id": "txn-groceries-supermarket",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-food-dining",
       "categoryName": "Food & Dining",
       "type": "EXPENSE",
@@ -179,7 +179,7 @@
     },
     {
       "id": "txn-coffee-roasters",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-food-dining",
       "categoryName": "Food & Dining",
       "type": "EXPENSE",
@@ -192,7 +192,7 @@
     },
     {
       "id": "txn-work-desk-accessories",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-shopping-lifestyle",
       "categoryName": "Shopping & Lifestyle",
       "type": "EXPENSE",
@@ -207,7 +207,7 @@
   "categoryBudgets": [
     {
       "id": "cbudget-housing-rent-2026-10",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-housing-rent",
       "month": "2026-10",
       "limitAmount": 15000,
@@ -215,7 +215,7 @@
     },
     {
       "id": "cbudget-food-dining-2026-10",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-food-dining",
       "month": "2026-10",
       "limitAmount": 14000,
@@ -223,7 +223,7 @@
     },
     {
       "id": "cbudget-shopping-lifestyle-2026-10",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "categoryId": "cat-shopping-lifestyle",
       "month": "2026-10",
       "limitAmount": 8000,
@@ -233,7 +233,7 @@
   "monthlyBudgets": [
     {
       "id": "mbudget-demo-2026-10",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "month": "2026-10",
       "limitAmount": 45000,
       "createdAt": "2026-10-01T00:00:00.000Z"
@@ -244,7 +244,7 @@
   "notifications": [
     {
       "id": "notif-welcome-demo",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "type": "SYSTEM",
       "message": "Welcome to Splity! Your 3 categories, 5 transactions, and 3 friend balances are ready.",
       "read": false,
@@ -254,7 +254,7 @@
   "reportJobs": [
     {
       "id": "4617d9c3-9924-4406-9a1c-2a295d3bd456",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "month": "2026-09",
       "status": "DONE",
       "createdAt": "2026-10-23T11:03:33.030Z",
@@ -350,7 +350,7 @@
     },
     {
       "id": "24e6f6bc-949e-4ae5-a4c5-d416fca56d5f",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "month": "2026-10",
       "status": "DONE",
       "createdAt": "2026-10-23T11:03:33.032Z",
@@ -589,21 +589,21 @@
   "friends": [
     {
       "id": "friend-rohan-sharma",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Rohan Sharma",
       "phone": "+91 98765 11111",
       "createdAt": "2026-10-01T00:00:00.000Z"
     },
     {
       "id": "friend-priya-patel",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Priya Patel",
       "phone": "+91 98765 22222",
       "createdAt": "2026-10-01T00:00:00.000Z"
     },
     {
       "id": "friend-aman-verma",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Aman Verma",
       "phone": "+91 98765 33333",
       "createdAt": "2026-10-01T00:00:00.000Z"
@@ -612,7 +612,7 @@
   "friendGroups": [
     {
       "id": "group-goa-trip",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Goa Weekend Trip",
       "description": "Shared beach villa rental, seafood dinners & car fuel",
       "members": [
@@ -624,7 +624,7 @@
     },
     {
       "id": "group-roommates-flat",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "name": "Roommates & Flat 402",
       "description": "Monthly flat groceries, broadband internet & utility splits",
       "members": [
@@ -637,7 +637,7 @@
   "friendDebts": [
     {
       "id": "debt-goa-villa-dinner",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "friendName": "Rohan Sharma",
       "groupId": "group-goa-trip",
       "groupName": "Goa Weekend Trip",
@@ -650,7 +650,7 @@
     },
     {
       "id": "debt-concert-pass-booking",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "friendName": "Priya Patel",
       "groupId": null,
       "groupName": null,
@@ -663,7 +663,7 @@
     },
     {
       "id": "debt-flat-wifi-groceries",
-      "userId": "demo-user-123",
+      "userId": "demo@splity.app",
       "friendName": "Aman Verma",
       "groupId": "group-roommates-flat",
       "groupName": "Roommates & Flat 402",

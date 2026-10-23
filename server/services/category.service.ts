@@ -30,7 +30,7 @@ export async function createCategory(
   };
 
   db.data.categories.push(category);
-  db.saveItem('categories', category);
+  await db.saveItem('categories', category);
   return category;
 }
 
@@ -57,7 +57,7 @@ export async function updateCategory(
   if (updates.icon !== undefined) category.icon = updates.icon;
   if (updates.color !== undefined) category.color = updates.color;
 
-  db.saveItem('categories', category);
+  await db.saveItem('categories', category);
   return category;
 }
 
@@ -68,7 +68,7 @@ export async function deleteCategory(userId: string, categoryId: string): Promis
   }
 
   db.data.categories.splice(idx, 1);
-  db.deleteItem('categories', categoryId);
+  await db.deleteItem('categories', categoryId);
 
   // Set onDelete: SetNull for transactions
   db.data.transactions.forEach((tx) => {

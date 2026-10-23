@@ -83,6 +83,14 @@ export function createApp() {
     next();
   });
 
+  // Synchronize distributed serverless instances with DynamoDB
+  app.use(async (req: any, res: any, next: any) => {
+    if (req.path.startsWith('/api') && req.path !== '/api/health') {
+      await db.syncFromDynamo();
+    }
+    next();
+  });
+
   // Production Security Headers
   app.use(
     helmet({
@@ -557,8 +565,8 @@ export function createApp() {
 
   app.post('/api/reports/monthly', requireUser, async (req: AuthRequest, res) => {
     try {
-      const { month } = req.body;
-      const job = await createMonthlyReport(req.user!.id, month);
+      const month = req.body?.month || req.query?.month || new Date().toISOString().substring(0, 7);
+      const job = await createMonthlyReport(req.user!.id, String(month));
       res.json(job);
     } catch (err: any) {
       res.status(err.status || 500).json({ error: err.message || 'Failed to create monthly report' });

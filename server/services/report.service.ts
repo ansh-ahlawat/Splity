@@ -29,12 +29,11 @@ export async function createMonthlyReport(userId: string, requestedMonth?: strin
   } else {
     db.data.reportJobs.push(reportJob);
   }
-  db.saveItem('reportJobs', reportJob);
+  await db.saveItem('reportJobs', reportJob);
 
-  // Run async processing
-  processReportJob(userId, jobId, month).catch((err) => console.error('Report generation error:', err));
-
-  return reportJob;
+  // Directly await report processing so Lambda does NOT freeze the async promise
+  const completedReport = await processReportJob(userId, jobId, month);
+  return completedReport || reportJob;
 }
 
 export async function processReportJob(userId: string, jobId: string, month: string): Promise<MonthlyReportJob | undefined> {
@@ -61,7 +60,16 @@ Please provide an advanced-level yet crystal-clear Executive Financial Analysis 
 3. 2 Practical Strategic Steps to optimize cash reserves next month.
 `;
 
-    let narrative = await generateNarrativeText(factPrompt);
+    let narrative = '';
+    try {
+      const narrativePromise = generateNarrativeText(factPrompt);
+      const timeoutPromise = new Promise<string>((_, reject) =>
+        setTimeout(() => reject(new Error('AI narrative timeout')), 3500)
+      );
+      narrative = await Promise.race([narrativePromise, timeoutPromise]);
+    } catch {
+      narrative = '';
+    }
 
     // Advanced, crystal-clear fallback if AI returns generic message
     if (!narrative || narrative.includes('unavailable') || narrative.length < 50) {

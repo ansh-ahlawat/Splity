@@ -69,7 +69,7 @@ export async function createFriend(userId: string, name: string, phone?: string)
     createdAt: new Date().toISOString(),
   };
   db.data.friends.push(friend);
-  db.saveItem('friends', friend);
+  await db.saveItem('friends', friend);
 
   createNotification(userId, {
     type: 'FRIEND_ADDED',
@@ -102,7 +102,7 @@ export async function deleteFriend(userId: string, friendId: string): Promise<Fr
     return { id: friendId, userId, name: 'Friend', createdAt: new Date().toISOString() };
   }
   const [removed] = db.data.friends.splice(idx, 1);
-  db.deleteItem('friends', friendId);
+  await db.deleteItem('friends', friendId);
 
   createNotification(userId, {
     type: 'FRIEND_DELETED',
@@ -131,7 +131,7 @@ export async function createFriendGroup(userId: string, name: string, members: s
     createdAt: new Date().toISOString(),
   };
   db.data.friendGroups.push(group);
-  db.saveItem('friendGroups', group);
+  await db.saveItem('friendGroups', group);
   return group;
 }
 
@@ -237,7 +237,7 @@ export async function createFriendDebt(
   };
 
   db.data.friendDebts.push(debt);
-  db.saveItem('friendDebts', debt);
+  await db.saveItem('friendDebts', debt);
 
   if (debt.type === 'YOU_OWE') {
     createNotification(userId, {
@@ -292,7 +292,7 @@ export async function settleFriendDebt(userId: string, debtId: string): Promise<
   if (!debt) throw { status: 404, message: 'Debt record not found' };
 
   debt.settled = true;
-  db.saveItem('friendDebts', debt);
+  await db.saveItem('friendDebts', debt);
 
   createNotification(userId, {
     type: 'EXPENSE_SETTLED',

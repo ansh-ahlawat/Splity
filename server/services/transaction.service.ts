@@ -86,7 +86,7 @@ export async function createTransaction(
   };
 
   db.data.transactions.push(transaction);
-  db.saveItem('transactions', transaction);
+  await db.saveItem('transactions', transaction);
 
   // Create notification for expense
   if (data.type === 'EXPENSE') {
@@ -132,7 +132,7 @@ export async function updateTransaction(
     }
   }
 
-  db.saveItem('transactions', tx);
+  await db.saveItem('transactions', tx);
 
   if (tx.type === 'EXPENSE' && tx.categoryId) {
     const month = tx.date.substring(0, 7);
@@ -149,7 +149,7 @@ export async function deleteTransaction(userId: string, id: string): Promise<voi
   }
 
   const [deletedTx] = db.data.transactions.splice(idx, 1);
-  db.deleteItem('transactions', id);
+  await db.deleteItem('transactions', id);
 
   if (deletedTx.type === 'EXPENSE') {
     createNotification(userId, {

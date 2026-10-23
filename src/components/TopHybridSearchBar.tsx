@@ -508,7 +508,7 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
             style={{ boxShadow: 'none' }}
           >
             {/* Sphere Ball Rolling Video Emblem - outer circle removed, shifted between current and previous */}
-            <div className="w-7 h-7 sm:w-[28px] sm:h-[28px] ml-0.5 sm:ml-0.5 rounded-full overflow-hidden shrink-0 flex items-center justify-center select-none">
+            <div className="w-7 h-7 sm:w-[28px] sm:h-[28px] ml-0.5 sm:ml-0.5 rounded-full overflow-hidden shrink-0 flex items-center justify-center select-none bg-gradient-to-tr from-[#166534] via-emerald-500 to-teal-400 shadow-xs">
               <video
                 ref={videoRef}
                 src="/rolling-ball.mp4"
@@ -517,6 +517,9 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
                 muted
                 playsInline
                 className="w-full h-full object-cover pointer-events-none rounded-full scale-105"
+                onCanPlay={(e) => {
+                  try { e.currentTarget.play(); } catch (_) {}
+                }}
               />
             </div>
 

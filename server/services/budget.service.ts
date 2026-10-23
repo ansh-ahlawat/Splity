@@ -53,7 +53,7 @@ export async function upsertCategoryBudget(
     db.data.categoryBudgets.push(budget);
   }
 
-  db.saveItem('categoryBudgets', budget);
+  await db.saveItem('categoryBudgets', budget);
 
   // Re-check threshold warnings
   await checkBudgetWarning(userId, categoryId, month);
@@ -91,7 +91,7 @@ export async function upsertMonthlyBudget(userId: string, month: string, limitAm
     db.data.monthlyBudgets.push(budget);
   }
 
-  db.saveItem('monthlyBudgets', budget);
+  await db.saveItem('monthlyBudgets', budget);
   return budget;
 }
 

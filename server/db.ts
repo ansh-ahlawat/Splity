@@ -60,7 +60,7 @@ export interface FriendDebt {
   createdAt: string;
 }
 
-interface DbSchema {
+export interface DbSchema {
   users: User[];
   userPasswords: Record<string, string>;
   sessions: Session[];
@@ -103,18 +103,34 @@ const DEMO_USER: User = {
   spendingCeiling: 45000,
   targetSavings: 40000,
   profileSetupCompleted: true,
-  createdAt: new Date().toISOString(),
+  createdAt: '2026-10-01T00:00:00.000Z',
 };
 
 export function ensureDemoData() {
-  const hasDemo = dbData.users.some((u) => u.id === DEMO_USER_ID);
-  if (!hasDemo) {
-    dbData.users.unshift(DEMO_USER);
+  if (!dbData.users) dbData.users = [];
+  if (!dbData.categories) dbData.categories = [];
+  if (!dbData.friends) dbData.friends = [];
+  if (!dbData.friendGroups) dbData.friendGroups = [];
+  if (!dbData.friendDebts) dbData.friendDebts = [];
+  if (!dbData.transactions) dbData.transactions = [];
+  if (!dbData.monthlyBudgets) dbData.monthlyBudgets = [];
+  if (!dbData.categoryBudgets) dbData.categoryBudgets = [];
+  if (!dbData.notifications) dbData.notifications = [];
+  if (!dbData.userPasswords) dbData.userPasswords = {};
+
+  // 1. Demo User
+  const userIdx = dbData.users.findIndex((u) => u.id === DEMO_USER_ID);
+  if (userIdx >= 0) {
+    dbData.users[userIdx] = { ...DEMO_USER, ...dbData.users[userIdx] };
+  } else {
+    dbData.users.push(DEMO_USER);
   }
+
+  // Password123!
   dbData.userPasswords[DEMO_USER_ID] =
     'scrypt:808080:e7b00366a5c2b620a23bc38703a893ef:994488a07fffc568a9e69b55bfdc422dfa4d033a37d3ef02e1a5e35752cb6d6da4023ed5f417a6f126d53f2c2c3e0518f605165888972f32e7c6436387e397d3';
 
-  // 1. Exactly 3 Categories with proper semantic IDs
+  // 2. Exactly 3 Categories with Semantic IDs
   const demoCategories: Category[] = [
     {
       id: 'cat-housing-rent',
@@ -142,7 +158,7 @@ export function ensureDemoData() {
     },
   ];
 
-  // 2. Exactly 3 Friends with proper semantic IDs
+  // 3. Exactly 3 Friends with Semantic IDs
   const demoFriends: Friend[] = [
     {
       id: 'friend-rohan-sharma',
@@ -167,32 +183,33 @@ export function ensureDemoData() {
     },
   ];
 
-  // 3. Exactly 2 Groups with proper semantic IDs and descriptions
+  // 4. Exactly 2 Friend Groups with Semantic IDs
   const demoGroups: FriendGroup[] = [
     {
       id: 'group-goa-trip',
       userId: DEMO_USER_ID,
       name: 'Goa Weekend Trip',
-      description: 'Shared beach villa rental, seafood dinners & car fuel',
-      members: ['Rohan Sharma', 'Priya Patel', 'Aman Verma'],
+      description: 'Goa villa stay, dining, and beach scooty expenses',
+      members: [DEMO_USER_ID, 'friend-rohan-sharma', 'friend-priya-patel'],
       createdAt: '2026-10-01T00:00:00.000Z',
     },
     {
       id: 'group-roommates-flat',
       userId: DEMO_USER_ID,
       name: 'Roommates & Flat 402',
-      description: 'Monthly flat groceries, broadband internet & utility splits',
-      members: ['Rohan Sharma', 'Aman Verma'],
+      description: 'Shared flat rent, high-speed WiFi, maid, and monthly groceries',
+      members: [DEMO_USER_ID, 'friend-aman-verma'],
       createdAt: '2026-10-01T00:00:00.000Z',
     },
   ];
 
-  // 4. Exactly 3 Debts (1 owe & 2 owed) with proper semantic IDs and descriptions
+  // 5. Exactly 3 Debts (1 owe, 2 owed)
   const demoDebts: FriendDebt[] = [
     {
       id: 'debt-goa-villa-dinner',
       userId: DEMO_USER_ID,
       friendName: 'Rohan Sharma',
+      friendPhone: '+91 98765 11111',
       groupId: 'group-goa-trip',
       groupName: 'Goa Weekend Trip',
       amount: 1450,
@@ -200,12 +217,13 @@ export function ensureDemoData() {
       description: 'Seafood dinner & drinks bill split at Fisherman Wharf',
       settled: false,
       date: '2026-10-18',
-      createdAt: '2026-10-18T21:00:00.000Z',
+      createdAt: '2026-10-18T00:00:00.000Z',
     },
     {
       id: 'debt-concert-pass-booking',
       userId: DEMO_USER_ID,
       friendName: 'Priya Patel',
+      friendPhone: '+91 98765 22222',
       groupId: null,
       groupName: null,
       amount: 3200,
@@ -213,12 +231,13 @@ export function ensureDemoData() {
       description: 'Advance booking for live music concert passes',
       settled: false,
       date: '2026-10-19',
-      createdAt: '2026-10-19T14:30:00.000Z',
+      createdAt: '2026-10-19T00:00:00.000Z',
     },
     {
       id: 'debt-flat-wifi-groceries',
       userId: DEMO_USER_ID,
       friendName: 'Aman Verma',
+      friendPhone: '+91 98765 33333',
       groupId: 'group-roommates-flat',
       groupName: 'Roommates & Flat 402',
       amount: 1850,
@@ -226,11 +245,11 @@ export function ensureDemoData() {
       description: 'Airtel Xstream fiber WiFi & pantry staples monthly split',
       settled: false,
       date: '2026-10-20',
-      createdAt: '2026-10-20T16:00:00.000Z',
+      createdAt: '2026-10-20T00:00:00.000Z',
     },
   ];
 
-  // 5. Exactly 5 Transactions with proper semantic IDs and descriptions
+  // 6. Exactly 5 Transactions with Semantic IDs
   const demoTransactions: Transaction[] = [
     {
       id: 'txn-salary-deposit-oct',
@@ -299,7 +318,7 @@ export function ensureDemoData() {
     },
   ];
 
-  // 6. Budgets for the 3 categories
+  // 7. Budgets for the 3 Categories
   const demoMonthlyBudgets: MonthlyBudget[] = [
     {
       id: 'mbudget-demo-2026-10',
@@ -348,45 +367,30 @@ export function ensureDemoData() {
     },
   ];
 
-  dbData.categories = [
-    ...dbData.categories.filter((c) => c.userId !== DEMO_USER_ID),
-    ...demoCategories,
-  ];
-
-  dbData.friends = [
-    ...dbData.friends.filter((f) => f.userId !== DEMO_USER_ID),
-    ...demoFriends,
-  ];
-
-  dbData.friendGroups = [
-    ...dbData.friendGroups.filter((g) => g.userId !== DEMO_USER_ID),
-    ...demoGroups,
-  ];
-
-  dbData.friendDebts = [
-    ...dbData.friendDebts.filter((d) => d.userId !== DEMO_USER_ID),
-    ...demoDebts,
-  ];
-
-  dbData.transactions = [
-    ...dbData.transactions.filter((t) => t.userId !== DEMO_USER_ID),
-    ...demoTransactions,
-  ];
-
-  dbData.monthlyBudgets = [
-    ...dbData.monthlyBudgets.filter((b) => b.userId !== DEMO_USER_ID),
-    ...demoMonthlyBudgets,
-  ];
-
-  dbData.categoryBudgets = [
-    ...dbData.categoryBudgets.filter((cb) => cb.userId !== DEMO_USER_ID),
-    ...demoCategoryBudgets,
-  ];
-
-  dbData.notifications = [
-    ...dbData.notifications.filter((n) => n.userId !== DEMO_USER_ID),
-    ...demoNotifications,
-  ];
+  if (dbData.categories.filter((c) => c.userId === DEMO_USER_ID).length === 0) {
+    dbData.categories.push(...demoCategories);
+  }
+  if (dbData.friends.filter((f) => f.userId === DEMO_USER_ID).length === 0) {
+    dbData.friends.push(...demoFriends);
+  }
+  if (dbData.friendGroups.filter((g) => g.userId === DEMO_USER_ID).length === 0) {
+    dbData.friendGroups.push(...demoGroups);
+  }
+  if (dbData.friendDebts.filter((d) => d.userId === DEMO_USER_ID).length === 0) {
+    dbData.friendDebts.push(...demoDebts);
+  }
+  if (dbData.transactions.filter((t) => t.userId === DEMO_USER_ID).length === 0) {
+    dbData.transactions.push(...demoTransactions);
+  }
+  if (dbData.monthlyBudgets.filter((b) => b.userId === DEMO_USER_ID).length === 0) {
+    dbData.monthlyBudgets.push(...demoMonthlyBudgets);
+  }
+  if (dbData.categoryBudgets.filter((cb) => cb.userId === DEMO_USER_ID).length === 0) {
+    dbData.categoryBudgets.push(...demoCategoryBudgets);
+  }
+  if (dbData.notifications.filter((n) => n.userId === DEMO_USER_ID).length === 0) {
+    dbData.notifications.push(...demoNotifications);
+  }
 }
 
 export function initSeedData() {
@@ -413,6 +417,46 @@ export function initSeedData() {
   ensureDemoData();
 }
 
+let lastDynamoSync = 0;
+const SYNC_COOLDOWN_MS = 1500; // 1.5 seconds cooldown between full scans
+
+export async function syncFromDynamo(force = false) {
+  const now = Date.now();
+  if (!force && now - lastDynamoSync < SYNC_COOLDOWN_MS) {
+    return;
+  }
+
+  try {
+    const remoteData = await loadAllFromDynamoDb();
+    if (remoteData && Object.keys(remoteData).length > 0) {
+      const collections: (keyof DbSchema)[] = [
+        'users',
+        'categories',
+        'transactions',
+        'categoryBudgets',
+        'monthlyBudgets',
+        'friends',
+        'friendGroups',
+        'friendDebts',
+        'notifications',
+        'reportJobs',
+      ];
+
+      for (const coll of collections) {
+        if (Array.isArray(remoteData[coll]) && remoteData[coll].length > 0) {
+          (dbData as any)[coll] = remoteData[coll];
+        }
+      }
+
+      ensureDemoData();
+      lastDynamoSync = now;
+      saveLocalFileOnly();
+    }
+  } catch (err: any) {
+    console.warn('[AWS DynamoDB] syncFromDynamo notice:', err.message);
+  }
+}
+
 async function loadDb() {
   try {
     if (fs.existsSync(DB_FILE)) {
@@ -421,79 +465,72 @@ async function loadDb() {
       if (parsed && Array.isArray(parsed.users) && parsed.users.length > 0) {
         dbData = parsed;
         ensureDemoData();
-        saveDb();
+        saveLocalFileOnly();
       } else {
         initSeedData();
-        saveDb();
+        saveLocalFileOnly();
       }
     } else if (fs.existsSync(EXAMPLE_DB_FILE)) {
       const content = fs.readFileSync(EXAMPLE_DB_FILE, 'utf-8');
       dbData = JSON.parse(content);
       ensureDemoData();
-      saveDb();
+      saveLocalFileOnly();
     } else {
       initSeedData();
-      saveDb();
+      saveLocalFileOnly();
     }
   } catch (err) {
-    console.error('Failed to load local database, initializing fresh seed', err);
     initSeedData();
-    saveDb();
+    saveLocalFileOnly();
   }
 
-  // Attempt to sync from DynamoDB in the background
-  try {
-    const tableReady = await ensureDynamoTable();
-    if (tableReady) {
-      const remoteData = await loadAllFromDynamoDb();
-      if (remoteData && Object.keys(remoteData).length > 0) {
-        // Merge remote items from DynamoDB if present
-        let mergedCount = 0;
-        for (const [key, items] of Object.entries(remoteData)) {
-          if (Array.isArray(items) && items.length > 0 && Array.isArray((dbData as any)[key])) {
-            const localArr: any[] = (dbData as any)[key];
-            for (const item of items) {
-              const existingIndex = localArr.findIndex((x) => x.id === item.id);
-              if (existingIndex >= 0) {
-                localArr[existingIndex] = item;
-              } else {
-                localArr.push(item);
-              }
-              mergedCount++;
-            }
-          }
-        }
-        if (mergedCount > 0) {
-          console.log(`[AWS DynamoDB] Merged ${mergedCount} items from DynamoDB into local memory.`);
-          saveLocalFileOnly();
-        }
-      }
-    }
-  } catch (e: any) {
-    console.warn('[AWS DynamoDB] Startup sync notice:', e.message);
-  }
+  // Attempt to sync from DynamoDB
+  await syncFromDynamo(true);
 }
 
 function saveLocalFileOnly() {
   try {
     fs.writeFileSync(DB_FILE, JSON.stringify(dbData, null, 2), 'utf-8');
   } catch (err) {
-    console.error('Failed to save local database file', err);
+    // In read-only lambda environments, ignoring local file write failure is safe
   }
 }
 
-function saveDb(options?: { syncCollection?: keyof DbSchema; syncItem?: any; deleteItem?: { collection: keyof DbSchema; id: string } }) {
+async function saveItem(collection: keyof DbSchema, item: any) {
+  const list = (dbData as any)[collection];
+  if (Array.isArray(list)) {
+    const idx = list.findIndex((x: any) => x.id === item.id);
+    if (idx >= 0) {
+      list[idx] = item;
+    } else {
+      list.push(item);
+    }
+  }
   saveLocalFileOnly();
 
-  // Async sync to DynamoDB
-  if (options?.syncCollection && options?.syncItem) {
-    putDynamoItem(String(options.syncCollection), options.syncItem).catch((err) => {
-      console.warn(`[AWS DynamoDB] Failed to sync ${String(options.syncCollection)} item to DynamoDB:`, err.message);
-    });
-  } else if (options?.deleteItem) {
-    deleteDynamoItem(String(options.deleteItem.collection), options.deleteItem.id).catch((err) => {
-      console.warn(`[AWS DynamoDB] Failed to delete ${String(options.deleteItem.collection)} item from DynamoDB:`, err.message);
-    });
+  // Persist directly to DynamoDB so all serverless instances immediately see it
+  try {
+    await putDynamoItem(String(collection), item);
+  } catch (err: any) {
+    console.warn(`[AWS DynamoDB] Failed to sync ${String(collection)} to DynamoDB:`, err.message);
+  }
+}
+
+async function deleteItem(collection: keyof DbSchema, id: string) {
+  const list = (dbData as any)[collection];
+  if (Array.isArray(list)) {
+    const idx = list.findIndex((x: any) => x.id === id);
+    if (idx >= 0) {
+      list.splice(idx, 1);
+    }
+  }
+  saveLocalFileOnly();
+
+  // Delete directly from DynamoDB so all serverless instances immediately see it
+  try {
+    await deleteDynamoItem(String(collection), id);
+  } catch (err: any) {
+    console.warn(`[AWS DynamoDB] Failed to delete ${String(collection)} from DynamoDB:`, err.message);
   }
 }
 
@@ -524,21 +561,18 @@ async function syncAllToDynamo(): Promise<{ success: boolean; totalSynced: numbe
   return { success: true, totalSynced: count };
 }
 
-// Initialize on start
+// Initial sync on startup
 loadDb();
 
 export const db = {
   get data() {
     return dbData;
   },
-  save: saveDb,
+  save: saveLocalFileOnly,
   reload: loadDb,
-  saveItem: (collection: keyof DbSchema, item: any) => {
-    saveDb({ syncCollection: collection, syncItem: item });
-  },
-  deleteItem: (collection: keyof DbSchema, id: string) => {
-    saveDb({ deleteItem: { collection, id } });
-  },
+  syncFromDynamo,
+  saveItem,
+  deleteItem,
   syncAllToDynamo,
   getAwsStatus,
 };

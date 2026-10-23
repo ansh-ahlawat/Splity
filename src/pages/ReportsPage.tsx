@@ -59,14 +59,18 @@ export const ReportsPage: React.FC = () => {
 
   const handleGenerateReport = async () => {
     setGenerating(true);
-    // Never ask for month - seamlessly use selectedMonth or active cycle
     const targetMonth = selectedMonth || reportJob?.month || new Date().toISOString().substring(0, 7);
     try {
-      const res = await apiRequest<MonthlyReportJob>(`/api/reports/monthly?month=${targetMonth}`, {
+      const res = await apiRequest<MonthlyReportJob>('/api/reports/monthly', {
         method: 'POST',
+        body: JSON.stringify({ month: targetMonth }),
       });
       setReportJob(res);
-      pollReportStatus(res.id);
+      if (res.status === 'DONE' || res.status === 'FAILED') {
+        setGenerating(false);
+      } else {
+        pollReportStatus(res.id);
+      }
     } catch (err: any) {
       alert(err.message || 'Failed to generate report');
       setGenerating(false);
@@ -98,19 +102,6 @@ export const ReportsPage: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">
               Financial Synthesis & Reports
             </h1>
-            {awsStatus && (
-              <span
-                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${
-                  awsStatus.s3Connected
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                    : 'bg-blue-50 text-blue-700 border-blue-200'
-                }`}
-                title={`AWS Region: ${awsStatus.region} | DynamoDB: ${awsStatus.tableName} | S3: ${awsStatus.bucketName}`}
-              >
-                <Cloud className="w-3 h-3" />
-                AWS S3 & DynamoDB
-              </span>
-            )}
           </div>
           <p className="text-xs sm:text-[13px] text-gray-500 font-light mt-0.5 tracking-tight">
             Comprehensive monthly audit, category variance, executive AI analysis, and vector PDF receipt.
@@ -122,18 +113,11 @@ export const ReportsPage: React.FC = () => {
             onClick={handleGenerateReport}
             disabled={generating}
             className="btn-primary"
-            title="Generate or re-run financial synthesis report for this cycle and save to AWS S3"
+            title="Generate monthly financial synthesis report and email via AWS SNS"
           >
-            {generating ? (
-              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-            ) : (
-              <Sparkles className="w-3.5 h-3.5" />
-            )}
             <span>
               {generating
-                ? 'Updating & Sending via SNS...'
-                : reportJob
-                ? 'Regenerate Receipt & Email (SNS)'
+                ? 'Generating & Sending via SNS...'
                 : 'Generate Report & Email (SNS)'}
             </span>
           </button>
@@ -354,17 +338,9 @@ export const ReportsPage: React.FC = () => {
                 No Analytics Yet For {selectedMonth}
               </h3>
               <p className="text-xs text-gray-400 font-light leading-relaxed max-w-sm mx-auto">
-                Click &apos;Generate Report&apos; above to compute monthly KPIs, compile category breakdowns, and upload your synthesis to AWS S3.
+                Click &apos;Generate Report & Email (SNS)&apos; above to compute monthly KPIs, compile category breakdowns, and dispatch your verified receipt.
               </p>
             </div>
-            <button
-              onClick={handleGenerateReport}
-              disabled={generating}
-              className="btn-primary mx-auto"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Generate Now</span>
-            </button>
           </div>
         </div>
       )}

@@ -274,16 +274,17 @@ export async function uploadReportToS3(params: {
 }): Promise<{ s3Url: string; s3Key: string; localFallbackUrl: string; uploadedToS3: boolean }> {
   const { key, content, contentType, reportId } = params;
 
-  // Always save a local copy in public/reports for lightning-fast retrieval and offline safety
-  const publicReportsDir = path.join(process.cwd(), 'public', 'reports');
-  if (!fs.existsSync(publicReportsDir)) {
-    fs.mkdirSync(publicReportsDir, { recursive: true });
-  }
-
-  const safeFilename = path.basename(key);
-  const localFilePath = path.join(publicReportsDir, safeFilename);
-  fs.writeFileSync(localFilePath, content);
-  const localFallbackUrl = `/reports/${safeFilename}`;
+  // Save local copy in /tmp on Lambda or public/reports on local server
+  let localFallbackUrl = `/reports/${path.basename(key)}`;
+  try {
+    const baseDir = process.env.AWS_LAMBDA_FUNCTION_NAME ? '/tmp/reports' : path.join(process.cwd(), 'public', 'reports');
+    if (!fs.existsSync(baseDir)) {
+      fs.mkdirSync(baseDir, { recursive: true });
+    }
+    const safeFilename = path.basename(key);
+    fs.writeFileSync(path.join(baseDir, safeFilename), content);
+    localFallbackUrl = `/reports/${safeFilename}`;
+  } catch (_) {}
 
   let s3Uploaded = false;
   let s3Url = localFallbackUrl;

@@ -48,12 +48,41 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
   const { user } = useAuth();
   const { selectedMonth } = useDate();
 
-  const [summary, setSummary] = useState<MonthlySummary | null>(null);
-  const [categorySpends, setCategorySpends] = useState<CategorySpend[]>([]);
-  const [recentTxns, setRecentTxns] = useState<Transaction[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [debtSummary, setDebtSummary] = useState<DebtSummary | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [summary, setSummary] = useState<MonthlySummary | null>(() => {
+    try {
+      const c = sessionStorage.getItem(`splity_cache_summary_${selectedMonth}`);
+      return c ? JSON.parse(c) : null;
+    } catch { return null; }
+  });
+  const [categorySpends, setCategorySpends] = useState<CategorySpend[]>(() => {
+    try {
+      const c = sessionStorage.getItem(`splity_cache_cat_${selectedMonth}`);
+      return c ? JSON.parse(c) : [];
+    } catch { return []; }
+  });
+  const [recentTxns, setRecentTxns] = useState<Transaction[]>(() => {
+    try {
+      const c = sessionStorage.getItem(`splity_cache_txns_${selectedMonth}`);
+      return c ? JSON.parse(c) : [];
+    } catch { return []; }
+  });
+  const [categories, setCategories] = useState<Category[]>(() => {
+    try {
+      const c = sessionStorage.getItem('splity_cache_categories');
+      return c ? JSON.parse(c) : [];
+    } catch { return []; }
+  });
+  const [debtSummary, setDebtSummary] = useState<DebtSummary | null>(() => {
+    try {
+      const c = sessionStorage.getItem('splity_cache_debts');
+      return c ? JSON.parse(c) : null;
+    } catch { return null; }
+  });
+  const [loading, setLoading] = useState<boolean>(() => {
+    try {
+      return !Boolean(sessionStorage.getItem(`splity_cache_summary_${selectedMonth}`));
+    } catch { return true; }
+  });
 
   // Add Transaction Modal
   const [showAddModal, setShowAddModal] = useState(false);
@@ -108,6 +137,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
       setRecentTxns(txRes.transactions);
       setCategories(allCatRes);
       setDebtSummary(debtRes);
+
+      try {
+        sessionStorage.setItem(`splity_cache_summary_${selectedMonth}`, JSON.stringify(sumRes));
+        sessionStorage.setItem(`splity_cache_cat_${selectedMonth}`, JSON.stringify(catRes));
+        sessionStorage.setItem(`splity_cache_txns_${selectedMonth}`, JSON.stringify(txRes.transactions));
+        sessionStorage.setItem('splity_cache_categories', JSON.stringify(allCatRes));
+        sessionStorage.setItem('splity_cache_debts', JSON.stringify(debtRes));
+      } catch (_) {}
     } catch (err) {
       console.error('Error loading dashboard data:', err);
     } finally {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FileBarChart, Sparkles, Download, RefreshCw, TrendingUp, ShieldCheck, CloudCheck, Cloud, AlertCircle, Database } from 'lucide-react';
+import { FileBarChart, Sparkles, Download, RefreshCw, TrendingUp, CloudCheck, Cloud, AlertCircle, Database } from 'lucide-react';
 import { apiRequest } from '../api/httpClient.js';
 import { MonthlyReportJob } from '../types.js';
 import { useDate } from '../context/DateContext.js';
@@ -196,13 +196,12 @@ export const ReportsPage: React.FC = () => {
           {/* Detailed Executive Briefing */}
           <div className="p-5 sm:p-6 bg-gradient-to-br from-[#166534] to-[#14532d] text-white rounded-3xl space-y-3 shadow-none">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-green-300">
-                <ShieldCheck className="w-4 h-4" />
-                <span className="text-xs font-semibold tracking-wide uppercase">
+              <div className="flex items-center gap-2 text-white">
+                <span className="text-xs font-semibold tracking-wide uppercase text-white">
                   Ai Summary
                 </span>
               </div>
-              <span className="text-[10px] font-mono-num bg-white/15 text-green-100 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-mono-num bg-white/15 text-white px-2 py-0.5 rounded-full">
                 Audit Verified · {reportJob.month}
               </span>
             </div>
@@ -216,6 +215,7 @@ export const ReportsPage: React.FC = () => {
                   const cleanLine = line
                     .replace(/###\s*/g, '')
                     .replace(/\*\*/g, '')
+                    .replace(/\*/g, '')
                     .replace(/^[\*\-•]\s*/g, '')
                     .replace(/#+\s*/g, '')
                     .trim();
@@ -230,7 +230,7 @@ export const ReportsPage: React.FC = () => {
                   if (isHeader) {
                     return (
                       <div key={idx} className="pt-2 border-t border-white/10 first:border-t-0 first:pt-0">
-                        <h4 className="text-xs sm:text-[13px] font-semibold text-emerald-200 tracking-wide">
+                        <h4 className="text-xs sm:text-[13px] font-semibold text-white tracking-wide">
                           {cleanLine}
                         </h4>
                       </div>
@@ -241,9 +241,9 @@ export const ReportsPage: React.FC = () => {
                     return (
                       <div
                         key={idx}
-                        className="p-3 bg-white/10 rounded-2xl border border-white/15 text-xs text-emerald-100 font-light leading-relaxed"
+                        className="p-3 bg-white/10 rounded-2xl border border-white/15 text-xs text-white font-light leading-relaxed"
                       >
-                        <span className="font-semibold text-emerald-300 mr-1.5">Key Insight:</span>
+                        <span className="font-semibold text-white mr-1.5">Key Insight:</span>
                         {cleanLine
                           .replace(/^Key Insight:?\s*/i, '')
                           .replace(/^Positive Takeaway:?\s*/i, '')
@@ -255,7 +255,7 @@ export const ReportsPage: React.FC = () => {
                   return (
                     <div
                       key={idx}
-                      className="text-xs sm:text-[13px] text-green-50/95 font-light leading-relaxed"
+                      className="text-xs sm:text-[13px] text-white font-light leading-relaxed"
                     >
                       <p>{cleanLine}</p>
                     </div>
@@ -315,18 +315,8 @@ export const ReportsPage: React.FC = () => {
                       <td className="py-2.5 px-4 font-medium text-gray-900 border-r border-[#edf2ee]">{cat.categoryName}</td>
                       <td className="py-2.5 px-4 font-mono-num text-gray-900 border-r border-[#edf2ee]">₹ {cat.total.toLocaleString('en-IN')}</td>
                       <td className="py-2.5 px-4 font-mono-num text-gray-400 border-r border-[#edf2ee]">₹ {(cat.limitAmount || 0).toLocaleString('en-IN')}</td>
-                      <td className="py-2.5 px-4 text-right">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[11px] font-mono-num font-medium border ${
-                            (cat.percentUsed || 0) > 100
-                              ? 'bg-red-50 text-red-700 border-red-200/60'
-                              : (cat.percentUsed || 0) >= 80
-                              ? 'bg-amber-50 text-amber-700 border-amber-200/60'
-                              : 'bg-green-50 text-green-700 border-green-200/60'
-                          }`}
-                        >
-                          {cat.percentUsed || 0}% used
-                        </span>
+                      <td className="py-2.5 px-4 font-mono-num text-gray-400 text-right">
+                        {cat.percentUsed || 0}% used
                       </td>
                     </tr>
                   ))}

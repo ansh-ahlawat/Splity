@@ -97,8 +97,8 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
   const budgetComplianceStr = `${Math.round((withinBudgetCount / categories.length) * 100)}% Compliant`;
   const dailyBurnStr = `Rs. ${Math.round(expenseVal / 30).toLocaleString('en-IN')}/day`;
 
-  // Executive narrative
-  const rawNarrative =
+  // Executive narrative (cleaned of any asterisks or markdown tokens)
+  const rawNarrative = (
     report.narrative ||
     `During this billing cycle, your total inflow reached Rs. ${incomeVal.toLocaleString(
       'en-IN'
@@ -106,7 +106,15 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
       'en-IN'
     )} in total expenditures, resulting in a positive net capital retention of Rs. ${netSavedVal.toLocaleString(
       'en-IN'
-    )} (${savingsRateVal}% savings efficiency). Your primary spending driver was concentrated in Housing & Rent (Rs. 12,000), with significant disbursements recorded at Prestige Living Properties (Rs. 12,000). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.`;
+    )} (${savingsRateVal}% savings efficiency). Your primary spending driver was concentrated in Housing & Rent (Rs. 12,000), with significant disbursements recorded at Prestige Living Properties (Rs. 12,000). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.`
+  )
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/#{1,6}\s*/g, '')
+    .replace(/_{1,2}/g, '')
+    .replace(/[`~]/g, '')
+    .replace(/•/g, '-')
+    .trim();
 
   const narrativeLines = wrapText(rawNarrative, 90).slice(0, 5);
 
@@ -229,11 +237,8 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
   const contentW = 511.28;
 
   // 2. Official Header & Branding (y: 755 - 802)
-  drawRoundedRect(leftX, 762, 34, 34, 8, 0.086, 0.396, 0.204);
-  drawText('S', leftX + 11, 773, '/F2', 18, 1, 1, 1);
-
-  drawText('SPLITY', leftX + 44, 783, '/F2', 16, 0.06, 0.09, 0.16);
-  drawText('EXECUTIVE FINANCIAL SYNTHESIS & AUDIT RECEIPT', leftX + 44, 770, '/F2', 7, 0.086, 0.396, 0.204);
+  drawText('SPLITY', leftX, 783, '/F2', 17, 0.06, 0.09, 0.16);
+  drawText('Official Financial Audit Statement', leftX, 769, '/F2', 7.5, 0.086, 0.396, 0.204);
 
   // Right Metadata
   drawText(`RECEIPT: ${receiptNo}`, leftX + contentW, 784, '/F2', 8.5, 0.06, 0.09, 0.16, 'right', 130);
@@ -243,25 +248,21 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
   // Hairline separator
   drawLine(leftX, 748, leftX + contentW, 748, 0.88, 0.91, 0.94, 0.6);
 
-  // 3. Top Banner Card: EXECUTIVE FINANCIAL ANALYSIS & STRATEGIC HEALTH
+  // 3. Top Banner Card: Ai Summary
   const bannerY = 598;
   const bannerH = 136;
   drawRoundedRect(leftX, bannerY, contentW, bannerH, 16, 0.078, 0.325, 0.176);
 
-  // Shield Icon circle inside banner
-  drawRoundedRect(leftX + 16, bannerY + bannerH - 28, 16, 16, 8, 0.18, 0.42, 0.28);
-  drawText('[v]', leftX + 19, bannerY + bannerH - 24, '/F2', 7.5, 0.525, 0.937, 0.675);
-
-  // Banner Title: Ai Summary (No green dot!)
-  drawText('Ai Summary', leftX + 38, bannerY + bannerH - 23, '/F2', 10, 0.525, 0.937, 0.675);
+  // Banner Title: Ai Summary (white, no icons, no dots)
+  drawText('Ai Summary', leftX + 20, bannerY + bannerH - 24, '/F2', 10.5, 1, 1, 1);
 
   // Right Pill Badge: Audit Verified · YYYY-MM
   drawRoundedRect(leftX + contentW - 128, bannerY + bannerH - 30, 114, 20, 10, 0.16, 0.4, 0.26);
-  drawText(`Audit Verified | ${month}`, leftX + contentW - 120, bannerY + bannerH - 23, '/F2', 7.5, 0.86, 0.99, 0.9);
+  drawText(`Audit Verified | ${month}`, leftX + contentW - 120, bannerY + bannerH - 23, '/F2', 7.5, 1, 1, 1);
 
   let curNarrativeY = bannerY + bannerH - 48;
   for (const line of narrativeLines) {
-    drawText(line, leftX + 20, curNarrativeY, '/F1', 8.2, 0.96, 0.98, 0.96);
+    drawText(line, leftX + 20, curNarrativeY, '/F1', 8.2, 1, 1, 1);
     curNarrativeY -= 14.5;
   }
 
@@ -321,67 +322,26 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
     // Col 3: Monthly Max
     drawText(maxStr, leftX + 330, rowY + 6, '/F1', 9, 0.58, 0.64, 0.72);
 
-    // Col 4: Status Pill Badge
-    const isAmber = pct >= 80;
-    const badgeW = 66;
-    const badgeH = 18;
-    const badgeX = leftX + 438;
-
-    if (isAmber) {
-      drawRoundedRect(badgeX, rowY + 1, badgeW, badgeH, 9, 0.996, 0.953, 0.78, 0.992, 0.902, 0.541, 0.5);
-      drawText(badgeText, badgeX + 10, rowY + 6, '/F2', 7.5, 0.706, 0.325, 0.035);
-    } else {
-      drawRoundedRect(badgeX, rowY + 1, badgeW, badgeH, 9, 0.863, 0.988, 0.906, 0.733, 0.969, 0.816, 0.5);
-      drawText(badgeText, badgeX + 10, rowY + 6, '/F2', 7.5, 0.082, 0.502, 0.239);
-    }
+    // Col 4: Status in simple grey text, no coloured background badge
+    drawText(badgeText, leftX + 450, rowY + 6, '/F1', 9, 0.58, 0.64, 0.72);
 
     rowY -= 30;
   }
 
-  // 6. Verification and Authenticity Box
-  const boxY = Math.max(130, rowY - 14);
-  const boxW = (contentW - 12) / 2;
-
-  // Box 1
-  drawRoundedRect(leftX, boxY, boxW, 52, 10, 1, 1, 1, 0.88, 0.91, 0.94, 0.5);
-  drawText('BUDGET COMPLIANCE & BURN-RATE', leftX + 14, boxY + 36, '/F2', 7, 0.39, 0.45, 0.54);
-  drawText(`Allocation Health: ${budgetComplianceStr}`, leftX + 14, boxY + 22, '/F2', 8.5, 0.06, 0.09, 0.165);
-  drawText(`Estimated Daily Run-Rate: ${dailyBurnStr}`, leftX + 14, boxY + 9, '/F1', 7.5, 0.39, 0.45, 0.54);
-
-  // Box 2
-  const box2X = leftX + boxW + 12;
-  drawRoundedRect(box2X, boxY, boxW, 52, 10, 1, 1, 1, 0.88, 0.91, 0.94, 0.5);
-  drawText('LEDGER AUTHENTICITY & SECURITY', box2X + 14, boxY + 36, '/F2', 7, 0.39, 0.45, 0.54);
-  drawText('Status: Cryptographically Verified & Sealed', box2X + 14, boxY + 22, '/F2', 8.5, 0.086, 0.396, 0.204);
-  drawText(`Audit Fingerprint: ${cryptoHash}`, box2X + 14, boxY + 9, '/F1', 7.5, 0.39, 0.45, 0.54);
-
-  // 7. Official Footer
-  const footerLineY = boxY - 16;
-  drawLine(leftX, footerLineY, leftX + contentW, footerLineY, 0.88, 0.91, 0.94, 0.5);
-
+  // 6. Minimal Fixed Footer at bottom of page
+  const footerY = 38;
+  drawLine(leftX, footerY + 16, leftX + contentW, footerY + 16, 0.88, 0.91, 0.94, 0.5);
   drawText(
-    'Splity Financial Operating System  |  Verified Monthly Audit Report  |  Stored in AWS S3',
+    'This is an automated computer-generated financial report. No signature required.',
     leftX + contentW / 2,
-    footerLineY - 16,
+    footerY,
     '/F1',
     7.5,
     0.58,
     0.64,
     0.72,
     'center',
-    340
-  );
-  drawText(
-    'This document is a certified digital financial record generated for tax, budgeting, and reimbursement compliance.',
-    leftX + contentW / 2,
-    footerLineY - 28,
-    '/F1',
-    6.8,
-    0.72,
-    0.78,
-    0.84,
-    'center',
-    380
+    350
   );
 
   // Finalize PDF stream

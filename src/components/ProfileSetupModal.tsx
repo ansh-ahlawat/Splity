@@ -163,7 +163,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
             onClick={(e) => e.stopPropagation()}
           />
 
-          {/* Outer frosted container */}
+          {/* Direct white card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 18 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -172,13 +172,11 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               duration: 0.4,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="relative z-10 w-[94vw] max-w-2xl sm:max-w-3xl p-2 rounded-[36px] bg-white/[0.38] border-none shadow-2xl pointer-events-auto select-text"
+            className="relative z-10 w-[94vw] max-w-2xl sm:max-w-3xl bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden shadow-none pointer-events-auto select-text"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Inner white card */}
-            <div className="bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden shadow-none">
-              {/* Header */}
-              <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#edf2ee] bg-white shrink-0">
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#edf2ee] bg-white shrink-0">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-8 h-8 rounded-full bg-[rgba(22,101,52,0.08)] border border-[rgba(22,101,52,0.14)] text-[#166534] flex items-center justify-center shrink-0">
                     <Sparkles className="w-4 h-4 text-[#166534]" />
@@ -325,7 +323,6 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                   </div>
                 </form>
               </div>
-            </div>
           </motion.div>
         </div>
       )}

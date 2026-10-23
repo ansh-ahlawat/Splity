@@ -198,6 +198,8 @@ export interface MonthlyReportJob {
   downloadUrl?: string;
   s3Url?: string;
   s3Key?: string;
+  s3PdfUrl?: string;
+  pdfDataUri?: string;
   error?: string;
   createdAt: string;
 }

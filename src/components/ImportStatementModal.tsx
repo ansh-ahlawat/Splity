@@ -10,6 +10,15 @@ interface ImportStatementModalProps {
   onSuccess?: () => void;
 }
 
+function readFileAsBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
   isOpen,
   onClose,
@@ -27,17 +36,13 @@ export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       setFile(selectedFile);
-      if (selectedFile.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (typeof reader.result === 'string') {
-            setImageBase64(reader.result);
-          }
-        };
-        reader.readAsDataURL(selectedFile);
-      } else {
-        setImageBase64(null);
-      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          setImageBase64(reader.result);
+        }
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -64,6 +69,11 @@ export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
       const fileName = file ? file.name : 'statement_raw_text.txt';
       const fileType = fileName.endsWith('.pdf') ? 'PDF' : 'IMAGE';
 
+      let b64 = imageBase64;
+      if (file && !b64) {
+        b64 = await readFileAsBase64(file);
+      }
+
       const createRes = await apiRequest<{ importJob: ImportJob; uploadUrl: string }>('/api/imports', {
         method: 'POST',
         body: JSON.stringify({ fileName, fileType }),
@@ -73,7 +83,7 @@ export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
         method: 'POST',
         body: JSON.stringify({
           textContent: sampleText.trim() ? sampleText.trim() : undefined,
-          imageBase64: imageBase64 || undefined,
+          imageBase64: b64 || undefined,
         }),
       });
 
@@ -224,7 +234,7 @@ export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
                 value={sampleText}
                 onChange={(e) => setSampleText(e.target.value)}
                 className="input-base w-full min-h-[96px] pt-4 px-3 pb-3 font-mono-num text-xs font-light resize-none leading-relaxed"
-                placeholder={"05/09/2025  Swiggy Instamart      ₹347.00\n06/09/2025  Amazon Pay UPI        ₹1,299.00\n06/09/2025  Zomato Gold           ₹149.00"}
+                placeholder={"\n05/09/2025  Swiggy Instamart      ₹347.00\n06/09/2025  Amazon Pay UPI        ₹1,299.00\n06/09/2025  Zomato Gold           ₹149.00"}
               />
             </div>
 

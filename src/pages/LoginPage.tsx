@@ -265,8 +265,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ mode = 'login', onSwitchMode
       localStorage.setItem('profile_phone', '+91 00000 00000');
       localStorage.setItem('profile_ceiling', '45000');
       localStorage.setItem('profile_savings', '40000');
+      localStorage.setItem('profile_setup_done_demo@splity.app', 'true');
       localStorage.setItem('profile_setup_done_demo-user-123', 'true');
-      await login('demo@expensebuddy.app', 'Password123!');
+      await login('demo@splity.app', 'Password123!');
     } catch (err: any) {
       setError(err.message || 'Demo login failed.');
     } finally {

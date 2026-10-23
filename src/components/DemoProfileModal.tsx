@@ -249,7 +249,7 @@ export const DemoProfileModal: React.FC<DemoProfileModalProps> = ({
               <input
                 type="email"
                 disabled
-                value={user?.email || 'demo@expensebuddy.app'}
+                value={user?.email || 'demo@splity.app'}
                 className="input-base w-full text-xs opacity-60 cursor-not-allowed bg-black/[0.02] font-light"
               />
             </div>

@@ -94,10 +94,10 @@ let dbData: DbSchema = {
   friendDebts: [],
 };
 
-const DEMO_USER_ID = 'demo-user-123';
+const DEMO_USER_ID = 'demo@splity.app';
 const DEMO_USER: User = {
   id: DEMO_USER_ID,
-  email: 'demo@expensebuddy.app',
+  email: 'demo@splity.app',
   phone: '+91 00000 00000',
   name: 'Ansh Ahlawat',
   spendingCeiling: 45000,
@@ -119,7 +119,7 @@ export function ensureDemoData() {
   if (!dbData.userPasswords) dbData.userPasswords = {};
 
   // 1. Demo User
-  const userIdx = dbData.users.findIndex((u) => u.id === DEMO_USER_ID);
+  const userIdx = dbData.users.findIndex((u) => u.id === DEMO_USER_ID || u.email === 'demo@splity.app');
   if (userIdx >= 0) {
     dbData.users[userIdx] = { ...DEMO_USER, ...dbData.users[userIdx] };
   } else {
@@ -127,8 +127,10 @@ export function ensureDemoData() {
   }
 
   // Password123!
-  dbData.userPasswords[DEMO_USER_ID] =
+  const passwordHash =
     'scrypt:808080:e7b00366a5c2b620a23bc38703a893ef:994488a07fffc568a9e69b55bfdc422dfa4d033a37d3ef02e1a5e35752cb6d6da4023ed5f417a6f126d53f2c2c3e0518f605165888972f32e7c6436387e397d3';
+  dbData.userPasswords[DEMO_USER_ID] = passwordHash;
+  dbData.userPasswords['demo-user-123'] = passwordHash;
 
   // 2. Exactly 3 Categories with Semantic IDs
   const demoCategories: Category[] = [
@@ -361,7 +363,7 @@ export function ensureDemoData() {
       id: 'notif-welcome-demo',
       userId: DEMO_USER_ID,
       type: 'SYSTEM',
-      message: 'Welcome to Splity! Your 3 categories, 5 transactions, and 3 friend balances are ready.',
+      message: 'Welcome to Splity!',
       read: false,
       createdAt: '2026-10-01T00:00:00.000Z',
     },

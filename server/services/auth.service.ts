@@ -86,8 +86,8 @@ export async function loginUser(identifier: string, password: string) {
   }
 
   let hash = db.data.userPasswords[user.id] || db.data.userPasswords[user.email];
-  if (!hash && (user.id === 'demo-user-123' || user.email === 'anshahlawat.me@gmail.com' || user.email === 'demo@expensebuddy.app')) {
-    hash = db.data.userPasswords['demo-user-123'];
+  if (!hash && (user.id === 'demo@splity.app' || user.id === 'demo-user-123' || user.email === 'demo@splity.app' || user.email === 'anshahlawat.me@gmail.com' || user.email === 'demo@expensebuddy.app')) {
+    hash = db.data.userPasswords['demo@splity.app'] || db.data.userPasswords['demo-user-123'];
   }
 
   let valid = await verifyPassword(password, hash);

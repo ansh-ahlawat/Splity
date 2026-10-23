@@ -79,7 +79,7 @@ export const ModalContainer: React.FC<ModalContainerProps> = ({
             className="fixed inset-0 bg-black/40 backdrop-blur-[6px] pointer-events-auto cursor-pointer"
           />
 
-          {/* Extra container outside initial container with 50% opacity representing shading */}
+          {/* Direct white popup with smooth curve radius (rounded-[28px]) */}
           <motion.div
             ref={contentRef}
             layout
@@ -92,57 +92,47 @@ export const ModalContainer: React.FC<ModalContainerProps> = ({
               layout: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
             }}
             onClick={(e) => e.stopPropagation()}
-            className={`relative z-10 w-[94vw] ${maxWidthClass} p-2 rounded-[36px] bg-white/[0.325] border-none shadow-none pointer-events-auto -translate-y-2 sm:-translate-y-3`}
+            className={`relative z-10 w-[94vw] ${maxWidthClass} bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden ${maxHeightClass} shadow-none pointer-events-auto -translate-y-2 sm:-translate-y-3`}
           >
-            {/* Initial container: White popup with smooth curve radius like search bar (rounded-[28px]) */}
-            <motion.div
-              layout
-              transition={{
-                duration: 0.45,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={`bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden ${maxHeightClass} shadow-none`}
-            >
-              {/* Header: Centered on screen, expansive width, compact height */}
-              <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 border-b border-[#edf2ee] bg-white shrink-0">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight truncate">
-                        {title}
-                      </h2>
-                      {badge}
-                    </div>
-                    {subtitle && (
-                      <p className="text-[11px] sm:text-xs text-gray-500 font-light mt-0.5 truncate">
-                        {subtitle}
-                      </p>
-                    )}
+            {/* Header: Centered on screen, expansive width, compact height */}
+            <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 border-b border-[#edf2ee] bg-white shrink-0">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight truncate">
+                      {title}
+                    </h2>
+                    {badge}
                   </div>
-                </div>
-
-                <div className="flex items-center gap-4 shrink-0">
-                  {headerRight}
-                  {/* Close cross button */}
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-                    title="Close"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                  {subtitle && (
+                    <p className="text-[11px] sm:text-xs text-gray-500 font-light mt-0.5 truncate">
+                      {subtitle}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              {/* Body: Scrollable, horizontally wide and comfortable with smooth height layout */}
-              <motion.div
-                layout
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="p-5 sm:p-7 overflow-y-auto flex-1 overscroll-contain"
-              >
-                {children}
-              </motion.div>
+              <div className="flex items-center gap-4 shrink-0">
+                {headerRight}
+                {/* Close cross button */}
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                  title="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Body: Scrollable, horizontally wide and comfortable with smooth height layout */}
+            <motion.div
+              layout
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="p-5 sm:p-7 overflow-y-auto flex-1 overscroll-contain"
+            >
+              {children}
             </motion.div>
           </motion.div>
         </div>

@@ -27,7 +27,7 @@ interface AuthContextType {
 
 function isProfileSetupNeeded(u: User | null): boolean {
   if (!u || !u.id) return false;
-  if (u.id === 'demo-user-123') return false;
+  if (u.id === 'demo@splity.app' || u.id === 'demo-user-123' || u.email === 'demo@splity.app') return false;
   if (u.profileSetupCompleted) return false;
   const doneForUser = localStorage.getItem(`profile_setup_done_${u.id}`);
   if (doneForUser === 'true') return false;

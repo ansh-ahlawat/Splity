@@ -511,11 +511,8 @@ export function createApp() {
   // Statement Import
   app.post('/api/imports', requireUser, async (req: AuthRequest, res) => {
     try {
-      const { fileName, fileContentBase64, mimeType } = req.body;
-      if (!fileName || !fileContentBase64) {
-        return res.status(400).json({ error: 'fileName and fileContentBase64 are required' });
-      }
-      const job = await createImportJob(req.user!.id, fileName, fileContentBase64, mimeType);
+      const { fileName, fileType } = req.body || {};
+      const job = await createImportJob(req.user!.id, fileName || 'bank_statement.txt', fileType || 'IMAGE');
       res.json(job);
     } catch (err: any) {
       res.status(err.status || 500).json({ error: err.message || 'Failed to create import job' });
@@ -524,7 +521,8 @@ export function createApp() {
 
   app.post('/api/imports/:id/process', requireUser, async (req: AuthRequest, res) => {
     try {
-      const result = await processImportJob(req.user!.id, req.params.id);
+      const { textContent, imageBase64 } = req.body || {};
+      const result = await processImportJob(req.user!.id, req.params.id, textContent, imageBase64);
       res.json(result);
     } catch (err: any) {
       res.status(err.status || 500).json({ error: err.message || 'Failed to process import job' });

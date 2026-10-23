@@ -21,6 +21,7 @@ import {
   CreateBucketCommand,
   HeadBucketCommand
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import {
   SNSClient,
   PublishCommand,
@@ -386,6 +387,28 @@ export async function uploadReportToS3(params: {
     localFallbackUrl,
     uploadedToS3: s3Uploaded,
   };
+}
+
+/**
+ * Generate a secure, 7-day presigned direct download URL for an S3 object (no login/credentials needed).
+ */
+export async function getPresignedDownloadUrl(key: string, filename?: string): Promise<string | null> {
+  if (!s3Client) {
+    initAwsClients();
+  }
+  if (!s3Client) return null;
+  try {
+    const cmd = new GetObjectCommand({
+      Bucket: S3_BUCKET_NAME,
+      Key: key,
+      ResponseContentDisposition: filename ? `attachment; filename="${filename}"` : undefined,
+    });
+    const url = await getSignedUrl(s3Client, cmd, { expiresIn: 7 * 24 * 3600 });
+    return url;
+  } catch (err: any) {
+    console.warn('[AWS S3] Presign failed:', err.message);
+    return null;
+  }
 }
 
 /**

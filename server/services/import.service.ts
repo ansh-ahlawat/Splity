@@ -63,8 +63,8 @@ export async function processImportJob(
       const mimeType = match ? match[1] : 'image/jpeg';
       const data = match ? match[2] : imageBase64;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
+      const responsePromise = ai.models.generateContent({
+        model: 'gemini-3.8-flash',
         contents: [
           {
             role: 'user',
@@ -103,6 +103,12 @@ Output valid JSON array:
           temperature: 0.1,
         },
       });
+
+      const timeoutPromise = new Promise<any>((_, reject) =>
+        setTimeout(() => reject(new Error('OCR Vision timeout')), 8000)
+      );
+
+      const response = await Promise.race([responsePromise, timeoutPromise]);
 
       const raw = response.text?.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim() || '[]';
       const parsed = JSON.parse(raw);

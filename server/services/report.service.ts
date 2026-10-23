@@ -6,7 +6,8 @@ import { generateNarrativeText } from '../gemini.js';
 import { getMonthlySummary, getSpendByCategory, getTopMerchants } from './transaction.service.js';
 import { MonthlyReportJob } from '../../src/types.js';
 import { createNotification } from './notification.service.js';
-import { uploadReportToS3, sendReceiptViaSns } from '../aws/aws.service.js';
+import { uploadReportToS3, sendReceiptViaSns, getPresignedDownloadUrl } from '../aws/aws.service.js';
+import { generatePdfBuffer } from '../utils/pdfGenerator.js';
 
 export async function createMonthlyReport(userId: string, requestedMonth?: string): Promise<MonthlyReportJob> {
   const month = requestedMonth || new Date().toISOString().substring(0, 7);
@@ -120,9 +121,46 @@ Keep it concise, strictly bullet points starting with '• ', no jargon, no emoj
     report.categorySpends = categorySpends;
     report.topMerchants = topMerchants;
     report.narrative = narrative;
-    report.downloadUrl = `/api/reports/${jobId}/download`;
 
-    // Persist full report payload to AWS S3
+    const user = db.data.users.find((u) => u.id === userId);
+    const userEmail = user?.email || 'user@splity.app';
+
+    // 1. Generate verified vector PDF buffer
+    let pdfBuffer: Buffer | null = null;
+    try {
+      pdfBuffer = generatePdfBuffer(report, user);
+    } catch (pdfErr: any) {
+      console.warn('[PDF Gen Error]:', pdfErr.message);
+    }
+
+    // 2. Upload PDF directly to AWS S3
+    const pdfS3Key = `reports/${userId}/${month}/Splity_Financial_Statement_${jobId}.pdf`;
+    let pdfDownloadUrl = `https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com/api/reports/${jobId}/download`;
+
+    if (pdfBuffer) {
+      try {
+        const s3PdfResult = await uploadReportToS3({
+          key: pdfS3Key,
+          content: pdfBuffer,
+          contentType: 'application/pdf',
+          reportId: jobId,
+        });
+
+        // 3. Generate secure direct presigned S3 download link valid for 7 days
+        const presignedUrl = await getPresignedDownloadUrl(pdfS3Key, `Splity-Statement-${month}.pdf`);
+        if (presignedUrl) {
+          pdfDownloadUrl = presignedUrl;
+        } else if (s3PdfResult.s3Url) {
+          report.s3PdfUrl = s3PdfResult.s3Url;
+        }
+      } catch (s3Err: any) {
+        console.warn('[S3 PDF Upload Warning]:', s3Err.message);
+      }
+    }
+
+    report.downloadUrl = pdfDownloadUrl;
+
+    // Persist full report JSON payload to AWS S3
     const reportPayload = JSON.stringify(
       {
         id: jobId,
@@ -133,6 +171,7 @@ Keep it concise, strictly bullet points starting with '• ', no jargon, no emoj
         categorySpends,
         topMerchants,
         narrative,
+        pdfDownloadUrl,
         generatedAt: new Date().toISOString(),
       },
       null,
@@ -153,15 +192,12 @@ Keep it concise, strictly bullet points starting with '• ', no jargon, no emoj
     db.saveItem('reportJobs', report);
 
     // Send PDF receipt and synthesis to emailholder via AWS SNS
-    const user = db.data.users.find((u) => u.id === userId);
-    const userEmail = user?.email || 'user@splity.app';
-
     sendReceiptViaSns({
       email: userEmail,
       month,
       summary,
       narrative,
-      downloadUrl: report.downloadUrl,
+      downloadUrl: pdfDownloadUrl,
       s3Url: report.s3Url,
     }).catch((snsErr) => console.warn('[AWS SNS] Non-blocking dispatch notice:', snsErr.message));
 

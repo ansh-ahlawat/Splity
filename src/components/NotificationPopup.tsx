@@ -216,7 +216,7 @@ export const NotificationPopup: React.FC<NotificationPopupProps> = ({
             className="fixed inset-0 bg-black/25 backdrop-blur-[6px]"
           />
 
-          {/* Extra container outside initial container with opacity 50 percent for shading */}
+          {/* Direct white popup with smooth curve radius (rounded-[28px]) */}
           <motion.div
             ref={popupRef}
             layout
@@ -229,27 +229,18 @@ export const NotificationPopup: React.FC<NotificationPopupProps> = ({
               layout: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
             }}
             onClick={(e) => e.stopPropagation()}
-            className="relative z-10 w-[94vw] max-w-2xl sm:max-w-3xl p-2 rounded-[36px] bg-white/[0.325] border-none shadow-none pointer-events-auto"
+            className="relative z-10 w-[94vw] max-w-2xl sm:max-w-3xl bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden max-h-[82vh] sm:max-h-[500px] shadow-none pointer-events-auto"
           >
-            {/* Initial container: White popup with smooth curve radius like search bar (rounded-[28px]) */}
-            <motion.div
-              layout
-              transition={{
-                duration: 0.45,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="bg-white rounded-[28px] border border-[#edf2ee] flex flex-col overflow-hidden max-h-[82vh] sm:max-h-[500px] shadow-none"
-            >
-              {/* Header: Centered on screen, expansive width, compact height */}
-              <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 border-b border-[#edf2ee] bg-white shrink-0">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight">Notifications</span>
-                  {unreadCount > 0 && (
-                    <span className="text-[11px] font-medium bg-green-50 text-green-700 px-2.5 py-0.5 rounded-full border border-green-200/50">
-                      {unreadCount} new
-                    </span>
-                  )}
-                </div>
+            {/* Header: Centered on screen, expansive width, compact height */}
+            <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 sm:py-4 border-b border-[#edf2ee] bg-white shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight">Notifications</span>
+                {unreadCount > 0 && (
+                  <span className="text-[11px] font-medium bg-green-50 text-green-700 px-2.5 py-0.5 rounded-full border border-green-200/50">
+                    {unreadCount} new
+                  </span>
+                )}
+              </div>
 
                 <div className="flex items-center gap-2">
                   {unreadCount > 0 && (
@@ -410,7 +401,6 @@ export const NotificationPopup: React.FC<NotificationPopupProps> = ({
                 )}
               </div>
             </motion.div>
-          </motion.div>
         </div>
       )}
     </AnimatePresence>

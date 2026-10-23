@@ -177,25 +177,22 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#edf2ee] bg-white shrink-0">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-[rgba(22,101,52,0.08)] border border-[rgba(22,101,52,0.14)] text-[#166534] flex items-center justify-center shrink-0">
-                    <Sparkles className="w-4 h-4 text-[#166534]" />
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight">
+                      Complete Account Setup
+                    </h2>
+                    <span className="text-[10px] font-semibold bg-[rgba(22,101,52,0.08)] text-[#166534] px-2.5 py-0.5 rounded-full border border-[rgba(22,101,52,0.14)]">
+                      Mandatory
+                    </span>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight">
-                        Complete Account Setup
-                      </h2>
-                      <span className="text-[10px] font-semibold bg-[rgba(22,101,52,0.08)] text-[#166534] px-2.5 py-0.5 rounded-full border border-[rgba(22,101,52,0.14)]">
-                        Mandatory
-                      </span>
-                    </div>
-                    <p className="text-[11px] sm:text-xs text-gray-500 font-light mt-0.5">
-                      Please configure your identity and budget goals to access your dashboard
-                    </p>
-                  </div>
+                  <p className="text-[11px] sm:text-xs text-gray-500 font-light mt-0.5">
+                    Please configure your identity and budget goals to access your dashboard
+                  </p>
                 </div>
               </div>
+            </div>
 
               {/* Body */}
               <div className="p-5 sm:p-7">

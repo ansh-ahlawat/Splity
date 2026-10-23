@@ -93,13 +93,26 @@ export async function createFriend(userId: string, name: string, phone?: string)
 // Delete a friend
 export async function deleteFriend(userId: string, friendId: string): Promise<Friend> {
   if (!db.data.friends) db.data.friends = [];
-  const idx = db.data.friends.findIndex((f) => f.id === friendId && f.userId === userId);
+
+  if (friendId.startsWith('reciprocal-')) {
+    const rawId = friendId.replace('reciprocal-', '');
+    const mfIdx = db.data.friends.findIndex((f) => f.id === rawId);
+    if (mfIdx !== -1) {
+      const [removed] = db.data.friends.splice(mfIdx, 1);
+      await db.deleteItem('friends', rawId, removed.userId);
+      return removed;
+    }
+  }
+
+  let idx = db.data.friends.findIndex((f) => f.id === friendId && f.userId === userId);
   if (idx === -1) {
-    // If it's a virtual reciprocal friend, just return a dummy
+    idx = db.data.friends.findIndex((f) => f.id === friendId);
+  }
+  if (idx === -1) {
     return { id: friendId, userId, name: 'Friend', createdAt: new Date().toISOString() };
   }
   const [removed] = db.data.friends.splice(idx, 1);
-  await db.deleteItem('friends', friendId, userId);
+  await db.deleteItem('friends', friendId, removed.userId || userId);
 
   createNotification(userId, {
     type: 'FRIEND_DELETED',

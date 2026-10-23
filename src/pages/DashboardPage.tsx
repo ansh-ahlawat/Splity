@@ -299,9 +299,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
                   setShowBudgetModal(true);
                 }}
                 title="Edit Budget Ceiling"
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer shrink-0"
+                className="w-9 h-9 sm:w-9.5 sm:h-9.5 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer shrink-0"
               >
-                <Pencil className="w-3.5 h-3.5" />
+                <Pencil className="w-4 h-4 sm:w-4.5 sm:h-4.5" strokeWidth={1.5} />
               </button>
               <button
                 onClick={() => onNavigate('categories')}

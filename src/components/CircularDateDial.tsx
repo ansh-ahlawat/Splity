@@ -10,7 +10,7 @@ const MONTHS_LIST = [
   '2027-07', '2027-08', '2027-09', '2027-10', '2027-11', '2027-12'
 ];
 
-const renderMonthLabel = (mStr: string) => {
+const renderMonthLabel = (mStr: string, isSelected = false) => {
   const [year, month] = mStr.split('-');
   const date = new Date(Number(year), Number(month) - 1, 1);
   const monthShort = date.toLocaleDateString('en-US', { month: 'short' });
@@ -18,7 +18,9 @@ const renderMonthLabel = (mStr: string) => {
   return (
     <span className="inline-flex items-baseline gap-1">
       <span>{monthShort}</span>
-      <span className="font-mono-num font-normal tracking-tight">{yearShort}</span>
+      <span className={`tracking-tight ${isSelected ? 'font-mono-num font-bold' : 'font-light opacity-80'}`}>
+        {yearShort}
+      </span>
     </span>
   );
 };
@@ -182,12 +184,12 @@ export const CircularDateDial: React.FC = () => {
                 <div className="relative text-green-800 font-bold text-sm tracking-tight whitespace-nowrap select-none transition-all duration-500">
                   {/* Subtle 0.49 blur behind current date */}
                   <span className="absolute inset-0 -inset-x-2 -inset-y-0.5 backdrop-blur-[0.49px] pointer-events-none -z-10 rounded-full" />
-                  {renderMonthLabel(mStr)}
+                  {renderMonthLabel(mStr, true)}
                 </div>
               ) : (
                 // Inactive Dates: Turns dark on hover (group-hover:text-gray-950), font-light, Space Grotesk year
                 <div className="text-gray-500 group-hover:text-gray-950 font-light text-xs whitespace-nowrap select-none transition-colors duration-300">
-                  {renderMonthLabel(mStr)}
+                  {renderMonthLabel(mStr, false)}
                 </div>
               )}
             </div>

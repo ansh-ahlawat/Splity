@@ -139,18 +139,9 @@ export const ReportsPage: React.FC = () => {
               {generating
                 ? 'Generating...'
                 : reportJob && reportJob.status === 'DONE'
-                ? 'Regenerate'
+                ? 'Re-Generate'
                 : 'Generate Report'}
             </span>
-          </button>
-
-          <button
-            onClick={handleEmailReceipt}
-            disabled={emailing || generating || !reportJob || reportJob.status !== 'DONE'}
-            className="btn-primary"
-            title="Email the current report receipt via AWS SNS"
-          >
-            <span>{emailing ? 'Sending via SNS...' : 'Email (SNS)'}</span>
           </button>
         </div>
       </div>
@@ -171,11 +162,6 @@ export const ReportsPage: React.FC = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-5 gap-3">
             <div>
-              <div className="mb-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-wider text-green-700 block">
-                  Executive Synthesis
-                </span>
-              </div>
               <h2 className="text-lg font-semibold text-gray-900">
                 Monthly Financial Audit — {reportJob.month}
               </h2>
@@ -185,6 +171,16 @@ export const ReportsPage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
+              <button
+                type="button"
+                onClick={handleEmailReceipt}
+                disabled={emailing || generating || !reportJob || reportJob.status !== 'DONE'}
+                className="btn-secondary"
+                title="Email the current report statement"
+              >
+                <span>{emailing ? 'Sending...' : 'Email'}</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => downloadReceiptPdf(reportJob)}

@@ -10,8 +10,13 @@ try {
   accessTokenMemory = null;
 }
 
+const DEFAULT_PROD_API = 'https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com';
+
 const API_BASE: string =
-  (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL)) || '';
+  (typeof import.meta !== 'undefined' && import.meta.env && (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL)) ||
+  (typeof window !== 'undefined' && (window.location.hostname.includes('amplifyapp.com') || window.location.hostname.includes('awsapprunner.com'))
+    ? DEFAULT_PROD_API
+    : '');
 
 function resolveUrl(endpoint: string): string {
   if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) {

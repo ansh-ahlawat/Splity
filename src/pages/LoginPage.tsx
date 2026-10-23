@@ -5,6 +5,7 @@ import {
   User,
   CheckCircle2,
   ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext.js';
@@ -656,16 +657,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({ mode = 'login', onSwitchMode
               </AnimatePresence>
             </div>
 
-            {/* Bottom Row: Demo Login only */}
-            <div className="flex items-center justify-center pt-2">
+            {/* Bottom Row: 1-Click Instant Demo Login */}
+            <div className="flex flex-col items-center justify-center pt-2.5">
               <button
                 type="button"
                 onClick={handleDemoLogin}
                 disabled={submitting}
-                className="text-[12px] font-light text-[#166534] hover:text-[#14532d] hover:underline cursor-pointer transition-colors py-1"
+                className="w-full sm:w-auto px-5 py-2 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 active:scale-[0.98] border border-emerald-600/25 text-[#166534] font-medium text-xs sm:text-[13px] flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xs"
               >
-                Demo login
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+                <span>Instant Demo Login (1-Click)</span>
               </button>
+              <p className="text-[10.5px] text-gray-400 mt-1 font-light">Direct access with 3 categories, 3 friends & 5 transactions</p>
             </div>
           </div>
 

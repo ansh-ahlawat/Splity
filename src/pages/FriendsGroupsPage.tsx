@@ -626,7 +626,7 @@ export const FriendsGroupsPage: React.FC = () => {
                       </div>
                       <div className="min-w-0">
                         <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{group.name}</h4>
-                        <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
+                        <p className="text-[11px] font-light text-gray-400 truncate">{group.description || 'Shared bills'}</p>
                       </div>
                     </div>
                     <div className="text-[11px] font-mono-num font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">
@@ -1138,7 +1138,7 @@ export const FriendsGroupsPage: React.FC = () => {
                     </div>
                     <div className="min-w-0">
                       <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{group.name}</h4>
-                      <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
+                      <p className="text-[11px] font-light text-gray-400 truncate">{group.description || 'Shared bills'}</p>
                     </div>
                   </div>
                   <div className="text-[11px] font-mono-num font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">

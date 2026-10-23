@@ -1,0 +1,18 @@
+{
+  "id": "24e6f6bc-949e-4ae5-a4c5-d416fca56d5f",
+  "userId": "demo-user-123",
+  "month": "2026-10",
+  "status": "DONE",
+  "summary": {
+    "month": "2026-10",
+    "totalIncome": 0,
+    "totalExpense": 0,
+    "netSaved": 0,
+    "savingsRate": 0,
+    "monthlyBudget": 45000
+  },
+  "categorySpends": [],
+  "topMerchants": [],
+  "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹0 in total expenditures, resulting in a positive net capital retention of ₹0 (0% savings efficiency). Your primary spending driver was concentrated in general categories, with significant disbursements recorded at recurring payees. To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+  "generatedAt": "2026-10-23T11:03:33.260Z"
+}

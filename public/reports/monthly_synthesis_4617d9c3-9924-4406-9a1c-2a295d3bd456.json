@@ -1,0 +1,93 @@
+{
+  "id": "4617d9c3-9924-4406-9a1c-2a295d3bd456",
+  "userId": "demo-user-123",
+  "month": "2026-09",
+  "status": "DONE",
+  "summary": {
+    "month": "2026-09",
+    "totalIncome": 89500,
+    "totalExpense": 28940,
+    "netSaved": 60560,
+    "savingsRate": 68,
+    "monthlyBudget": 45000
+  },
+  "categorySpends": [
+    {
+      "categoryId": "e75f5ebb-52bc-4566-bca6-fca414896b1d",
+      "categoryName": "Housing & Rent",
+      "color": "#8B5CF6",
+      "total": 12000,
+      "limitAmount": 12000,
+      "percentUsed": 100
+    },
+    {
+      "categoryId": "eb0eecd4-b2e3-4e40-a3bd-5f9c4cf83e64",
+      "categoryName": "Food & Dining",
+      "color": "#10B981",
+      "total": 8450,
+      "limitAmount": 14000,
+      "percentUsed": 60
+    },
+    {
+      "categoryId": "f5779d85-92d5-4fc4-8ea3-8069a47c980c",
+      "categoryName": "Shopping",
+      "color": "#3B82F6",
+      "total": 3640,
+      "limitAmount": 8000,
+      "percentUsed": 46
+    },
+    {
+      "categoryId": "2e96ada5-da8c-40f7-8785-fb93e6f6864c",
+      "categoryName": "Transport & Fuel",
+      "color": "#F59E0B",
+      "total": 1950,
+      "limitAmount": 4500,
+      "percentUsed": 43
+    },
+    {
+      "categoryId": "72b26a89-33f6-4230-a596-fc3f31d877a4",
+      "categoryName": "Utilities",
+      "color": "#6366F1",
+      "total": 1700,
+      "limitAmount": 3000,
+      "percentUsed": 57
+    },
+    {
+      "categoryId": "115ec2f6-4305-4d77-bfa3-5c048deb7b92",
+      "categoryName": "Entertainment",
+      "color": "#EC4899",
+      "total": 1200,
+      "limitAmount": 3500,
+      "percentUsed": 34
+    }
+  ],
+  "topMerchants": [
+    {
+      "merchant": "Prestige Living",
+      "total": 12000,
+      "count": 1
+    },
+    {
+      "merchant": "Chai Point",
+      "total": 2000,
+      "count": 1
+    },
+    {
+      "merchant": "Swiggy Instamart",
+      "total": 1850,
+      "count": 1
+    },
+    {
+      "merchant": "Amazon India",
+      "total": 1690,
+      "count": 1
+    },
+    {
+      "merchant": "Zomato",
+      "total": 1450,
+      "count": 1
+    }
+  ],
+  "narrative": "During this billing cycle, your total inflow reached ₹89,500 against ₹28,940 in total expenditures, resulting in a positive net capital retention of ₹60,560 (68% savings efficiency). Your primary spending driver was concentrated in Housing & Rent (₹12,000), with significant disbursements recorded at Prestige Living (₹12,000). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+  "generatedAt": "2026-10-23T11:03:33.173Z"
+}

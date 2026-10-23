@@ -1,0 +1,24 @@
+{
+  "id": "7088e7f6-ec2b-4474-b941-cf2a14d71547",
+  "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+  "month": "2026-10",
+  "status": "DONE",
+  "summary": {
+    "month": "2026-10",
+    "totalIncome": 0,
+    "totalExpense": 800,
+    "netSaved": -800,
+    "savingsRate": 0,
+    "monthlyBudget": 0
+  },
+  "categorySpends": [],
+  "topMerchants": [
+    {
+      "merchant": "Blue Tokai Coffee Roasters",
+      "total": 800,
+      "count": 1
+    }
+  ],
+  "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+  "generatedAt": "2026-10-23T11:21:01.955Z"
+}

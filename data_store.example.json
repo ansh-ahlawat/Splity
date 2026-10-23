@@ -1,0 +1,1174 @@
+{
+  "users": [
+    {
+      "id": "demo-user-123",
+      "email": "demo@expensebuddy.app",
+      "phone": "+91 00000 00000",
+      "name": "Ansh Ahlawat",
+      "spendingCeiling": 45000,
+      "targetSavings": 40000,
+      "profileSetupCompleted": true,
+      "createdAt": "2026-09-07T10:09:22.531Z"
+    },
+    {
+      "id": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "email": "qa_user_1792754071010@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "email": "qa_user_1792754158981@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:15:59.105Z"
+    },
+    {
+      "id": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "email": "qa_user_1792754215977@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "email": "qa_user_1792754283600@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "email": "qa_user_1792754461241@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "email": "qa_user_1792754486205@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "email": "qa_user_1792754538857@splity.app",
+      "phone": "+91 99999 88888",
+      "name": "QA Tester",
+      "spendingCeiling": 0,
+      "targetSavings": 0,
+      "profileSetupCompleted": false,
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    }
+  ],
+  "userPasswords": {
+    "demo-user-123": "scrypt:808080:e7b00366a5c2b620a23bc38703a893ef:994488a07fffc568a9e69b55bfdc422dfa4d033a37d3ef02e1a5e35752cb6d6da4023ed5f417a6f126d53f2c2c3e0518f605165888972f32e7c6436387e397d3",
+    "a36efd81-1720-412a-b105-c431eb9ab0cb": "scrypt:808080:00e6bc52eb3f2a33bcc6375f1c7b6faa:140be2c5ff668a087ab165ba85326c9d66a5b7de721540d425bfe81d8760ec71ce41c1871c375f2b61d1453f8501bd788e8f750bc9dabec58f8645b607d16ce8",
+    "339a8f7a-ff8f-424b-8e07-9b9ced5752cd": "scrypt:808080:551c8a0ef7e54b98afa6f02563d94475:0afca0548d2aec0045de3ff6a423341a4d127624238ba91549b675092ff5e1dd865a77d2157678ad332ea4571b5060e543924ad23d108a47b27e8952abd3a9fd",
+    "df6ce9e1-e40b-42dd-8460-fbd0f204b93e": "scrypt:808080:0f769f046d180d20ec71c731721ff6cc:6a8d05bd352b7305775fa6c98d69fc7fc030ec42766e2b0a22a8b959753e00942737fc7ec2a238f8f7f57788af7c2faed341a5f6af8d20db32856463655d7193",
+    "ae850426-64e1-4e41-b903-2b640ffaacc6": "scrypt:808080:e4fde4016447696e6b51de4fcf757500:5a4e14d94a43b3de89e9d77a69bbced5fba7681985b601f481db35319cb80c5990f2a6058ea62e4a1265dc66749f5f8ae88db3bdfd9194a2e5a1eb7740743082",
+    "43d2034e-2722-4e41-9fdd-dc949f2810b4": "scrypt:808080:f31699ba7fa82f1c280a12e2387cae66:58de2abfe1972888d587eb521b7ef211b127d8f88a9c2a5f56b3ae51b147c0dbd1d6b9608a69d6668089e0aec0dbb24ea79179f742c2e8635c9a30162c696314",
+    "315b390d-1ab4-4454-a5dc-e157bdaf1e4a": "scrypt:808080:cb075cfbb8c31a493f46200e4d9f83cf:429b94026d9388d03584eb6aaae9176ec87660ea26e74876b28fbd7b369473b53779bdf619cca88929931bd59a8f4a294461be83c4e4b0b96ab254a1a47ecf4d",
+    "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2": "scrypt:808080:2f257ce13a18a5a49bc967f4a9d8e8b7:9f887e7c21967659a8f3d770c71cad774deee0bfa2649270a06c83496f03c820ed24995aa6bbb7d67fe0d502533179cf78709d7f89f12d0beff327f815aa5b47"
+  },
+  "sessions": [
+    {
+      "id": "37395b05-57c5-4c2e-af14-3c99a892ea76",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "refreshTokenHash": "6d93ced4bc818fd11f192ba97e5e7c7fd65f63ff2004ed1f304a38e66c84de9a",
+      "expiresAt": "2026-11-22T11:14:31.137Z",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "c74af4c8-6fc8-432e-b9d8-fc32cbd3b2b8",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "refreshTokenHash": "f788b831c4be2d1b8c95167921511fb42454654f7f6370ce976035244654faa7",
+      "expiresAt": "2026-11-22T11:15:59.106Z",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "a07e2987-151f-4d53-8e8a-18ade69f56b7",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "refreshTokenHash": "762f5709dd516b5c4efa1eabb292a286aede9ca00a181a8ae50ea167636f4310",
+      "expiresAt": "2026-11-22T11:16:56.101Z",
+      "createdAt": "2026-10-23T11:16:56.101Z"
+    },
+    {
+      "id": "f50fc665-50fe-4e4d-aa9d-52adb66ab544",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "refreshTokenHash": "9e03dac2d55151f2a5acd257a7ed96c773520a8e13c046cd6117d5c54db4b9e6",
+      "expiresAt": "2026-11-22T11:18:03.724Z",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "b696c7b0-64ca-446c-a417-4a71ed961a40",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "refreshTokenHash": "4bec28a2c335925c7f90d3b682f673dd6118c28930ed655df68cb8afda081547",
+      "expiresAt": "2026-11-22T11:21:01.367Z",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "583b86fe-f456-4b34-944b-0f2afacfda55",
+      "userId": "demo-user-123",
+      "refreshTokenHash": "52e1c84765eb5ad9de606d172e58d62ed69cef5281e1b5b998c8db2f4ce7de7a",
+      "expiresAt": "2026-11-22T11:21:03.403Z",
+      "createdAt": "2026-10-23T11:21:03.403Z"
+    },
+    {
+      "id": "38bd000e-4924-4ed5-8623-68feaa18c49a",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "refreshTokenHash": "19c140ad0a5b204c40f593abafde7744c544c314989e1803b82f2b0935ea730e",
+      "expiresAt": "2026-11-22T11:21:26.336Z",
+      "createdAt": "2026-10-23T11:21:26.336Z"
+    },
+    {
+      "id": "ef6b3244-4c48-4b66-b6fe-9c36574b554c",
+      "userId": "demo-user-123",
+      "refreshTokenHash": "f7c2506a14885db8f82abba1743bc61e9aa15bcde1dc5b97babebaa2b17eac0c",
+      "expiresAt": "2026-11-22T11:21:28.537Z",
+      "createdAt": "2026-10-23T11:21:28.537Z",
+      "revokedAt": "2026-10-23T11:21:29.511Z"
+    },
+    {
+      "id": "b64a8790-ebde-43a0-a634-f0255deedd3e",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "refreshTokenHash": "a1b9c292d0f601479ff6b7210a85207647ca240e7a03237cbc87201380de1c06",
+      "expiresAt": "2026-11-22T11:22:18.986Z",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "cd9efafb-ea11-45fb-819e-6155cc36ae0f",
+      "userId": "demo-user-123",
+      "refreshTokenHash": "bca0c3125cc1d24b1f214dc4487807743710c16ad54addd09710aba65616c775",
+      "expiresAt": "2026-11-22T11:22:21.164Z",
+      "createdAt": "2026-10-23T11:22:21.164Z",
+      "revokedAt": "2026-10-23T11:22:22.081Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "eb1ab60c-b35d-4598-9e56-6acf5beafba0",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "ac321ef6-ca38-4ac4-909b-2d0038bbc0bb",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "27a221c4-9cef-46a9-9e03-bde6896f6f8d",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "42a1dbef-9349-4e71-9c9a-ecffbe731698",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "ec2f0508-56f4-41f6-8e7f-1fbdd9e95b37",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:14:31.137Z"
+    },
+    {
+      "id": "954f5591-2fd6-45bc-9595-6e22dc4e6157",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "e03ce407-4669-46a5-afbf-8de83a09808a",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "85f09bdb-350c-41c8-93e8-63db080833b4",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "3904f650-e97b-4238-a7bb-b06c66809f34",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "d84d5270-2bc1-41d1-b22f-3fb02693f555",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:15:59.106Z"
+    },
+    {
+      "id": "85051c5e-7ee7-423e-850b-327964b59806",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "00581329-23db-4c22-9245-224f98200aa6",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "8b7f9035-5092-49e7-a7fa-4dce3b834696",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "724b506d-9ec0-4a0a-b51d-47c34b8cd9b9",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "f2bc03f4-e7c4-400d-9d49-8af7ff79b786",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:16:56.100Z"
+    },
+    {
+      "id": "fb991815-67a7-4a38-a0bf-a407d6c812e6",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "722a2c8d-7b0c-48e1-b672-64aaf270f5d5",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "24f7f6f3-ed97-4604-800f-9cd25c930c1e",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "39859943-16fc-4c9c-8482-99420c159590",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "636b50a9-0a69-45d6-a549-86b16d1064ce",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:18:03.724Z"
+    },
+    {
+      "id": "1124ca4f-10a1-4f9d-9cc4-02bcd9544071",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "e87ec54c-1e30-4905-b711-83b785154536",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "133c8cfd-7eb8-4fac-913f-0504cce7d1b1",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "80968558-2a3a-487d-8ffc-8bcb5ceee712",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "41689f51-112b-4576-b839-80db1f45dd39",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:21:01.367Z"
+    },
+    {
+      "id": "278d9b6a-7dbe-4c71-a09a-a827c73489c3",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "613e05f4-be56-43e6-a1d8-c96f709382ae",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "a1b6fcce-cfc6-4503-8a2d-159f3148b332",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "32e172e8-feb9-4b26-b6d0-310214901fd0",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "a83497e4-d5c7-460c-8400-90162d81e3d4",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:21:26.335Z"
+    },
+    {
+      "id": "316497da-8687-4b16-89ab-f085954608b5",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "0fa8909e-97ea-4a70-9c78-a0e597dad303",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "name": "Shopping",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "e3d9ca67-60cd-45c8-b9b4-9f1f2916e5a9",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "825487dc-26d5-4f7a-bf97-c1fab2e4e78f",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "name": "Transport & Fuel",
+      "icon": "Car",
+      "color": "#F59E0B",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "942a6124-4ab1-44eb-ad91-f90cf246fc55",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "name": "Entertainment",
+      "icon": "Tv",
+      "color": "#EC4899",
+      "createdAt": "2026-10-23T11:22:18.986Z"
+    },
+    {
+      "id": "cat-housing-rent",
+      "userId": "demo-user-123",
+      "name": "Housing & Rent",
+      "icon": "Home",
+      "color": "#8B5CF6",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-food-dining",
+      "userId": "demo-user-123",
+      "name": "Food & Dining",
+      "icon": "Utensils",
+      "color": "#10B981",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "cat-shopping-lifestyle",
+      "userId": "demo-user-123",
+      "name": "Shopping & Lifestyle",
+      "icon": "ShoppingBag",
+      "color": "#3B82F6",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "txn-salary-deposit-oct",
+      "userId": "demo-user-123",
+      "categoryId": null,
+      "categoryName": "Salary / Income",
+      "type": "INCOME",
+      "amount": 82000,
+      "merchant": "Acme Technologies",
+      "note": "Monthly Senior Engineer salary direct credit",
+      "date": "2026-10-01",
+      "source": "MANUAL",
+      "createdAt": "2026-10-01T09:00:00.000Z"
+    },
+    {
+      "id": "txn-apartment-rent-oct",
+      "userId": "demo-user-123",
+      "categoryId": "cat-housing-rent",
+      "categoryName": "Housing & Rent",
+      "type": "EXPENSE",
+      "amount": 12000,
+      "merchant": "Prestige Living Properties",
+      "note": "Monthly 2BHK apartment rent payment",
+      "date": "2026-10-02",
+      "source": "MANUAL",
+      "createdAt": "2026-10-02T10:30:00.000Z"
+    },
+    {
+      "id": "txn-groceries-supermarket",
+      "userId": "demo-user-123",
+      "categoryId": "cat-food-dining",
+      "categoryName": "Food & Dining",
+      "type": "EXPENSE",
+      "amount": 3200,
+      "merchant": "Nature's Basket Gourmet",
+      "note": "Monthly organic pantry supplies & olive oil",
+      "date": "2026-10-06",
+      "source": "MANUAL",
+      "createdAt": "2026-10-06T15:20:00.000Z"
+    },
+    {
+      "id": "txn-coffee-roasters",
+      "userId": "demo-user-123",
+      "categoryId": "cat-food-dining",
+      "categoryName": "Food & Dining",
+      "type": "EXPENSE",
+      "amount": 850,
+      "merchant": "Blue Tokai Coffee Roasters",
+      "note": "Artisan pour-over coffee & breakfast croissant",
+      "date": "2026-10-12",
+      "source": "MANUAL",
+      "createdAt": "2026-10-12T11:45:00.000Z"
+    },
+    {
+      "id": "txn-work-desk-accessories",
+      "userId": "demo-user-123",
+      "categoryId": "cat-shopping-lifestyle",
+      "categoryName": "Shopping & Lifestyle",
+      "type": "EXPENSE",
+      "amount": 2450,
+      "merchant": "Amazon India",
+      "note": "Ergonomic aluminum laptop stand & wireless mouse",
+      "date": "2026-10-17",
+      "source": "MANUAL",
+      "createdAt": "2026-10-17T18:10:00.000Z"
+    }
+  ],
+  "categoryBudgets": [
+    {
+      "id": "cbudget-housing-rent-2026-10",
+      "userId": "demo-user-123",
+      "categoryId": "cat-housing-rent",
+      "month": "2026-10",
+      "limitAmount": 15000,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "cbudget-food-dining-2026-10",
+      "userId": "demo-user-123",
+      "categoryId": "cat-food-dining",
+      "month": "2026-10",
+      "limitAmount": 14000,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "cbudget-shopping-lifestyle-2026-10",
+      "userId": "demo-user-123",
+      "categoryId": "cat-shopping-lifestyle",
+      "month": "2026-10",
+      "limitAmount": 8000,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "monthlyBudgets": [
+    {
+      "id": "mbudget-demo-2026-10",
+      "userId": "demo-user-123",
+      "month": "2026-10",
+      "limitAmount": 45000,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "importJobs": [],
+  "importItems": [],
+  "notifications": [
+    {
+      "id": "c38f4746-fdb1-4cac-8806-f4013eb6fd3e",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754538857@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:22:19.335Z"
+    },
+    {
+      "id": "a89f5262-ec79-4a75-a98f-ec7be58502ce",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:22:19.046Z"
+    },
+    {
+      "id": "244c81ac-3454-407e-8b43-fc3028e03038",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:22:19.021Z"
+    },
+    {
+      "id": "d0efd756-ccff-4535-9d7d-9e84bd31b246",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754486205@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:26.692Z"
+    },
+    {
+      "id": "86e0b3ee-533f-48f5-b4e0-c8b2b7411abf",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:26.393Z"
+    },
+    {
+      "id": "0d391009-56b3-4aa4-bdca-ccd627769a12",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:26.370Z"
+    },
+    {
+      "id": "e7ef8070-dbfc-4a11-afc8-fe35504fca81",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754461241@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:02.947Z"
+    },
+    {
+      "id": "d55b5d59-51a3-45a3-b202-a3a6fbaff2d1",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:01.432Z"
+    },
+    {
+      "id": "84c5c241-ea56-48f6-9480-822a74aa5da7",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:21:01.409Z"
+    },
+    {
+      "id": "a4927666-a04e-4d2b-884f-cdf41f057192",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754283600@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:18:04.142Z"
+    },
+    {
+      "id": "a667b006-9509-4f30-ac3b-f55c345e26e3",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:18:03.779Z"
+    },
+    {
+      "id": "e966b5fa-837c-4489-9280-04a451f1dfb7",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:18:03.757Z"
+    },
+    {
+      "id": "77e131a1-ec7f-4ac5-a690-4b00b29822e9",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754215977@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:16:56.441Z"
+    },
+    {
+      "id": "86d024f2-a2bb-460e-844c-bb9002a929d5",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:16:56.158Z"
+    },
+    {
+      "id": "1488f3a7-45a2-4717-af2e-ee5dc90cc14f",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:16:56.136Z"
+    },
+    {
+      "id": "9ae6c346-881f-452f-91bb-e650e472ddad",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754158981@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:15:59.565Z"
+    },
+    {
+      "id": "66fbab67-749e-4740-88fe-3c05493c6b8a",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:15:59.193Z"
+    },
+    {
+      "id": "1ef27a2f-2b2b-476d-b585-5fb67a467da1",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:15:59.170Z"
+    },
+    {
+      "id": "ed7371ef-73ac-4903-b11f-3995769e72cf",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "type": "REPORT_READY",
+      "category": "Reports",
+      "message": "Financial Analytics: Your receipt for 2026-10 has been updated in S3 and dispatched to qa_user_1792754071010@splity.app via AWS SNS.",
+      "read": false,
+      "createdAt": "2026-10-23T11:14:31.569Z"
+    },
+    {
+      "id": "1203d74e-8d28-43f3-9c92-5bb091e58479",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "type": "EXPENSE_DELETED",
+      "category": "Expenses",
+      "message": "Deleted expense: Blue Tokai Coffee Roasters (₹800)",
+      "read": false,
+      "createdAt": "2026-10-23T11:14:31.213Z"
+    },
+    {
+      "id": "02c714d7-0dc9-419e-ac1c-5c0439231191",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "type": "EXPENSE_ADDED",
+      "category": "Expenses",
+      "message": "Expense recorded: Blue Tokai Cafe of ₹750.5",
+      "read": false,
+      "createdAt": "2026-10-23T11:14:31.187Z"
+    },
+    {
+      "id": "notif-welcome-demo",
+      "userId": "demo-user-123",
+      "type": "SYSTEM",
+      "message": "Welcome to Splity! Your 3 categories, 5 transactions, and 3 friend balances are ready.",
+      "read": false,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "reportJobs": [
+    {
+      "id": "4617d9c3-9924-4406-9a1c-2a295d3bd456",
+      "userId": "demo-user-123",
+      "month": "2026-09",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:03:33.030Z",
+      "summary": {
+        "month": "2026-09",
+        "totalIncome": 89500,
+        "totalExpense": 28940,
+        "netSaved": 60560,
+        "savingsRate": 68,
+        "monthlyBudget": 45000
+      },
+      "categorySpends": [
+        {
+          "categoryId": "e75f5ebb-52bc-4566-bca6-fca414896b1d",
+          "categoryName": "Housing & Rent",
+          "color": "#8B5CF6",
+          "total": 12000,
+          "limitAmount": 12000,
+          "percentUsed": 100
+        },
+        {
+          "categoryId": "eb0eecd4-b2e3-4e40-a3bd-5f9c4cf83e64",
+          "categoryName": "Food & Dining",
+          "color": "#10B981",
+          "total": 8450,
+          "limitAmount": 14000,
+          "percentUsed": 60
+        },
+        {
+          "categoryId": "f5779d85-92d5-4fc4-8ea3-8069a47c980c",
+          "categoryName": "Shopping",
+          "color": "#3B82F6",
+          "total": 3640,
+          "limitAmount": 8000,
+          "percentUsed": 46
+        },
+        {
+          "categoryId": "2e96ada5-da8c-40f7-8785-fb93e6f6864c",
+          "categoryName": "Transport & Fuel",
+          "color": "#F59E0B",
+          "total": 1950,
+          "limitAmount": 4500,
+          "percentUsed": 43
+        },
+        {
+          "categoryId": "72b26a89-33f6-4230-a596-fc3f31d877a4",
+          "categoryName": "Utilities",
+          "color": "#6366F1",
+          "total": 1700,
+          "limitAmount": 3000,
+          "percentUsed": 57
+        },
+        {
+          "categoryId": "115ec2f6-4305-4d77-bfa3-5c048deb7b92",
+          "categoryName": "Entertainment",
+          "color": "#EC4899",
+          "total": 1200,
+          "limitAmount": 3500,
+          "percentUsed": 34
+        }
+      ],
+      "topMerchants": [
+        {
+          "merchant": "Prestige Living",
+          "total": 12000,
+          "count": 1
+        },
+        {
+          "merchant": "Chai Point",
+          "total": 2000,
+          "count": 1
+        },
+        {
+          "merchant": "Swiggy Instamart",
+          "total": 1850,
+          "count": 1
+        },
+        {
+          "merchant": "Amazon India",
+          "total": 1690,
+          "count": 1
+        },
+        {
+          "merchant": "Zomato",
+          "total": 1450,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹89,500 against ₹28,940 in total expenditures, resulting in a positive net capital retention of ₹60,560 (68% savings efficiency). Your primary spending driver was concentrated in Housing & Rent (₹12,000), with significant disbursements recorded at Prestige Living (₹12,000). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/4617d9c3-9924-4406-9a1c-2a295d3bd456/download",
+      "s3Url": "/reports/monthly_synthesis_4617d9c3-9924-4406-9a1c-2a295d3bd456.json",
+      "s3Key": "reports/demo-user-123/2026-09/monthly_synthesis_4617d9c3-9924-4406-9a1c-2a295d3bd456.json"
+    },
+    {
+      "id": "24e6f6bc-949e-4ae5-a4c5-d416fca56d5f",
+      "userId": "demo-user-123",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:03:33.032Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 0,
+        "netSaved": 0,
+        "savingsRate": 0,
+        "monthlyBudget": 45000
+      },
+      "categorySpends": [],
+      "topMerchants": [],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹0 in total expenditures, resulting in a positive net capital retention of ₹0 (0% savings efficiency). Your primary spending driver was concentrated in general categories, with significant disbursements recorded at recurring payees. To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/24e6f6bc-949e-4ae5-a4c5-d416fca56d5f/download",
+      "s3Url": "/reports/monthly_synthesis_24e6f6bc-949e-4ae5-a4c5-d416fca56d5f.json",
+      "s3Key": "reports/demo-user-123/2026-10/monthly_synthesis_24e6f6bc-949e-4ae5-a4c5-d416fca56d5f.json"
+    },
+    {
+      "id": "7d100132-e7c2-4da8-8cad-1bad0077a3c6",
+      "userId": "a36efd81-1720-412a-b105-c431eb9ab0cb",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:14:31.197Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/7d100132-e7c2-4da8-8cad-1bad0077a3c6/download",
+      "s3Url": "/reports/monthly_synthesis_7d100132-e7c2-4da8-8cad-1bad0077a3c6.json",
+      "s3Key": "reports/a36efd81-1720-412a-b105-c431eb9ab0cb/2026-10/monthly_synthesis_7d100132-e7c2-4da8-8cad-1bad0077a3c6.json"
+    },
+    {
+      "id": "7261c6b3-7889-45fd-8ee1-32e86914c2e4",
+      "userId": "339a8f7a-ff8f-424b-8e07-9b9ced5752cd",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:15:59.180Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/7261c6b3-7889-45fd-8ee1-32e86914c2e4/download",
+      "s3Url": "/reports/monthly_synthesis_7261c6b3-7889-45fd-8ee1-32e86914c2e4.json",
+      "s3Key": "reports/339a8f7a-ff8f-424b-8e07-9b9ced5752cd/2026-10/monthly_synthesis_7261c6b3-7889-45fd-8ee1-32e86914c2e4.json"
+    },
+    {
+      "id": "bcc4735f-971f-44e4-b41d-2a52316b5173",
+      "userId": "df6ce9e1-e40b-42dd-8460-fbd0f204b93e",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:16:56.145Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/bcc4735f-971f-44e4-b41d-2a52316b5173/download",
+      "s3Url": "/reports/monthly_synthesis_bcc4735f-971f-44e4-b41d-2a52316b5173.json",
+      "s3Key": "reports/df6ce9e1-e40b-42dd-8460-fbd0f204b93e/2026-10/monthly_synthesis_bcc4735f-971f-44e4-b41d-2a52316b5173.json"
+    },
+    {
+      "id": "5db4b462-ce77-49ea-a448-dd16705983d6",
+      "userId": "ae850426-64e1-4e41-b903-2b640ffaacc6",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:18:03.766Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/5db4b462-ce77-49ea-a448-dd16705983d6/download",
+      "s3Url": "/reports/monthly_synthesis_5db4b462-ce77-49ea-a448-dd16705983d6.json",
+      "s3Key": "reports/ae850426-64e1-4e41-b903-2b640ffaacc6/2026-10/monthly_synthesis_5db4b462-ce77-49ea-a448-dd16705983d6.json"
+    },
+    {
+      "id": "7088e7f6-ec2b-4474-b941-cf2a14d71547",
+      "userId": "43d2034e-2722-4e41-9fdd-dc949f2810b4",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:21:01.419Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/7088e7f6-ec2b-4474-b941-cf2a14d71547/download",
+      "s3Url": "/reports/monthly_synthesis_7088e7f6-ec2b-4474-b941-cf2a14d71547.json",
+      "s3Key": "reports/43d2034e-2722-4e41-9fdd-dc949f2810b4/2026-10/monthly_synthesis_7088e7f6-ec2b-4474-b941-cf2a14d71547.json"
+    },
+    {
+      "id": "229a5f58-e2dc-4a01-9691-7836725810a9",
+      "userId": "315b390d-1ab4-4454-a5dc-e157bdaf1e4a",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:21:26.380Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/229a5f58-e2dc-4a01-9691-7836725810a9/download",
+      "s3Url": "/reports/monthly_synthesis_229a5f58-e2dc-4a01-9691-7836725810a9.json",
+      "s3Key": "reports/315b390d-1ab4-4454-a5dc-e157bdaf1e4a/2026-10/monthly_synthesis_229a5f58-e2dc-4a01-9691-7836725810a9.json"
+    },
+    {
+      "id": "23bee384-1f80-4dae-8210-9bb5dc61aca9",
+      "userId": "68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2",
+      "month": "2026-10",
+      "status": "DONE",
+      "createdAt": "2026-10-23T11:22:19.032Z",
+      "summary": {
+        "month": "2026-10",
+        "totalIncome": 0,
+        "totalExpense": 800,
+        "netSaved": -800,
+        "savingsRate": 0,
+        "monthlyBudget": 0
+      },
+      "categorySpends": [],
+      "topMerchants": [
+        {
+          "merchant": "Blue Tokai Coffee Roasters",
+          "total": 800,
+          "count": 1
+        }
+      ],
+      "narrative": "During this billing cycle, your total inflow reached ₹0 against ₹800 in total expenditures, resulting in a net deficit of ₹800. Your primary spending driver was concentrated in general categories, with significant disbursements recorded at Blue Tokai Coffee Roasters (₹800). To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.",
+      "downloadUrl": "/api/reports/23bee384-1f80-4dae-8210-9bb5dc61aca9/download",
+      "s3Url": "/reports/monthly_synthesis_23bee384-1f80-4dae-8210-9bb5dc61aca9.json",
+      "s3Key": "reports/68c586ef-a6a8-4eb7-a02c-9c9cf8f16ee2/2026-10/monthly_synthesis_23bee384-1f80-4dae-8210-9bb5dc61aca9.json"
+    }
+  ],
+  "friends": [
+    {
+      "id": "friend-rohan-sharma",
+      "userId": "demo-user-123",
+      "name": "Rohan Sharma",
+      "phone": "+91 98765 11111",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "friend-priya-patel",
+      "userId": "demo-user-123",
+      "name": "Priya Patel",
+      "phone": "+91 98765 22222",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "friend-aman-verma",
+      "userId": "demo-user-123",
+      "name": "Aman Verma",
+      "phone": "+91 98765 33333",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "friendGroups": [
+    {
+      "id": "group-goa-trip",
+      "userId": "demo-user-123",
+      "name": "Goa Weekend Trip",
+      "description": "Shared beach villa rental, seafood dinners & car fuel",
+      "members": [
+        "Rohan Sharma",
+        "Priya Patel",
+        "Aman Verma"
+      ],
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "group-roommates-flat",
+      "userId": "demo-user-123",
+      "name": "Roommates & Flat 402",
+      "description": "Monthly flat groceries, broadband internet & utility splits",
+      "members": [
+        "Rohan Sharma",
+        "Aman Verma"
+      ],
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "friendDebts": [
+    {
+      "id": "debt-goa-villa-dinner",
+      "userId": "demo-user-123",
+      "friendName": "Rohan Sharma",
+      "groupId": "group-goa-trip",
+      "groupName": "Goa Weekend Trip",
+      "amount": 1450,
+      "type": "YOU_OWE",
+      "description": "Seafood dinner & drinks bill split at Fisherman Wharf",
+      "settled": false,
+      "date": "2026-10-18",
+      "createdAt": "2026-10-18T21:00:00.000Z"
+    },
+    {
+      "id": "debt-concert-pass-booking",
+      "userId": "demo-user-123",
+      "friendName": "Priya Patel",
+      "groupId": null,
+      "groupName": null,
+      "amount": 3200,
+      "type": "OWED_TO_YOU",
+      "description": "Advance booking for live music concert passes",
+      "settled": false,
+      "date": "2026-10-19",
+      "createdAt": "2026-10-19T14:30:00.000Z"
+    },
+    {
+      "id": "debt-flat-wifi-groceries",
+      "userId": "demo-user-123",
+      "friendName": "Aman Verma",
+      "groupId": "group-roommates-flat",
+      "groupName": "Roommates & Flat 402",
+      "amount": 1850,
+      "type": "OWED_TO_YOU",
+      "description": "Airtel Xstream fiber WiFi & pantry staples monthly split",
+      "settled": false,
+      "date": "2026-10-20",
+      "createdAt": "2026-10-20T16:00:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Roma';
+  src: url('/fonts/Roma.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glion';
+  src: url('/fonts/glion.otf') format('opentype'),
+       url('/fonts/glion.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qoeg';
+  src: url('/fonts/qoeg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --font-roma: 'Roma', serif;
+  --font-glion: 'Glion', sans-serif;
+  --font-qoeg: 'Qoeg', sans-serif;
+}
+
+@layer base {
+  *, ::before, ::after {
+    border-color: transparent;
+    outline: none;
+    box-shadow: none !important;
+    --tw-shadow: 0 0 #0000 !important;
+    --tw-shadow-colored: 0 0 #0000 !important;
+    --tw-inset-shadow: 0 0 #0000 !important;
+    --tw-inset-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+  }
+  html {
+    color-scheme: light;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.015em;
+    min-height: 100vh;
+    background-color: #f6f8f6;
+    background-image: url('/gradient.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+}
+
+/* ═══════ Custom Themed Cursor from cursor.png (Hardware-Accelerated Zero Lag) ═══════ */
+html, body, *, ::before, ::after {
+  cursor: url('/custom-cursor.png') 1 1, auto !important;
+}
+
+button, a, [role="button"], input[type="submit"], input[type="button"], select, .cursor-pointer, .btn-primary, .btn-secondary, .btn-secondary-danger {
+  cursor: url('/custom-pointer.png') 1 1, pointer !important;
+}
+
+button:disabled, .btn-primary:disabled, .btn-secondary:disabled {
+  cursor: not-allowed !important;
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], textarea, [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* Tabular numbers for financial metrics (Space Grotesk) */
+.font-mono-num {
+  font-family: 'Space Grotesk', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* ═══════ Minimalist Flat Smooth Flow (No Outlines, No Drop Shadows) ═══════ */
+
+/* Flat Clean Minimal Card */
+.card-base {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 20px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.card-base:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Floating AI Search Dock with 50% opacity blur */
+.glass-dock {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.glass-dock:focus-within {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Floating Pill Header */
+.glass-header {
+  background: transparent;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Primary Forest Green Pill Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5625rem;
+  height: 2.375rem;
+  padding: 0 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #166534; /* Rich Forest Green */
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 9999px;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-primary:hover {
+  background-color: #15803d;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary Soft Pill Button (Themed Light Green Shade) */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5625rem;
+  height: 2.375rem;
+  padding: 0 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #166534;
+  background: rgba(22, 101, 52, 0.07);
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 9999px;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(22, 101, 52, 0.13);
+  color: #14532d;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Soft Pill Button - Danger Variant (Themed Soft Red) */
+.btn-secondary-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5625rem;
+  height: 2.375rem;
+  padding: 0 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 9999px;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-secondary-danger:hover {
+  background: rgba(220, 38, 38, 0.14);
+  color: #b91c1c;
+}
+
+.btn-secondary-danger:active {
+  transform: scale(0.98);
+}
+
+/* Search-bar styled Clean Input Fields with smooth curve & thin text */
+.input-base {
+  height: 2.5rem;
+  padding: 0 1.125rem;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #edf2ee !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 20px;
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.input-base::placeholder {
+  color: #9ca3af;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.input-base:hover {
+  border-color: #dfe6e0 !important;
+}
+
+.input-base:focus {
+  border-color: #166534 !important;
+  background: #ffffff;
+  box-shadow: none !important;
+}
+
+input.input-base,
+select.input-base,
+textarea.input-base {
+  font-weight: 300;
+}
+
+/* Ensure inputs with left icons have generous left padding so icons never overlap placeholder or text */
+.has-left-icon,
+input.has-left-icon {
+  padding-left: 2.75rem !important; /* 44px ensures 16px clear gap after icon at left: 14px */
+}
+
+/* Hide scrollbar for smooth carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbars globally */
+*::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Minimalist Voice Waveform Animation */
+@keyframes soundWave {
+  0%, 100% {
+    transform: scaleY(0.25);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1.35);
+    opacity: 1;
+  }
+}
+
+.animate-soundwave-1 {
+  animation: soundWave 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.1s;
+}
+.animate-soundwave-2 {
+  animation: soundWave 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.22s;
+}
+.animate-soundwave-3 {
+  animation: soundWave 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.35s;
+}
+.animate-soundwave-4 {
+  animation: soundWave 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.18s;
+}
+.animate-soundwave-5 {
+  animation: soundWave 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.3s;
+}
+
+/* Seamless progressive gradient blur with no visible dividing line */
+.progressive-blur {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  height: 160px;
+  pointer-events: none;
+  z-index: 30;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.8) 80%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 20%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.8) 80%, black 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(246, 248, 246, 0.35) 45%, rgba(246, 248, 246, 0.85) 100%);
+}
+
+/* Splity Brand: Clean Simple Themed Green with Qoeg font */
+.splity-brand-text {
+  font-family: 'Qoeg', sans-serif;
+  position: relative;
+  display: inline-block;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  color: #166534;
+}

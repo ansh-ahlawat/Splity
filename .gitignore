@@ -1,0 +1,20 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Local Database & Seed
+data_store.json
+!data_store.example.json
+
+# Lockfiles (using npm package-lock.json)
+bun.lock*
+
+# Test Results & Artifacts
+test-results/
+playwright-report/
+

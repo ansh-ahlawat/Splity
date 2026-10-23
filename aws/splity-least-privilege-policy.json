@@ -1,0 +1,52 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SplityDynamoDBAccess",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:DescribeTable",
+        "dynamodb:CreateTable",
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:BatchGetItem"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:*:*:table/splity_records",
+        "arn:aws:dynamodb:*:*:table/splity_records/*"
+      ]
+    },
+    {
+      "Sid": "SplityS3ReportStorage",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:HeadBucket",
+        "s3:CreateBucket",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::splity-analytics-reports",
+        "arn:aws:s3:::splity-analytics-reports/*"
+      ]
+    },
+    {
+      "Sid": "SplitySNSEmailNotifications",
+      "Effect": "Allow",
+      "Action": [
+        "sns:CreateTopic",
+        "sns:Subscribe",
+        "sns:Publish"
+      ],
+      "Resource": [
+        "arn:aws:sns:*:*:SplityMonthlyReceipts"
+      ]
+    }
+  ]
+}

@@ -302,6 +302,7 @@ Instructions:
   }
 
   // 3. Fallback: Local statistics engine (NO timeout, natural answers based on user's real numbers)
+  const fallbackPrefix = 'Gemini API limit hit for Today, try later.\n\n';
   const lower = query.toLowerCase();
 
   // Friend debt logging fallback
@@ -357,7 +358,7 @@ Instructions:
         intent: 'LOG_FRIEND_DEBT',
         source: 'gemini',
         query: originalQuery,
-        message: `Added: ${friendName} ${debt.type === 'OWED_TO_YOU' ? 'owes you' : 'is owed'} ₹${amount.toLocaleString('en-IN')}.`,
+        message: `${fallbackPrefix}Added: ${friendName} ${debt.type === 'OWED_TO_YOU' ? 'owes you' : 'is owed'} ₹${amount.toLocaleString('en-IN')}.`,
         actionTaken: true,
         data: debt,
       };
@@ -377,7 +378,7 @@ Instructions:
         intent: 'SET_CATEGORY_BUDGET',
         source: 'gemini',
         query: originalQuery,
-        message: `Set ${cat.name} budget limit to ₹${amount.toLocaleString('en-IN')} for this month.`,
+        message: `${fallbackPrefix}Set ${cat.name} budget limit to ₹${amount.toLocaleString('en-IN')} for this month.`,
         actionTaken: true,
         data: b,
       };
@@ -411,7 +412,7 @@ Instructions:
       intent: 'PLAN_PURCHASE',
       source: 'gemini',
       query: originalQuery,
-      message: `Based on your monthly net savings of ₹${netSavings.toLocaleString('en-IN')}, you can save approximately ₹${projectedSavings.toLocaleString('en-IN')} ${timeDisplay}.`,
+      message: `${fallbackPrefix}Based on your monthly net savings of ₹${netSavings.toLocaleString('en-IN')}, you can save approximately ₹${projectedSavings.toLocaleString('en-IN')} ${timeDisplay}.`,
       data: { diffMonths, netSavings, projectedSavings },
     };
   }
@@ -430,7 +431,7 @@ Instructions:
       intent: 'SETTLE_DEBT',
       source: 'gemini',
       query: originalQuery,
-      message: count > 0 ? `Cleared all ${count} pending balances with friends.` : 'All your balances are already settled.',
+      message: `${fallbackPrefix}${count > 0 ? `Cleared all ${count} pending balances with friends.` : 'All your balances are already settled.'}`,
       actionTaken: count > 0,
     };
   }
@@ -448,7 +449,7 @@ Instructions:
       intent: 'SPEND_SUMMARY',
       source: 'gemini',
       query: originalQuery,
-      message: `You spent ₹${spent.toLocaleString('en-IN')} on ${matchedCat.name} this month${limit}.`,
+      message: `${fallbackPrefix}You spent ₹${spent.toLocaleString('en-IN')} on ${matchedCat.name} this month${limit}.`,
       data: sp,
     };
   }
@@ -461,7 +462,7 @@ Instructions:
         intent: 'LOG_FRIEND_DEBT',
         source: 'gemini',
         query: originalQuery,
-        message: `Friends owe you ₹${totalOwedToYou.toLocaleString('en-IN')} total (${details}).`,
+        message: `${fallbackPrefix}Friends owe you ₹${totalOwedToYou.toLocaleString('en-IN')} total (${details}).`,
         data: { totalOwedToYou, debts: debtsOwedToYou },
       };
     } else {
@@ -469,7 +470,7 @@ Instructions:
         intent: 'LOG_FRIEND_DEBT',
         source: 'gemini',
         query: originalQuery,
-        message: 'No friends currently owe you money. All balances are settled.',
+        message: `${fallbackPrefix}No friends currently owe you money. All balances are settled.`,
       };
     }
   }
@@ -479,7 +480,7 @@ Instructions:
     intent: 'GENERAL_QUERY',
     source: 'gemini',
     query: originalQuery,
-    message: `This month you earned ₹${currentSummary.totalIncome.toLocaleString('en-IN')} and spent ₹${currentSummary.totalExpense.toLocaleString('en-IN')}, leaving ₹${currentSummary.netSaved.toLocaleString('en-IN')} in savings (${currentSummary.savingsRate}% saved).`,
+    message: `${fallbackPrefix}This month you earned ₹${currentSummary.totalIncome.toLocaleString('en-IN')} and spent ₹${currentSummary.totalExpense.toLocaleString('en-IN')}, leaving ₹${currentSummary.netSaved.toLocaleString('en-IN')} in savings (${currentSummary.savingsRate}% saved).`,
     data: currentSummary,
   };
 }

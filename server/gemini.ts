@@ -31,6 +31,25 @@ export function getGeminiClient(): GoogleGenAI {
   return aiClient;
 }
 
+export let lastGeminiError: { message: string; timestamp: number } | null = null;
+
+export const GEMINI_LIMIT_NOTE = 'Gemini API limit hit for Today, try later.\n\n';
+
+export function isGeminiLimitHit(): boolean {
+  if (!lastGeminiError) return false;
+  if (Date.now() - lastGeminiError.timestamp > 60 * 60 * 1000) return false;
+  const msg = lastGeminiError.message.toLowerCase();
+  return (
+    msg.includes('429') ||
+    msg.includes('quota') ||
+    msg.includes('resource_exhausted') ||
+    msg.includes('rate limit') ||
+    msg.includes('exhausted') ||
+    msg.includes('credit') ||
+    msg.includes('limit')
+  );
+}
+
 function withTimeout<T>(promise: Promise<T>, ms = 4500): Promise<T> {
   return Promise.race([
     promise,
@@ -59,6 +78,7 @@ export async function generateJSON<T = any>(prompt: string, systemInstruction?: 
     const cleanJson = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
     return JSON.parse(cleanJson) as T;
   } catch (err: any) {
+    lastGeminiError = { message: String(err?.message || err), timestamp: Date.now() };
     console.warn('Gemini API generateJSON fallback note:', err.message || err);
     return null;
   }
@@ -79,6 +99,7 @@ export async function generateNarrativeText(prompt: string, systemInstruction?: 
     const response = await withTimeout(callPromise, 4500);
     return response.text?.trim() || '';
   } catch (err: any) {
+    lastGeminiError = { message: String(err?.message || err), timestamp: Date.now() };
     console.warn('Gemini API generateNarrative fallback note:', err.message || err);
     return '';
   }

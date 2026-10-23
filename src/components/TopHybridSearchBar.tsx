@@ -451,8 +451,9 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
                 <div className="px-4 pt-3.5 pb-2.5 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-light tracking-wide text-gray-500 uppercase">
-                        Smart search • {result.intent.replace(/_/g, ' ')}
+                      <span className="text-[11px] font-light tracking-wide text-gray-500 uppercase flex items-center gap-3">
+                        <span>Smart search</span>
+                        <span className="text-gray-400 font-normal">{result.intent.replace(/_/g, ' ')}</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">

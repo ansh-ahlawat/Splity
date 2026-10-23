@@ -110,6 +110,7 @@ Keep it concise, strictly bullet points starting with '• ', no jargon, no emoj
     // Simple English fallback if AI fails or returns generic response
     if (!narrative || narrative.includes('unavailable') || narrative.length < 30) {
       narrative = [
+        `Gemini API limit hit for Today, try later.\n`,
         `• Cash Flow: ${cashFlowPoint}`,
         `• Category Optimization: ${categoryAdvice}`,
         `• Savings Trend: ${savingsComparison}`

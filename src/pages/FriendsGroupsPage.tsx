@@ -565,7 +565,7 @@ export const FriendsGroupsPage: React.FC = () => {
                         {friend.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{friend.name}</h4>
+                        <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{friend.name}</h4>
                         <p className="text-[11px] font-mono-num text-gray-400 truncate">{friend.phone || '+91'}</p>
                       </div>
                     </div>
@@ -625,7 +625,7 @@ export const FriendsGroupsPage: React.FC = () => {
                         <Users className="w-3.5 h-3.5 text-[#166534]" />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{group.name}</h4>
+                        <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{group.name}</h4>
                         <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
                       </div>
                     </div>
@@ -1058,7 +1058,7 @@ export const FriendsGroupsPage: React.FC = () => {
                       {friend.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{friend.name}</h4>
+                      <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{friend.name}</h4>
                       <p className="text-[11px] font-mono-num text-gray-400 truncate">{friend.phone || '+91'}</p>
                     </div>
                   </div>
@@ -1137,7 +1137,7 @@ export const FriendsGroupsPage: React.FC = () => {
                       <Users className="w-3.5 h-3.5 text-[#166534]" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{group.name}</h4>
+                      <h4 className="text-xs font-semibold text-[#166534] group-hover/row:text-black transition-colors truncate font-default-sans">{group.name}</h4>
                       <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
                     </div>
                   </div>

@@ -23,8 +23,8 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
   const isOver = limit > 0 && spent > limit;
   const isNear = limit > 0 && percent >= 80 && !isOver;
 
-  let badgeStyle = 'bg-green-500/10 text-green-700 border-green-500/20';
-  let badgeText = 'Healthy';
+  let badgeStyle = '';
+  let badgeText = '';
   let barColor = 'bg-green-600';
 
   if (isOver) {
@@ -56,9 +56,11 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${badgeStyle}`}>
-            {badgeText}
-          </span>
+          {badgeText ? (
+            <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${badgeStyle}`}>
+              {badgeText}
+            </span>
+          ) : null}
           {onDelete && (
             <button
               type="button"

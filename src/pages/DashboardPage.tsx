@@ -256,7 +256,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-5 sm:mb-7">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight leading-tight">
-            Hi {profileFullName},
+            Hi {profileFullName}
           </h1>
           <p className="text-xs sm:text-[13px] text-gray-500 font-light mt-0.5 tracking-tight">
             Ready to smartly manage your budget and track your expenses.
@@ -495,10 +495,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
             <button
               onClick={() => onNavigate('transactions')}
-              className="text-xs font-semibold text-gray-700 hover:text-green-800 flex items-center gap-2 px-3 py-1 rounded-full hover:bg-black/5 transition-all cursor-pointer"
+              className="text-xs font-semibold text-[#166534] hover:text-black flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-black/5 transition-all cursor-pointer group"
             >
               <span>View ledger</span>
-              <ArrowRight className="w-2.5 h-2.5 text-green-700" />
+              <ArrowRight className="w-2.5 h-2.5 text-[#166534] group-hover:text-black transition-colors" />
             </button>
           </div>
 
@@ -548,10 +548,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             </div>
             <button
               onClick={() => onNavigate('friends-groups')}
-              className="text-xs font-semibold text-gray-700 hover:text-green-800 flex items-center gap-2 px-3 py-1 rounded-full hover:bg-black/5 transition-all cursor-pointer"
+              className="text-xs font-semibold text-[#166534] hover:text-black flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-black/5 transition-all cursor-pointer group"
             >
               <span>Manage</span>
-              <ArrowRight className="w-2.5 h-2.5 text-green-700" />
+              <ArrowRight className="w-2.5 h-2.5 text-[#166534] group-hover:text-black transition-colors" />
             </button>
           </div>
 

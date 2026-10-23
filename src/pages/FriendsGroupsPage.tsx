@@ -625,12 +625,12 @@ export const FriendsGroupsPage: React.FC = () => {
                         <Users className="w-3.5 h-3.5 text-[#166534]" />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate">{group.name}</h4>
+                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{group.name}</h4>
                         <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
                       </div>
                     </div>
-                    <div className="text-[11px] font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">
-                      {group.members.length} members
+                    <div className="text-[11px] font-mono-num font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">
+                      {group.members.length}
                     </div>
                   </div>
                 ))
@@ -1137,12 +1137,12 @@ export const FriendsGroupsPage: React.FC = () => {
                       <Users className="w-3.5 h-3.5 text-[#166534]" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate">{group.name}</h4>
+                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{group.name}</h4>
                       <p className="text-[11px] text-gray-500 truncate">{group.description || 'Shared bills'}</p>
                     </div>
                   </div>
-                  <div className="text-[11px] font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">
-                    {group.members.length} members
+                  <div className="text-[11px] font-mono-num font-medium text-gray-500 bg-gray-100/80 px-2.5 py-0.5 rounded-full shrink-0">
+                    {group.members.length}
                   </div>
                 </div>
               ))}
@@ -1212,7 +1212,7 @@ export const FriendsGroupsPage: React.FC = () => {
             </div>
 
             {/* Members Section */}
-            <div className="space-y-2">
+            <div className="space-y-2.5 pt-4 sm:pt-5 border-t border-[#edf2ee]">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-semibold text-gray-900 tracking-tight flex items-center gap-1.5">
                   <Users className="w-3.5 h-3.5 text-[#166534]" />
@@ -1243,7 +1243,7 @@ export const FriendsGroupsPage: React.FC = () => {
                           {mem.charAt(0).toUpperCase()}
                         </div>
                         <div className="min-w-0">
-                          <div className="text-xs font-medium text-gray-900 group-hover/mem:text-[#166534] transition-colors truncate leading-tight">
+                          <div className="text-xs font-medium text-gray-900 group-hover/mem:text-[#166534] transition-colors truncate leading-tight font-default-sans">
                             {mem}
                           </div>
                           <div className="text-[10px] font-mono-num text-gray-400 truncate">
@@ -1261,7 +1261,7 @@ export const FriendsGroupsPage: React.FC = () => {
             </div>
 
             {/* Transactions Section */}
-            <div className="space-y-2.5 pt-2 border-t border-[#edf2ee]">
+            <div className="space-y-2.5 pt-5 sm:pt-6 border-t border-[#edf2ee]">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-semibold text-gray-900 tracking-tight">
                   Group Transactions ({groupDebts.length})

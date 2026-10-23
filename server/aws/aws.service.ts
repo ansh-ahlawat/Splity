@@ -28,7 +28,7 @@ import {
   SubscribeCommand
 } from '@aws-sdk/client-sns';
 
-const AWS_REGION = process.env.AWS_REGION || 'ap-south-1';
+const AWS_REGION = process.env.AWS_REGION || 'ap-southeast-2';
 const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID || '';
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY || '';
 const DYNAMODB_TABLE_NAME = process.env.DYNAMODB_TABLE_NAME || 'splity_records';

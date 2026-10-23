@@ -12,7 +12,6 @@ import { NotificationsPage } from './pages/NotificationsPage.js';
 import { FriendsGroupsPage } from './pages/FriendsGroupsPage.js';
 import { ProfileSettingsPage } from './pages/ProfileSettingsPage.js';
 import { ProfileSetupModal } from './components/ProfileSetupModal.js';
-import { SoftFlowCursor } from './components/SoftFlowCursor.js';
 import { ErrorBoundary } from './components/ErrorBoundary.js';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage.js';
 import { TermsPage } from './pages/TermsPage.js';
@@ -150,7 +149,6 @@ export default function App() {
     <ErrorBoundary>
       <AuthProvider>
         <DateProvider>
-          <SoftFlowCursor />
           <MainAppContent />
         </DateProvider>
       </AuthProvider>

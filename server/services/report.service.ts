@@ -46,18 +46,53 @@ export async function processReportJob(userId: string, jobId: string, month: str
     const categorySpends = await getSpendByCategory(userId, month);
     const topMerchants = await getTopMerchants(userId, month, 5);
 
-    const factPrompt = `
-Monthly Financial Performance Summary (${month}):
-Total Inflow (Income): ₹${summary.totalIncome.toFixed(2)}
-Total Outflow (Expenses): ₹${summary.totalExpense.toFixed(2)}
-Net Capital Retained (Savings): ₹${summary.netSaved.toFixed(2)} (Savings Efficiency Rate: ${summary.savingsRate}%)
-Top Expense Categories: ${categorySpends.slice(0, 4).map((c) => `${c.categoryName}: ₹${c.total} (${c.percentUsed || 0}% of budget)`).join(', ')}
-Top Payees / Merchants: ${topMerchants.slice(0, 4).map((m) => `${m.merchant}: ₹${m.total}`).join(', ')}
+    // Calculate previous month for month-over-month comparison
+    const [yearStr, monthStr] = month.split('-');
+    let prevYear = parseInt(yearStr, 10);
+    let prevMonthNum = parseInt(monthStr, 10) - 1;
+    if (prevMonthNum === 0) {
+      prevMonthNum = 12;
+      prevYear -= 1;
+    }
+    const prevMonth = `${prevYear}-${String(prevMonthNum).padStart(2, '0')}`;
+    const lastMonthSummary = await getMonthlySummary(userId, prevMonth);
 
-Please provide an advanced-level yet crystal-clear Executive Financial Analysis written in an approachable, easily understandable style for everyday personal finance. Cover:
-1. Overall Cash Flow Health & Capital Retention.
-2. Major Spending Drivers & Budget Compliance.
-3. 2 Practical Strategic Steps to optimize cash reserves next month.
+    // Savings comparison with arrows and percentage
+    let savingsComparison = '';
+    const diff = summary.netSaved - lastMonthSummary.netSaved;
+    if (lastMonthSummary.totalIncome > 0 || lastMonthSummary.totalExpense > 0) {
+      if (lastMonthSummary.netSaved === 0) {
+        savingsComparison = diff >= 0 
+          ? `Savings increased by Rs. ${Math.abs(diff).toLocaleString('en-IN')} (↑) compared to last month.`
+          : `Savings decreased by Rs. ${Math.abs(diff).toLocaleString('en-IN')} (↓) compared to last month.`;
+      } else {
+        const pctChange = Math.abs(Math.round((diff / Math.abs(lastMonthSummary.netSaved)) * 100));
+        const arrow = diff >= 0 ? '↑' : '↓';
+        savingsComparison = diff >= 0
+          ? `Savings increased by ${pctChange}% (${arrow}) compared to last month.`
+          : `Savings decreased by ${pctChange}% (${arrow}) compared to last month.`;
+      }
+    } else {
+      savingsComparison = `Savings stood at Rs. ${summary.netSaved.toLocaleString('en-IN')} (Baseline month).`;
+    }
+
+    // Category advice on where to spend less
+    const topCat = categorySpends[0] && categorySpends[0].total > 0 ? categorySpends[0] : null;
+    const categoryAdvice = topCat
+      ? `You can spend less on ${topCat.categoryName} (Rs. ${topCat.total.toLocaleString('en-IN')}) to increase your savings next month.`
+      : `Keep tracking your daily expenses to optimize your savings next month.`;
+
+    const cashFlowPoint = summary.netSaved >= 0
+      ? `You saved Rs. ${summary.netSaved.toLocaleString('en-IN')} this month with a savings rate of ${summary.savingsRate}%.`
+      : `Expenses exceeded income by Rs. ${Math.abs(summary.netSaved).toLocaleString('en-IN')} this month. Focus on reducing non-essential expenses.`;
+
+    const factPrompt = `
+Generate a 3-bullet point Ai Summary in simple, clear English for personal finance for ${month}:
+- Point 1: Cash Flow summary (Income: Rs. ${summary.totalIncome}, Expense: Rs. ${summary.totalExpense}, Net Saved: Rs. ${summary.netSaved}).
+- Point 2: Specific recommendation where to spend less (Top spending category is ${topCat ? topCat.categoryName + ' at Rs. ' + topCat.total : 'miscellaneous'}).
+- Point 3: Month-over-month comparison using arrows (↑ or ↓) and percentage: "${savingsComparison}".
+
+Keep it concise, strictly bullet points starting with '• ', no jargon, no emojis.
 `;
 
     let narrative = '';
@@ -71,17 +106,13 @@ Please provide an advanced-level yet crystal-clear Executive Financial Analysis 
       narrative = '';
     }
 
-    // Advanced, crystal-clear fallback if AI returns generic message
-    if (!narrative || narrative.includes('unavailable') || narrative.length < 50) {
-      const isPositive = summary.netSaved >= 0;
-      const topCat = categorySpends[0] ? `${categorySpends[0].categoryName} (₹${categorySpends[0].total.toLocaleString('en-IN')})` : 'general categories';
-      const topMerch = topMerchants[0] ? `${topMerchants[0].merchant} (₹${topMerchants[0].total.toLocaleString('en-IN')})` : 'recurring payees';
-
-      narrative = `During this billing cycle, your total inflow reached ₹${summary.totalIncome.toLocaleString('en-IN')} against ₹${summary.totalExpense.toLocaleString('en-IN')} in total expenditures, resulting in ${
-        isPositive
-          ? `a positive net capital retention of ₹${summary.netSaved.toLocaleString('en-IN')} (${summary.savingsRate}% savings efficiency)`
-          : `a net deficit of ₹${Math.abs(summary.netSaved).toLocaleString('en-IN')}`
-      }. Your primary spending driver was concentrated in ${topCat}, with significant disbursements recorded at ${topMerch}. To fortify your financial runway next cycle, maintain spending discipline across variable lifestyle categories and systematically allocate surplus inflows into dedicated liquid reserves.`;
+    // Simple English fallback if AI fails or returns generic response
+    if (!narrative || narrative.includes('unavailable') || narrative.length < 30) {
+      narrative = [
+        `• Cash Flow: ${cashFlowPoint}`,
+        `• Category Optimization: ${categoryAdvice}`,
+        `• Savings Trend: ${savingsComparison}`
+      ].join('\n\n');
     }
 
     report.status = 'DONE';

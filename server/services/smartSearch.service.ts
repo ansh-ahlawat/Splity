@@ -24,7 +24,18 @@ function removeMarkdownFormatting(text: string): string {
 
 function enhanceQuery(query: string): string {
   const lowerQuery = query.toLowerCase().trim();
-  
+
+  // Action / command queries should never have time context appended
+  const isActionCommand =
+    /^(add|split|log|pay|settle|create|record|remove|delete)\b/i.test(lowerQuery) ||
+    lowerQuery.includes('split with') ||
+    lowerQuery.includes('owes me') ||
+    lowerQuery.includes('i owe');
+
+  if (isActionCommand) {
+    return query.trim();
+  }
+
   // Add time context if missing
   if (!lowerQuery.includes('this month') && !lowerQuery.includes('last month') && 
       !lowerQuery.includes('this week') && !lowerQuery.includes('today') &&
@@ -204,18 +215,21 @@ Instructions:
             (f) => f.userId === userId && f.name.toLowerCase() === friendName.toLowerCase()
           );
           if (!friend) {
+            const friendSlug = friendName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             friend = {
-              id: crypto.randomUUID(),
+              id: `friend-${friendSlug || 'contact'}-${Date.now().toString().slice(-4)}`,
               userId,
               name: friendName,
               phone: '+91 98765 00000',
               createdAt: new Date().toISOString(),
             };
             db.data.friends.push(friend);
+            await db.saveItem('friends', friend);
           }
 
+          const debtSlug = (params.description || friendName).toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 16);
           const debt: FriendDebt = {
-            id: crypto.randomUUID(),
+            id: `debt-${debtSlug || 'split'}-${Date.now().toString().slice(-4)}`,
             userId,
             friendName,
             amount,
@@ -226,7 +240,7 @@ Instructions:
             createdAt: new Date().toISOString(),
           };
           db.data.friendDebts.push(debt);
-          db.save();
+          await db.saveItem('friendDebts', debt);
           actionTaken = true;
           actionData = debt;
         } else if (type === 'SETTLE_FRIEND_DEBT') {
@@ -291,14 +305,43 @@ Instructions:
   const lower = query.toLowerCase();
 
   // Friend debt logging fallback
-  const splitMatch = lower.match(/(?:add\s+)?([a-z\s]+)\s+(?:owes me|paid|has to pay me)\s+₹?\$?(\d+)/i) ||
-                     lower.match(/add\s+₹?\$?(\d+)\s+(?:expense\s+)?split with\s+([a-z\s]+)/i);
+  const splitMatch =
+    lower.match(/(?:add\s+)?([a-z\s]+)\s+(?:owes me|paid|has to pay me)\s+₹?\$?(\d+)/i) ||
+    lower.match(/(?:add\s+)?(?:₹?\$?(\d+)\s+)?(?:expense\s+)?split\s+(?:of\s+₹?\$?(\d+)\s+)?with\s+([a-z0-9\s]+)/i) ||
+    lower.match(/add\s+₹?\$?(\d+)\s+(?:expense\s+)?split with\s+([a-z0-9\s]+)/i);
+
   if (splitMatch) {
-    const friendName = (isNaN(Number(splitMatch[1])) ? splitMatch[1] : splitMatch[2]).trim();
-    const amount = Number(isNaN(Number(splitMatch[1])) ? splitMatch[2] : splitMatch[1]);
+    let friendName = '';
+    let amount = 0;
+    if (splitMatch[1] && isNaN(Number(splitMatch[1]))) {
+      friendName = splitMatch[1].trim();
+      amount = Number(splitMatch[2]);
+    } else {
+      amount = Number(splitMatch[1] || splitMatch[2]);
+      friendName = (splitMatch[3] || splitMatch[2] || '').trim();
+    }
+    friendName = friendName.replace(/\bthis month\b/gi, '').trim();
+
     if (friendName && amount > 0) {
+      let friend = db.data.friends.find(
+        (f) => f.userId === userId && f.name.toLowerCase() === friendName.toLowerCase()
+      );
+      if (!friend) {
+        const friendSlug = friendName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        friend = {
+          id: `friend-${friendSlug || 'contact'}-${Date.now().toString().slice(-4)}`,
+          userId,
+          name: friendName,
+          phone: '+91 98765 00000',
+          createdAt: new Date().toISOString(),
+        };
+        db.data.friends.push(friend);
+        await db.saveItem('friends', friend);
+      }
+
+      const debtSlug = friendName.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 16);
       const debt: FriendDebt = {
-        id: crypto.randomUUID(),
+        id: `debt-${debtSlug || 'split'}-${Date.now().toString().slice(-4)}`,
         userId,
         friendName,
         amount,
@@ -309,7 +352,7 @@ Instructions:
         createdAt: new Date().toISOString(),
       };
       db.data.friendDebts.push(debt);
-      db.save();
+      await db.saveItem('friendDebts', debt);
       return {
         intent: 'LOG_FRIEND_DEBT',
         source: 'gemini',

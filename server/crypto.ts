@@ -20,8 +20,11 @@ export async function hashPassword(password: string): Promise<string> {
   });
 }
 
-export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+export async function verifyPassword(password: string, hash?: string): Promise<boolean> {
   return new Promise((resolve) => {
+    if (!hash || typeof hash !== 'string') {
+      return resolve(false);
+    }
     const parts = hash.split(':');
     if (parts.length !== 4 || parts[0] !== 'scrypt') {
       return resolve(false);

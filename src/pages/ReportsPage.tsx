@@ -203,7 +203,7 @@ export const ReportsPage: React.FC = () => {
               <div className="flex items-center gap-2 text-green-300">
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-xs font-semibold tracking-wide uppercase">
-                  Executive Financial Analysis & Strategic Health
+                  Ai Summary
                 </span>
               </div>
               <span className="text-[10px] font-mono-num bg-white/15 text-green-100 px-2 py-0.5 rounded-full">
@@ -259,10 +259,9 @@ export const ReportsPage: React.FC = () => {
                   return (
                     <div
                       key={idx}
-                      className="flex items-start gap-2.5 text-xs sm:text-[13px] text-green-50/95 font-light leading-relaxed"
+                      className="text-xs sm:text-[13px] text-green-50/95 font-light leading-relaxed"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-2" />
-                      <p className="flex-1">{cleanLine}</p>
+                      <p>{cleanLine}</p>
                     </div>
                   );
                 })}

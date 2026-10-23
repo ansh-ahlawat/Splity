@@ -398,39 +398,86 @@ export async function sendReceiptViaSns(params: {
   narrative?: string;
   downloadUrl?: string;
   s3Url?: string;
+  reportId?: string;
 }): Promise<{ sent: boolean; messageId?: string; error?: string }> {
-  const { email, month, summary, narrative, downloadUrl, s3Url } = params;
+  const { email, month, summary, narrative, downloadUrl, reportId } = params;
 
   if (!snsClient) {
     initAwsClients();
   }
 
-  const subject = `[Splity] Financial Synthesis & Verified PDF Receipt - ${month}`;
+  // Format Month e.g. "October 2026"
+  let billingPeriod = month;
+  try {
+    const [y, m] = month.split('-');
+    const d = new Date(Number(y), Number(m) - 1, 1);
+    billingPeriod = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  } catch {}
+
+  const statementDate = new Date().toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  const pdfUrl =
+    downloadUrl && downloadUrl.startsWith('http')
+      ? downloadUrl
+      : `https://ihdzjbx00d.execute-api.ap-southeast-2.amazonaws.com${downloadUrl || (reportId ? `/api/reports/${reportId}/download` : '/api/reports/latest')}`;
+
+  const cleanNarrative = (narrative || 'Monthly audit synthesis generated successfully.')
+    .replace(/^[\*\-•]\s*/gm, '')
+    .trim();
+
+  const subject = `[Splity] Monthly Financial Statement - ${billingPeriod}`;
   const messageBody = `
-======================================================================
-               SPLITY FINANCIAL SYNTHESIS & RECEIPT
-======================================================================
-Billing Cycle : ${month}
-Issued To     : ${email}
-Issued Date   : ${new Date().toLocaleDateString('en-IN')}
+SPLITY
+Monthly Financial Statement
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-FINANCIAL SUMMARY:
-----------------------------------------------------------------------
-• Total Inflow (Income)     : Rs. ${summary.totalIncome.toLocaleString('en-IN')}
-• Total Outflow (Expenses)  : Rs. ${summary.totalExpense.toLocaleString('en-IN')}
-• Net Capital Retained      : Rs. ${summary.netSaved.toLocaleString('en-IN')} (${summary.savingsRate}% Savings Efficiency)
+STATEMENT DETAILS
 
-EXECUTIVE FINANCIAL ANALYSIS:
-----------------------------------------------------------------------
-${narrative || 'Monthly audit synthesis generated successfully.'}
+Billing Period : ${billingPeriod}
+Statement Date : ${statementDate}
+Prepared For   : ${email}
 
-VERIFIED RECEIPT & PDF DOWNLOAD:
-----------------------------------------------------------------------
-Your verified PDF receipt and S3 report can be viewed/downloaded at:
-${s3Url && s3Url.startsWith('http') ? s3Url : downloadUrl || '/reports'}
+────────────────────────────────────
 
-This is an automated notification from Splity via AWS SNS (Free Tier).
-======================================================================
+FINANCIAL OVERVIEW
+
+Total Income       : ₹${summary.totalIncome.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Total Expenses     : ₹${summary.totalExpense.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Net Savings        : ₹${summary.netSaved.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+Savings Rate       : ${summary.savingsRate > 0 ? `${summary.savingsRate}%` : 'N/A'}
+
+────────────────────────────────────
+
+MONTHLY FINANCIAL INSIGHTS
+
+${cleanNarrative}
+
+────────────────────────────────────
+
+REPORT DOCUMENT
+
+Your monthly financial statement PDF is available below.
+
+Report Format : Verified PDF Document
+Download Link :
+${pdfUrl}
+
+────────────────────────────────────
+
+ABOUT THIS STATEMENT
+
+This automated financial summary was generated
+by Splity using the transaction data available
+for the reporting period.
+
+(c) 2026 Splity. All rights reserved.
+
+Automated notification delivered via AWS SNS.
+Please do not reply directly to this email.
 `.trim();
 
   if (snsClient) {

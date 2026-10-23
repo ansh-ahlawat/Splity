@@ -91,7 +91,6 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
   const [notificationPopupOpen, setNotificationPopupOpen] = useState(false);
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [hasSeenNotifications, setHasSeenNotifications] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const searchBoxRef = useRef<HTMLDivElement>(null);
@@ -452,7 +451,6 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
                 <div className="px-4 pt-3.5 pb-2.5 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                       <span className="text-[11px] font-light tracking-wide text-gray-500 uppercase">
                         Smart search • {result.intent.replace(/_/g, ' ')}
                       </span>
@@ -460,21 +458,7 @@ export const TopHybridSearchBar: React.FC<TopHybridSearchBarProps> = ({
                     <div className="flex items-center gap-1.5">
                       <button
                         type="button"
-                        onClick={() => playSpeech(result.message)}
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] transition-colors cursor-pointer ${
-                          isPlayingAudio
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                        }`}
-                        title={isPlayingAudio ? 'Stop audio' : 'Listen via Gemini Speech'}
-                      >
-                        <FaVolumeHigh className="w-3 h-3 text-emerald-700" />
-                        <span>{isPlayingAudio ? 'Stop' : 'Listen'}</span>
-                      </button>
-                      <button
-                        type="button"
                         onClick={() => {
-                          if (isPlayingAudio) playSpeech('');
                           setResult(null);
                         }}
                         className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-black/5 transition-colors cursor-pointer"

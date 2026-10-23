@@ -31,10 +31,17 @@ export function getGeminiClient(): GoogleGenAI {
   return aiClient;
 }
 
+function withTimeout<T>(promise: Promise<T>, ms = 4500): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error('AI generation timed out')), ms)),
+  ]);
+}
+
 export async function generateJSON<T = any>(prompt: string, systemInstruction?: string): Promise<T | null> {
   try {
     const ai = getGeminiClient();
-    const response = await ai.models.generateContent({
+    const callPromise = ai.models.generateContent({
       model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
@@ -44,14 +51,15 @@ export async function generateJSON<T = any>(prompt: string, systemInstruction?: 
       },
     });
 
+    const response = await withTimeout(callPromise, 4500);
     const rawText = response.text?.trim();
     if (!rawText) return null;
 
     // Clean JSON fences if any remain
     const cleanJson = rawText.replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
     return JSON.parse(cleanJson) as T;
-  } catch (err) {
-    console.error('Gemini API generateJSON error:', err);
+  } catch (err: any) {
+    console.warn('Gemini API generateJSON fallback note:', err.message || err);
     return null;
   }
 }
@@ -59,7 +67,7 @@ export async function generateJSON<T = any>(prompt: string, systemInstruction?: 
 export async function generateNarrativeText(prompt: string, systemInstruction?: string): Promise<string> {
   try {
     const ai = getGeminiClient();
-    const response = await ai.models.generateContent({
+    const callPromise = ai.models.generateContent({
       model: 'gemini-3.8-flash',
       contents: prompt,
       config: {
@@ -68,10 +76,11 @@ export async function generateNarrativeText(prompt: string, systemInstruction?: 
       },
     });
 
-    return response.text?.trim() || 'No narrative generated.';
-  } catch (err) {
-    console.error('Gemini API generateNarrative error:', err);
-    return 'Detailed narrative currently unavailable. Please review category breakdown above.';
+    const response = await withTimeout(callPromise, 4500);
+    return response.text?.trim() || '';
+  } catch (err: any) {
+    console.warn('Gemini API generateNarrative fallback note:', err.message || err);
+    return '';
   }
 }
 

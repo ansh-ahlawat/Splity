@@ -252,28 +252,16 @@ export function downloadReceiptPdf(report: MonthlyReportJob): void {
   drawRoundedRect(leftX + 16, bannerY + bannerH - 28, 16, 16, 8, 0.18, 0.42, 0.28);
   drawText('[v]', leftX + 19, bannerY + bannerH - 24, '/F2', 7.5, 0.525, 0.937, 0.675);
 
-  // Banner Title
-  drawText(
-    'EXECUTIVE FINANCIAL ANALYSIS & STRATEGIC HEALTH',
-    leftX + 38,
-    bannerY + bannerH - 23,
-    '/F2',
-    9.5,
-    0.525,
-    0.937,
-    0.675
-  );
+  // Banner Title: Ai Summary (No green dot!)
+  drawText('Ai Summary', leftX + 38, bannerY + bannerH - 23, '/F2', 10, 0.525, 0.937, 0.675);
 
   // Right Pill Badge: Audit Verified · YYYY-MM
   drawRoundedRect(leftX + contentW - 128, bannerY + bannerH - 30, 114, 20, 10, 0.16, 0.4, 0.26);
   drawText(`Audit Verified | ${month}`, leftX + contentW - 120, bannerY + bannerH - 23, '/F2', 7.5, 0.86, 0.99, 0.9);
 
-  // Bullet dot & Narrative lines
-  drawText('*', leftX + 16, bannerY + bannerH - 48, '/F2', 12, 0.29, 0.87, 0.5);
-
   let curNarrativeY = bannerY + bannerH - 48;
   for (const line of narrativeLines) {
-    drawText(line, leftX + 30, curNarrativeY, '/F1', 8.2, 0.96, 0.98, 0.96);
+    drawText(line, leftX + 20, curNarrativeY, '/F1', 8.2, 0.96, 0.98, 0.96);
     curNarrativeY -= 14.5;
   }
 

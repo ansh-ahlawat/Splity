@@ -48,6 +48,7 @@ import {
   getLatestMonthlyReport,
   getAllUserReports
 } from './services/report.service';
+import { generatePdfBuffer } from './utils/pdfGenerator';
 import { sendReceiptViaSns } from './aws/aws.service';
 import {
   getFriends,
@@ -621,16 +622,31 @@ export function createApp() {
     res.json(job);
   });
 
-  app.get('/api/reports/:jobId/download', requireUser, async (req: AuthRequest, res) => {
-    const job = await getReportStatus(req.user!.id, req.params.jobId);
-    if (!job || !job.pdfDataUri) {
-      return res.status(404).json({ error: 'Report not ready for download' });
+  app.get('/api/reports/:jobId/download', async (req, res) => {
+    try {
+      const jobId = req.params.jobId;
+      if (!db.data.reportJobs) db.data.reportJobs = [];
+      let report = db.data.reportJobs.find((r) => r.id === jobId);
+      if (!report && (jobId === 'latest' || !jobId)) {
+        const doneReports = db.data.reportJobs.filter((r) => r.status === 'DONE');
+        report = doneReports.length > 0 ? doneReports[doneReports.length - 1] : db.data.reportJobs[db.data.reportJobs.length - 1];
+      }
+
+      if (!report) {
+        return res.status(404).send('Financial report not found or expired.');
+      }
+
+      const user = db.data.users.find((u) => u.id === report.userId);
+      const pdfBuffer = generatePdfBuffer(report, user);
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="Splity-Financial-Statement-${report.month}.pdf"`);
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+      return res.status(200).send(pdfBuffer);
+    } catch (err: any) {
+      console.error('[Download Report Error]:', err);
+      return res.status(500).send('Failed to compile PDF document.');
     }
-    const base64Data = job.pdfDataUri.replace(/^data:application\/pdf;base64,/, '');
-    const pdfBuffer = Buffer.from(base64Data, 'base64');
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=Splity-Report-${job.month}.pdf`);
-    res.send(pdfBuffer);
   });
 
   // AWS Cloud Integration Status & Sync

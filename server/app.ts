@@ -48,6 +48,7 @@ import {
   getLatestMonthlyReport,
   getAllUserReports
 } from './services/report.service';
+import { sendReceiptViaSns } from './aws/aws.service';
 import {
   getFriends,
   createFriend,
@@ -574,6 +575,41 @@ export function createApp() {
       res.json(job);
     } catch (err: any) {
       res.status(err.status || 500).json({ error: err.message || 'Failed to create monthly report' });
+    }
+  });
+
+  app.post('/api/reports/email', requireUser, async (req: AuthRequest, res) => {
+    try {
+      const { jobId, month } = req.body || {};
+      let report = jobId ? await getReportStatus(req.user!.id, jobId) : null;
+      if (!report) {
+        report = await getLatestMonthlyReport(req.user!.id);
+      }
+      if (!report) {
+        return res.status(404).json({ error: 'No generated report found to email. Please generate report first.' });
+      }
+
+      const userEmail = req.user!.email;
+      if (!userEmail) {
+        return res.status(400).json({ error: 'User email not found' });
+      }
+
+      const result = await sendReceiptViaSns({
+        email: userEmail,
+        month: report.month,
+        summary: report.summary,
+        narrative: report.narrative,
+        downloadUrl: report.downloadUrl,
+        s3Url: report.s3Url,
+      });
+
+      res.json({
+        success: true,
+        message: `Report receipt successfully dispatched to ${userEmail} via AWS SNS.`,
+        details: result,
+      });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message || 'Failed to email report via SNS' });
     }
   });
 

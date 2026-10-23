@@ -180,7 +180,11 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
   }
   if (!ddbDocClient) return false;
 
-  const id = item.id || item.userId || item.email || String(Date.now());
+  const id =
+    collection === 'users' && item.email
+      ? String(item.email).trim().toLowerCase()
+      : item.id || item.userId || item.email || String(Date.now());
+
   const ddbItem = {
     ...item,
     pk: collection,
@@ -211,7 +215,7 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
     try {
       const dedicatedItem = { ...item };
       if (dedicatedTable === 'Splity_Users') {
-        dedicatedItem.id = String(id);
+        dedicatedItem.id = item.email ? String(item.email).trim().toLowerCase() : String(id);
       } else {
         dedicatedItem.userId = item.userId || 'demo-user-123';
         dedicatedItem.id = String(id);

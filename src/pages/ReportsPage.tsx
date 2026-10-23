@@ -19,6 +19,7 @@ export const ReportsPage: React.FC = () => {
   const { selectedMonth } = useDate();
   const [reportJob, setReportJob] = useState<MonthlyReportJob | null>(null);
   const [generating, setGenerating] = useState(false);
+  const [emailing, setEmailing] = useState(false);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [awsStatus, setAwsStatus] = useState<AwsStatusInfo | null>(null);
 
@@ -77,6 +78,25 @@ export const ReportsPage: React.FC = () => {
     }
   };
 
+  const handleEmailReceipt = async () => {
+    if (!reportJob) {
+      alert('No report available yet to email. Please click Generate first.');
+      return;
+    }
+    setEmailing(true);
+    try {
+      const res = await apiRequest<{ success: boolean; message: string }>('/api/reports/email', {
+        method: 'POST',
+        body: JSON.stringify({ jobId: reportJob.id, month: reportJob.month }),
+      });
+      alert(res.message || 'Report receipt successfully dispatched via AWS SNS!');
+    } catch (err: any) {
+      alert(err.message || 'Failed to email report via SNS');
+    } finally {
+      setEmailing(false);
+    }
+  };
+
   const pollReportStatus = (jobId: string) => {
     const interval = setInterval(async () => {
       try {
@@ -112,14 +132,25 @@ export const ReportsPage: React.FC = () => {
           <button
             onClick={handleGenerateReport}
             disabled={generating}
-            className="btn-primary"
-            title="Generate monthly financial synthesis report and email via AWS SNS"
+            className="btn-secondary"
+            title="Generate or recalculate monthly financial synthesis report"
           >
             <span>
               {generating
-                ? 'Generating & Sending via SNS...'
-                : 'Generate Report & Email (SNS)'}
+                ? 'Generating...'
+                : reportJob && reportJob.status === 'DONE'
+                ? 'Regenerate'
+                : 'Generate Report'}
             </span>
+          </button>
+
+          <button
+            onClick={handleEmailReceipt}
+            disabled={emailing || generating || !reportJob || reportJob.status !== 'DONE'}
+            className="btn-primary"
+            title="Email the current report receipt via AWS SNS"
+          >
+            <span>{emailing ? 'Sending via SNS...' : 'Email (SNS)'}</span>
           </button>
         </div>
       </div>
@@ -140,16 +171,10 @@ export const ReportsPage: React.FC = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-5 gap-3">
             <div>
-              <div className="flex items-center gap-2 mb-0.5">
+              <div className="mb-0.5">
                 <span className="text-[10px] font-medium uppercase tracking-wider text-green-700 block">
                   Executive Synthesis
                 </span>
-                {reportJob.s3Key && (
-                  <span className="inline-flex items-center gap-1 text-[10px] font-mono-num text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">
-                    <Cloud className="w-2.5 h-2.5 text-emerald-600" />
-                    AWS S3 Stored
-                  </span>
-                )}
               </div>
               <h2 className="text-lg font-semibold text-gray-900">
                 Monthly Financial Audit — {reportJob.month}
@@ -160,18 +185,6 @@ export const ReportsPage: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {reportJob.downloadUrl && (
-                <a
-                  href={reportJob.s3Url && reportJob.s3Url.startsWith('http') ? reportJob.s3Url : reportJob.downloadUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-secondary text-xs"
-                  title="Download JSON report payload stored in AWS S3"
-                >
-                  <Cloud className="w-3.5 h-3.5 text-blue-600" />
-                  <span>S3 Report</span>
-                </a>
-              )}
               <button
                 type="button"
                 onClick={() => downloadReceiptPdf(reportJob)}
@@ -338,7 +351,7 @@ export const ReportsPage: React.FC = () => {
                 No Analytics Yet For {selectedMonth}
               </h3>
               <p className="text-xs text-gray-400 font-light leading-relaxed max-w-sm mx-auto">
-                Click &apos;Generate Report & Email (SNS)&apos; above to compute monthly KPIs, compile category breakdowns, and dispatch your verified receipt.
+                Click &apos;Generate Report&apos; above to compute monthly KPIs, compile category breakdowns, and dispatch your verified receipt.
               </p>
             </div>
           </div>

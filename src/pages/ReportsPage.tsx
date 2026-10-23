@@ -132,7 +132,7 @@ export const ReportsPage: React.FC = () => {
           <button
             onClick={handleGenerateReport}
             disabled={generating}
-            className="btn-secondary"
+            className="btn-primary"
             title="Generate or recalculate monthly financial synthesis report"
           >
             <span>

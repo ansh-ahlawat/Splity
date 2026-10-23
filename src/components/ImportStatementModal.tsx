@@ -249,9 +249,8 @@ export const ImportStatementModal: React.FC<ImportStatementModalProps> = ({
               <button
                 type="submit"
                 disabled={uploading}
-                className="btn-primary text-xs flex items-center gap-2 px-5 hover:transform-none"
+                className="btn-primary text-xs px-5 hover:transform-none"
               >
-                <Sparkles className="w-3.5 h-3.5" />
                 <span>{uploading ? 'Processing AI...' : 'Parse & Extract Transactions'}</span>
               </button>
             </div>

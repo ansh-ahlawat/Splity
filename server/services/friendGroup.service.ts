@@ -53,21 +53,18 @@ export async function createFriend(userId: string, name: string, phone?: string)
   const friendPhone = phone || '+91 98765 00000';
   const normPhone = normalizePhoneNumber(friendPhone);
 
-  // Avoid creating duplicate friends with same phone
-  const existing = db.data.friends.find(
-    (f) => f.userId === userId && (f.name.toLowerCase() === name.toLowerCase() || (normPhone && f.phone && normalizePhoneNumber(f.phone) === normPhone))
-  );
-  if (existing) {
-    return existing;
-  }
+  const cleanName = name.trim();
+  const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const friendId = `friend-${slug || 'contact'}-${Date.now().toString().slice(-4)}`;
 
   const friend: Friend = {
-    id: crypto.randomUUID(),
+    id: friendId,
     userId,
-    name,
+    name: cleanName,
     phone: friendPhone,
     createdAt: new Date().toISOString(),
   };
+
   db.data.friends.push(friend);
   await db.saveItem('friends', friend);
 
@@ -102,7 +99,7 @@ export async function deleteFriend(userId: string, friendId: string): Promise<Fr
     return { id: friendId, userId, name: 'Friend', createdAt: new Date().toISOString() };
   }
   const [removed] = db.data.friends.splice(idx, 1);
-  await db.deleteItem('friends', friendId);
+  await db.deleteItem('friends', friendId, userId);
 
   createNotification(userId, {
     type: 'FRIEND_DELETED',
@@ -122,10 +119,14 @@ export async function getFriendGroups(userId: string): Promise<FriendGroup[]> {
 // Create a group
 export async function createFriendGroup(userId: string, name: string, members: string[], description?: string): Promise<FriendGroup> {
   if (!db.data.friendGroups) db.data.friendGroups = [];
+  const cleanName = name.trim();
+  const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const groupId = `group-${slug || 'group'}-${Date.now().toString().slice(-4)}`;
+
   const group: FriendGroup = {
-    id: crypto.randomUUID(),
+    id: groupId,
     userId,
-    name,
+    name: cleanName,
     description,
     members,
     createdAt: new Date().toISOString(),
@@ -220,8 +221,15 @@ export async function createFriendDebt(
   const friendPhone = matchedFriend?.phone || null;
   const matchedGroup = groupId ? db.data.friendGroups.find((g) => g.id === groupId) : null;
 
+  const descSlug = (description || friendName || 'split')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 24);
+  const debtId = `debt-${descSlug || 'split'}-${Date.now().toString().slice(-4)}`;
+
   const debt: FriendDebt = {
-    id: crypto.randomUUID(),
+    id: debtId,
     userId,
     friendName,
     friendPhone,

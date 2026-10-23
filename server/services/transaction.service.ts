@@ -71,8 +71,15 @@ export async function createTransaction(
     if (cat) categoryName = cat.name;
   }
 
+  const merchantSlug = (data.merchant || categoryName || 'txn')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 20);
+  const txnId = `txn-${merchantSlug || 'expense'}-${Date.now().toString().slice(-4)}`;
+
   const transaction: Transaction = {
-    id: crypto.randomUUID(),
+    id: txnId,
     userId,
     categoryId: data.categoryId || null,
     categoryName,
@@ -149,7 +156,7 @@ export async function deleteTransaction(userId: string, id: string): Promise<voi
   }
 
   const [deletedTx] = db.data.transactions.splice(idx, 1);
-  await db.deleteItem('transactions', id);
+  await db.deleteItem('transactions', id, userId);
 
   if (deletedTx.type === 'EXPENSE') {
     createNotification(userId, {

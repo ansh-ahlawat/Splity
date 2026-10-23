@@ -516,7 +516,7 @@ async function saveItem(collection: keyof DbSchema, item: any) {
   }
 }
 
-async function deleteItem(collection: keyof DbSchema, id: string) {
+async function deleteItem(collection: keyof DbSchema, id: string, userId = 'demo-user-123') {
   const list = (dbData as any)[collection];
   if (Array.isArray(list)) {
     const idx = list.findIndex((x: any) => x.id === id);
@@ -528,7 +528,7 @@ async function deleteItem(collection: keyof DbSchema, id: string) {
 
   // Delete directly from DynamoDB so all serverless instances immediately see it
   try {
-    await deleteDynamoItem(String(collection), id);
+    await deleteDynamoItem(String(collection), id, userId);
   } catch (err: any) {
     console.warn(`[AWS DynamoDB] Failed to delete ${String(collection)} from DynamoDB:`, err.message);
   }

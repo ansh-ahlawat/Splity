@@ -20,10 +20,14 @@ export async function createCategory(
     throw { status: 409, message: `Category "${name}" already exists` };
   }
 
+  const cleanName = name.trim();
+  const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const catId = `cat-${slug || 'category'}-${Date.now().toString().slice(-4)}`;
+
   const category: Category = {
-    id: crypto.randomUUID(),
+    id: catId,
     userId,
-    name: name.trim(),
+    name: cleanName,
     icon: icon || 'Tag',
     color: color || '#6B7280',
     createdAt: new Date().toISOString(),
@@ -68,7 +72,7 @@ export async function deleteCategory(userId: string, categoryId: string): Promis
   }
 
   db.data.categories.splice(idx, 1);
-  await db.deleteItem('categories', categoryId);
+  await db.deleteItem('categories', categoryId, userId);
 
   // Set onDelete: SetNull for transactions
   db.data.transactions.forEach((tx) => {

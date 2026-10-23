@@ -59,16 +59,16 @@ let ddbRawClient: DynamoDBClient | null = null;
 let snsClient: SNSClient | null = null;
 
 export function initAwsClients(): { ddbDocClient: DynamoDBDocumentClient | null; s3Client: S3Client | null; snsClient: SNSClient | null } {
-  if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
-    console.warn('[AWS] Missing AWS credentials in .env (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY)');
-    return { ddbDocClient: null, s3Client: null, snsClient: null };
-  }
-
   try {
-    const creds = {
-      accessKeyId: AWS_ACCESS_KEY_ID.trim(),
-      secretAccessKey: AWS_SECRET_ACCESS_KEY.trim(),
-    };
+    const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+    const creds =
+      !isLambda && AWS_ACCESS_KEY_ID && AWS_SECRET_ACCESS_KEY
+        ? {
+            accessKeyId: AWS_ACCESS_KEY_ID.trim(),
+            secretAccessKey: AWS_SECRET_ACCESS_KEY.trim(),
+            ...(process.env.AWS_SESSION_TOKEN ? { sessionToken: process.env.AWS_SESSION_TOKEN.trim() } : {}),
+          }
+        : undefined;
 
     ddbRawClient = new DynamoDBClient({
       region: AWS_REGION,
@@ -160,8 +160,19 @@ export function getAwsStatus(): AwsStatus {
   return { ...awsStatus };
 }
 
+const DEDICATED_TABLES: Record<string, string> = {
+  friends: 'Splity_Friends',
+  transactions: 'Splity_Transactions',
+  categories: 'Splity_Categories',
+  friendDebts: 'Splity_Debts',
+  friendGroups: 'Splity_FriendGroups',
+  monthlyBudgets: 'Splity_Budgets',
+  categoryBudgets: 'Splity_Budgets',
+  users: 'Splity_Users',
+};
+
 /**
- * Save an item to DynamoDB table
+ * Save an item to DynamoDB (writes to both dedicated Splity_* table and splity_records)
  */
 export async function putDynamoItem(collection: string, item: any): Promise<boolean> {
   if (!ddbDocClient) {
@@ -177,6 +188,9 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
     updatedAt: new Date().toISOString(),
   };
 
+  let success = false;
+
+  // 1. Write to monolithic splity_records
   try {
     await ddbDocClient.send(
       new PutCommand({
@@ -184,24 +198,51 @@ export async function putDynamoItem(collection: string, item: any): Promise<bool
         Item: ddbItem,
       })
     );
+    success = true;
     awsStatus.dynamoDbConnected = true;
-    return true;
   } catch (err: any) {
     checkQuarantine(err);
-    console.warn(`[AWS DynamoDB] putDynamoItem (${collection}/${id}) failed: ${err.message}`);
-    return false;
+    console.warn(`[AWS DynamoDB] put ${DYNAMODB_TABLE_NAME} failed: ${err.message}`);
   }
+
+  // 2. Also write to dedicated Splity_* table so it shows immediately in the DynamoDB console
+  const dedicatedTable = DEDICATED_TABLES[collection];
+  if (dedicatedTable) {
+    try {
+      const dedicatedItem = { ...item };
+      if (dedicatedTable === 'Splity_Users') {
+        dedicatedItem.id = String(id);
+      } else {
+        dedicatedItem.userId = item.userId || 'demo-user-123';
+        dedicatedItem.id = String(id);
+      }
+      await ddbDocClient.send(
+        new PutCommand({
+          TableName: dedicatedTable,
+          Item: dedicatedItem,
+        })
+      );
+      success = true;
+    } catch (err: any) {
+      console.warn(`[AWS DynamoDB] put ${dedicatedTable} failed: ${err.message}`);
+    }
+  }
+
+  return success;
 }
 
 /**
- * Delete an item from DynamoDB table
+ * Delete an item from DynamoDB (both dedicated Splity_* table and splity_records)
  */
-export async function deleteDynamoItem(collection: string, id: string): Promise<boolean> {
+export async function deleteDynamoItem(collection: string, id: string, userId = 'demo-user-123'): Promise<boolean> {
   if (!ddbDocClient) {
     initAwsClients();
   }
   if (!ddbDocClient) return false;
 
+  let success = false;
+
+  // 1. Delete from splity_records
   try {
     await ddbDocClient.send(
       new DeleteCommand({
@@ -212,12 +253,31 @@ export async function deleteDynamoItem(collection: string, id: string): Promise<
         },
       })
     );
-    return true;
+    success = true;
   } catch (err: any) {
     checkQuarantine(err);
-    console.warn(`[AWS DynamoDB] deleteDynamoItem (${collection}/${id}) failed: ${err.message}`);
-    return false;
+    console.warn(`[AWS DynamoDB] delete ${DYNAMODB_TABLE_NAME} failed: ${err.message}`);
   }
+
+  // 2. Also delete from dedicated Splity_* table
+  const dedicatedTable = DEDICATED_TABLES[collection];
+  if (dedicatedTable) {
+    try {
+      const key: Record<string, any> =
+        dedicatedTable === 'Splity_Users' ? { id: String(id) } : { userId, id: String(id) };
+      await ddbDocClient.send(
+        new DeleteCommand({
+          TableName: dedicatedTable,
+          Key: key,
+        })
+      );
+      success = true;
+    } catch (err: any) {
+      console.warn(`[AWS DynamoDB] delete ${dedicatedTable} failed: ${err.message}`);
+    }
+  }
+
+  return success;
 }
 
 /**

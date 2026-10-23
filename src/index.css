@@ -32,6 +32,7 @@
   --font-roma: 'Roma', serif;
   --font-glion: 'Glion', sans-serif;
   --font-qoeg: 'Qoeg', sans-serif;
+  --font-default-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
 }
 
 @layer base {
@@ -340,4 +341,11 @@ input.has-left-icon {
   font-weight: normal;
   letter-spacing: 0.04em;
   color: #166534;
+}
+
+/* Restored original clean system sans font for Category and Friend names */
+.font-default-sans,
+.font-prev {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif !important;
+  letter-spacing: -0.015em;
 }

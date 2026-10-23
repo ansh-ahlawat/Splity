@@ -309,7 +309,7 @@ export const CategoryDetailPage: React.FC = () => {
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full shrink-0 shadow-none bg-gray-400" />
-                <span className="text-xs font-semibold text-gray-900 tracking-tight font-qoeg">
+                <span className="text-xs font-semibold text-gray-900 tracking-tight font-default-sans">
                   Uncategorized
                 </span>
               </div>

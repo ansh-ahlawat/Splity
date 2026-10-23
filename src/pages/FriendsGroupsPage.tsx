@@ -486,7 +486,7 @@ export const FriendsGroupsPage: React.FC = () => {
                         >
                           {debt.type === 'YOU_OWE' ? 'You owe' : 'Owes you'}
                         </span>
-                        <h4 className="text-sm font-semibold text-gray-950 mt-2">{debt.friendName}</h4>
+                        <h4 className="text-sm font-semibold text-gray-950 mt-2 font-default-sans">{debt.friendName}</h4>
                         <p className="text-xs text-gray-500 mt-0.5">{debt.description}</p>
                       </div>
                       <div className="text-right -mt-0.5">
@@ -565,7 +565,7 @@ export const FriendsGroupsPage: React.FC = () => {
                         {friend.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate">{friend.name}</h4>
+                        <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{friend.name}</h4>
                         <p className="text-[11px] font-mono-num text-gray-400 truncate">{friend.phone || '+91'}</p>
                       </div>
                     </div>
@@ -1058,7 +1058,7 @@ export const FriendsGroupsPage: React.FC = () => {
                       {friend.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate">{friend.name}</h4>
+                      <h4 className="text-xs font-semibold text-gray-900 group-hover/row:text-[#166534] transition-colors truncate font-default-sans">{friend.name}</h4>
                       <p className="text-[11px] font-mono-num text-gray-400 truncate">{friend.phone || '+91'}</p>
                     </div>
                   </div>

@@ -163,7 +163,7 @@ export const ReportsPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-5 gap-3">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">
-                Monthly Financial Audit — {reportJob.month}
+                Monthly Financial Audit  ({reportJob.month})
               </h2>
               <p className="text-xs text-gray-400 mt-0.5">
                 Cycle Audit {reportJob.month} · Generated {new Date(reportJob.createdAt).toLocaleDateString()} · Financial Intelligence Analytics
@@ -312,7 +312,7 @@ export const ReportsPage: React.FC = () => {
                 <tbody>
                   {reportJob.categorySpends?.map((cat, i) => (
                     <tr key={i} className="hover:bg-gray-50/60 border-b border-[#edf2ee] last:border-b-0">
-                      <td className="py-2.5 px-4 font-medium text-gray-900 border-r border-[#edf2ee]">{cat.categoryName}</td>
+                      <td className="py-2.5 px-4 font-medium text-gray-900 border-r border-[#edf2ee] font-default-sans">{cat.categoryName}</td>
                       <td className="py-2.5 px-4 font-mono-num text-gray-900 border-r border-[#edf2ee]">₹ {cat.total.toLocaleString('en-IN')}</td>
                       <td className="py-2.5 px-4 font-mono-num text-gray-400 border-r border-[#edf2ee]">₹ {(cat.limitAmount || 0).toLocaleString('en-IN')}</td>
                       <td className="py-2.5 px-4 font-mono-num text-gray-400 text-right">

@@ -51,7 +51,7 @@ export const BudgetProgressBar: React.FC<BudgetProgressBarProps> = ({
             className="w-2.5 h-2.5 rounded-full shrink-0 shadow-xs"
             style={{ backgroundColor: color }}
           />
-          <span className="text-xs font-semibold text-gray-900 tracking-tight font-qoeg">
+          <span className="text-xs font-semibold text-gray-900 tracking-tight font-default-sans">
             {categoryName}
           </span>
         </div>
